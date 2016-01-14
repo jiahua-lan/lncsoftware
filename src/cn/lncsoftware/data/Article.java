@@ -15,24 +15,6 @@ public class Article {
     private String author;
     private String previewSentences;
 
-    /**
-     * Create an article
-     * @param title The title of this article
-     * @param context Context of this article
-     * @param timeStamp Timestamp of this article
-     * @param author The author of this article
-     */
-    public Article(String title, String context, int timeStamp, String author) {
-        this.title = title;
-        this.context = context;
-        this.timeStamp = timeStamp;
-        this.author = author;
-    }
-
-    public Article(){
-        //Empty object
-    }
-
     public String getTitle() {
         return title;
     }

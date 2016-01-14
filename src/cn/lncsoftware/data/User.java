@@ -11,20 +11,6 @@ public class User {
     private String[] rights;
     private long timestamp;
 
-    /**
-     * Create a user-info object
-     * @param name Name of this user
-     * @param password Password of this user
-     * @param rights Permissions of this user
-     * @param timestamp When the user create
-     */
-    public User(String name, String password, String[] rights, long timestamp) {
-        this.name = name;
-        this.password = password;
-        this.rights = rights;
-        this.timestamp = timestamp;
-    }
-
     public String getName() {
         return name;
     }

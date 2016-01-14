@@ -9,16 +9,6 @@ public class Bulletin {
     private String type;
     private String context;
 
-    /**
-     * Bulletin object
-     * @param type Type of this bulletin
-     * @param context Context
-     */
-    public Bulletin(String type, String context) {
-        this.type = type;
-        this.context = context;
-    }
-
     public String getObjectID() {
         return objectID;
     }

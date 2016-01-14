@@ -14,30 +14,6 @@ public class AppDescription {
     private long timestamp;
     private String operator;
 
-    /**
-     * Create a App-Description object
-     * @param title Title
-     * @param description Descriptions
-     * @param imageCode Path of the app-icon
-     * @param link The link to the app
-     * @param status Status of the app, if write "invisible" it will be hide, if "offline" the link will disable, "online" is default.
-     * @param timestamp When the app create
-     * @param operator The creator;
-     */
-    public AppDescription(String title, String description, String imageCode, String link, String status, long timestamp, String operator) {
-        this.title = title;
-        this.description = description;
-        ImageCode = imageCode;
-        this.link = link;
-        this.status = status;
-        this.timestamp = timestamp;
-        this.operator = operator;
-    }
-
-    public AppDescription(){
-        //Empty object
-    }
-
     public String getTitle() {
         return title;
     }
