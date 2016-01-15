@@ -11,9 +11,13 @@ public class Article {
 
     private String title;
     private String context;
-    private long timeStamp;
+    private Date date;
     private String author;
     private String previewSentences;
+
+    public Article(){
+
+    }
 
     public String getTitle() {
         return title;
@@ -31,12 +35,12 @@ public class Article {
         this.context = context;
     }
 
-    public long getTimeStamp() {
-        return timeStamp;
+    public Date getDate() {
+        return date;
     }
 
-    public void setTimeStamp(long timeStamp) {
-        this.timeStamp = timeStamp;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public String getAuthor() {

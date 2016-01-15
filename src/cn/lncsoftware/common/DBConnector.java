@@ -7,21 +7,16 @@ import com.mongodb.client.MongoDatabase;
  * Created by catten on 16/1/15.
  */
 public class DBConnector {
-    private static MongoClient mongoClient = null;
+    private static MongoClient mongoClient = getMongoClient();
 
-    private DBConnector(){
+    public static MongoClient getMongoClient(){
         if(mongoClient == null){
             mongoClient = new MongoClient();
         }
+        return mongoClient;
     }
 
-    private static final DBConnector connector = new DBConnector();
-
-    /*public static DBConnector getInstance(){
-        return connector;
-    }*/
-
-    public static MongoDatabase getDatabase(){
-        return mongoClient.getDatabase("lncsoftware");
+    public static MongoDatabase getDatabase(String database){
+        return mongoClient.getDatabase(database);
     }
 }
