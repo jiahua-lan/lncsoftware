@@ -1,5 +1,8 @@
 package cn.lncsoftware.data;
 
+import java.util.ArrayList;
+import java.util.Date;
+
 /**
  * Created by catten on 16/1/15.
  */
@@ -8,8 +11,9 @@ public class User {
 
     private String name;
     private String password;
-    private String[] rights;
-    private long timestamp;
+    private ArrayList<String> rights;
+    private Date regDate;
+    private String contactInfo;
 
     public String getName() {
         return name;
@@ -27,20 +31,20 @@ public class User {
         this.password = password;
     }
 
-    public String[] getRights() {
+    public ArrayList<String> getRights() {
         return rights;
     }
 
-    public void setRights(String[] rights) {
+    public void setRights(ArrayList<String> rights) {
         this.rights = rights;
     }
 
-    public long getTimestamp() {
-        return timestamp;
+    public Date getRegDate() {
+        return regDate;
     }
 
-    public void setTimestamp(long timestamp) {
-        this.timestamp = timestamp;
+    public void setRegDate(Date regDate) {
+        this.regDate = regDate;
     }
 
     public String getObjectID() {
@@ -49,5 +53,13 @@ public class User {
 
     public void setObjectID(String objectID) {
         this.objectID = objectID;
+    }
+
+    public String getContactInfo() {
+        return contactInfo;
+    }
+
+    public void setContactInfo(String contactInfo) {
+        this.contactInfo = contactInfo;
     }
 }

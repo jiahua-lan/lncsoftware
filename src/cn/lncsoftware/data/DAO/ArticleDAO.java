@@ -62,15 +62,12 @@ public class ArticleDAO {
      */
     public static List<Article> find(String field, String regex){
         List<Article> result = new ArrayList<>();
-        if(regex != null && !"".equals(regex)){
+        List<Document> foundDocument = collection.
+                find(new Document(field, new Document("$regex",regex).append("$options","$i"))).
+                into(new ArrayList<Document>());
 
-            List<Document> foundDocument = collection.
-                    find(new Document(field, new Document("$regex",regex).append("$options","$i"))).
-                    into(new ArrayList<Document>());
-
-            for(Document document : foundDocument){
-                result.add(getFromDocument(document));
-            }
+        for(Document document : foundDocument){
+            result.add(getFromDocument(document));
         }
         return result;
     }
