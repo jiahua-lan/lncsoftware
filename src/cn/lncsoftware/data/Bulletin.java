@@ -1,5 +1,7 @@
 package cn.lncsoftware.data;
 
+import java.util.Date;
+
 /**
  * Created by catten on 16/1/15.
  */
@@ -8,6 +10,7 @@ public class Bulletin {
 
     private String type;
     private String context;
+    private Date date;
 
     public String getObjectID() {
         return objectID;
@@ -31,5 +34,13 @@ public class Bulletin {
 
     public void setContext(String context) {
         this.context = context;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }
