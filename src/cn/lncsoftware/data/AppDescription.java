@@ -1,5 +1,7 @@
 package cn.lncsoftware.data;
 
+import java.util.Date;
+
 /**
  * Created by catten on 16/1/15.
  */
@@ -11,7 +13,7 @@ public class AppDescription {
     private String ImageCode;
     private String link;
     private String status;
-    private long timestamp;
+    private Date date;
     private String operator;
 
     public String getTitle() {
@@ -58,12 +60,12 @@ public class AppDescription {
         this.status = status;
     }
 
-    public long getTimestamp() {
-        return timestamp;
+    public Date getDate() {
+        return date;
     }
 
-    public void setTimestamp(long timestamp) {
-        this.timestamp = timestamp;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public String getOperator() {

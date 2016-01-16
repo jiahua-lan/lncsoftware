@@ -26,7 +26,7 @@ public class BulletinDAO {
     /**
      * Get a bulletin by type, only return the first result
      * @param type type of the bulletin
-     * @return
+     * @return bulletin
      */
     public static Bulletin getByType(String type){
         Document document = collection.find(new Document("type",type)).first();
@@ -51,7 +51,7 @@ public class BulletinDAO {
 
     /**
      * Update a bulletin
-     * @param bulletin
+     * @param bulletin bulletin
      */
     public static void update(Bulletin bulletin){
         if("".equals(bulletin.getObjectID())) return;
@@ -77,7 +77,7 @@ public class BulletinDAO {
     /**
      * Convert bulletin to Document object
      * @param bulletin bulletin
-     * @return document contains infomation
+     * @return document contains information
      */
     public static Document convertToDocument(Bulletin bulletin){
         if(bulletin != null){
