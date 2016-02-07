@@ -1,19 +1,35 @@
 package cn.lncsoftware.data;
 
+import cn.lncsoftware.data.factory.UserDAO;
+import org.bson.Document;
+import org.bson.types.ObjectId;
+
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Created by catten on 16/1/15.
  */
-public class User {
-    private String objectID;
+public class User extends DataObject implements Serializable{
 
     private String name;
     private String password;
     private ArrayList<String> rights;
-    private Date regDate;
     private String contactInfo;
+
+    private static UserDAO dao = new UserDAO();
+
+    public User(Document doDoc) {
+        apply(doDoc);
+    }
+
+    public User(){
+
+    }
+
+    public synchronized static UserDAO getDao() {
+        return dao;
+    }
 
     public String getName() {
         return name;
@@ -39,22 +55,6 @@ public class User {
         this.rights = rights;
     }
 
-    public Date getRegDate() {
-        return regDate;
-    }
-
-    public void setRegDate(Date regDate) {
-        this.regDate = regDate;
-    }
-
-    public String getObjectID() {
-        return objectID;
-    }
-
-    public void setObjectID(String objectID) {
-        this.objectID = objectID;
-    }
-
     public String getContactInfo() {
         return contactInfo;
     }
@@ -62,4 +62,23 @@ public class User {
     public void setContactInfo(String contactInfo) {
         this.contactInfo = contactInfo;
     }
+
+    @Override
+    public Document toDocument() {
+        return new Document()
+                .append("name",name)
+                .append("password",password)
+                .append("rights",rights)
+                .append("contactInfo",contactInfo);
+    }
+
+    @Override
+    public void apply(Document doDoc) {
+        objectId = doDoc.getObjectId("_id");
+        name = doDoc.getString("name");
+        password = doDoc.getString("password");
+        rights = doDoc.get("rights",ArrayList.class);
+        contactInfo = doDoc.getString("contactInfo");
+    }
+
 }
