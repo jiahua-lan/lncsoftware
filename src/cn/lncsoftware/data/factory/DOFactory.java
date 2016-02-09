@@ -6,6 +6,9 @@ import com.mongodb.client.MongoCollection;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by catten on 16/2/3.
  */
@@ -36,6 +39,12 @@ public abstract class DOFactory<T extends DataObject> {
 
     public T get(ObjectId targetId){
         return getDataInstance(collection.find(new Document("_id",targetId)).first());
+    }
+
+    public List<T> convertDocList(List<Document> doDocList){
+        ArrayList<T> arrayList = new ArrayList<>();
+        for (Document document : doDocList) arrayList.add(getDataInstance(document));
+        return arrayList;
     }
 
     public abstract T getDataInstance(Document doDoc);

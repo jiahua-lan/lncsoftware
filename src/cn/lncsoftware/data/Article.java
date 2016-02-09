@@ -7,6 +7,7 @@ import org.bson.types.ObjectId;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by catten on 16/1/15.
@@ -21,7 +22,7 @@ public class Article extends DataObject implements Serializable{
     private Date date;
     private ObjectId author;
     private String previewSentences;
-    private ArrayList<String> tags;
+    private List<String> tags;
 
     public Article(Document doDoc) {
         apply(doDoc);
@@ -118,11 +119,11 @@ public class Article extends DataObject implements Serializable{
         this.previewSentences = previewSentences;
     }
 
-    public ArrayList<String> getTags() {
+    public List<String> getTags() {
         return tags;
     }
 
-    public void setTags(ArrayList<String> tags) {
+    public void setTags(List<String> tags) {
         this.tags = tags;
     }
 }

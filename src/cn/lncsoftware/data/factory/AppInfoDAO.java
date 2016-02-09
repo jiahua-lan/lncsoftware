@@ -18,6 +18,14 @@ public class AppInfoDAO extends DOFactory<AppInfo>{
         super("appInfo");
     }
 
+    public List<AppInfo> find(String field,String regex){
+        List<Document> documents = collection.find(
+                new Document(field, new Document("$regex",regex)
+                        .append("$options","$i")))
+                .into(new ArrayList<Document>());
+        return convertDocList(documents);
+    }
+
     @Override
     public AppInfo getDataInstance(Document doDoc) {
         return new AppInfo(doDoc);

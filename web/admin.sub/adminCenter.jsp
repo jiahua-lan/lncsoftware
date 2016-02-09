@@ -43,7 +43,7 @@ Please <a href="../index.jsp">Login</a>.<br>
 <label>Management:</label><br>
 <a href="UserManagement.jsp">User</a>
 <a href="AppInfoManagement.jsp">Application</a>
-<a href="AritcleManagement.jsp">Article</a>
+<a href="ArticleManagement.jsp">Article</a>
 <a href="BulletinManagement.jsp">Bulletin</a>
 <br>
 <%

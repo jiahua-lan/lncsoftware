@@ -8,6 +8,7 @@ import org.bson.Document;
 import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -53,11 +54,20 @@ public class ArticleDAO extends DOFactory<Article>{
                     .skip((int) (collection.count() - 10 * page))
                     .into(new ArrayList<Document>());
         }
-        List<Article> articles = new ArrayList<>();
-        for(Document document : documents){
-            articles.add(new Article(document));
-        }
-        return articles;
+        return convertDocList(documents);
+    }
+
+    public List<Article> find(String regex){
+        List<Document> documents = collection.find(
+                new Document(
+                        "$or",
+                        Arrays.asList(
+                                new Document("context", new Document("$regex", regex).append("$options","$i"))
+                                , new Document("title", new Document("$regex", regex).append("$options","$i"))
+                        )
+                ))
+                .into(new ArrayList<Document>());
+        return convertDocList(documents);
     }
 
     @Override
@@ -66,8 +76,7 @@ public class ArticleDAO extends DOFactory<Article>{
     }
 
     public static void main(String[] args) {
-        List<Article> articles = Article.getDao().getLatestPage();
-        for(Article article : articles){
+        for(Article article : new ArticleDAO().find(".*hello.*")){
             System.out.printf(" title: %s \n author: %s \n date: %s \n context: %s \n\n",article.getTitle(), User.getDao().get(article.getAuthor()).getName(),article.getDate(),article.getContext());
         }
     }

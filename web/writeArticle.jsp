@@ -25,9 +25,18 @@
 Please <a href="index.jsp">Login</a><br>
 <%
     }else{
-        if(action != null){
-            switch (action){
-                case "new":{
+        for(String s : passport.getRights()){
+            if("article".equals(s)){
+                statusFlag = "permission recognized";
+                break;
+            }
+        }
+
+        switch (statusFlag){
+            case "permission recognized":{
+                if(action != null){
+                    switch (action){
+                        case "new":{
 %>
 <form action="writeArticle.jsp" method="post">
     <input type="hidden" name="action" value="upload">
@@ -39,36 +48,39 @@ Please <a href="index.jsp">Login</a><br>
     <input type="submit" value="submit">
 </form>
 <%
-                };break;
+    };break;
 
-                case "upload":{
-                    String title = request.getParameter("title");
-                    String tags = request.getParameter("tags");
-                    String context = request.getParameter("context");
-                    if(title != null && title.length() < 64 && !"".equals(title.trim())){
-                        Article article = new Article();
-                        article.setTitle(title);
-                        if(tags != null && !"".equals(tags.trim())){
-                            ArrayList<String> arrayList = new ArrayList<>();
-                            Collections.addAll(arrayList,tags.split(";"));
-                            article.setTags(arrayList);
-                        }
-                        article.setContext(context);
-                        article.setAuthor(passport.getObjectId());
-                        article.setDate(new Date());
-                        article.setStatus("show");
-                        Article.getDao().insert(article);
+    case "upload":{
+        String title = request.getParameter("title");
+        String tags = request.getParameter("tags");
+        String context = request.getParameter("context");
+        if(title != null && title.length() < 64 && !"".equals(title.trim())){
+            Article article = new Article();
+            article.setTitle(title);
+            if(tags != null && !"".equals(tags.trim())){
+                ArrayList<String> arrayList = new ArrayList<>();
+                Collections.addAll(arrayList,tags.split(";"));
+                article.setTags(arrayList);
+            }
+            article.setContext(context);
+            article.setAuthor(passport.getObjectId());
+            article.setDate(new Date());
+            article.setStatus("show");
+            Article.getDao().insert(article);
 %>
 Submit successful.<br>
 <%
-                    }else{
+}else{
 %>
 Illegal Title.<br>
 <%
+                            }
+                        };break;
                     }
-                };break;
-            }
+                }
+            };break;
         }
+
     }
 %>
 </body>
