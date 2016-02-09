@@ -2,7 +2,8 @@
 <%@ page import="cn.lncsoftware.data.common.RegexTools" %>
 <%@ page import="java.util.List" %>
 <%@ page import="cn.lncsoftware.data.Article" %>
-<%@ page import="org.bson.types.ObjectId" %><%--
+<%@ page import="org.bson.types.ObjectId" %>
+<%@ page import="java.util.Collections" %><%--
   Created by IntelliJ IDEA.
   User: catten
   Date: 16/2/3
@@ -91,6 +92,7 @@ Welcome, <%=passport.getName()%>. <a href="index.jsp?action=logout">logout</a>
 Ooops, no articles here.<br>
 <%
     }else{
+        Collections.reverse(articles);
         for(Article article : articles){
             String author;
             User user = User.getDao().get(article.getAuthor());

@@ -56,7 +56,11 @@ Please <a href="index.jsp">Login</a><br>
                         article.setContext(context);
                         article.setAuthor(passport.getObjectId());
                         article.setDate(new Date());
+                        article.setStatus("show");
                         Article.getDao().insert(article);
+%>
+Submit successful.<br>
+<%
                     }else{
 %>
 Illegal Title.<br>

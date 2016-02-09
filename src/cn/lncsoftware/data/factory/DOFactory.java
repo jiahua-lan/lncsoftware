@@ -10,12 +10,12 @@ import org.bson.types.ObjectId;
  * Created by catten on 16/2/3.
  */
 public abstract class DOFactory<T extends DataObject> {
-    public static MongoCollection<Document> getCollection() {
+    protected static Connector connector;
+
+    protected MongoCollection<Document> collection;
+    public MongoCollection<Document> getCollection() {
         return collection;
     }
-
-    private static MongoCollection<Document> collection;
-    protected static Connector connector;
 
     public DOFactory(String collectionName){
         connector = new Connector("lncsoftware");
