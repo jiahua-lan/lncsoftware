@@ -71,13 +71,7 @@ public class ArticleDAO extends DOFactory<Article>{
     }
 
     @Override
-    public Article getDataInstance(Document doDoc) {
+    public Article create(Document doDoc) {
         return new Article(doDoc);
-    }
-
-    public static void main(String[] args) {
-        for(Article article : new ArticleDAO().find(".*hello.*")){
-            System.out.printf(" title: %s \n author: %s \n date: %s \n context: %s \n\n",article.getTitle(), User.getDao().get(article.getAuthor()).getName(),article.getDate(),article.getContext());
-        }
     }
 }

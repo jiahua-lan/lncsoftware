@@ -38,14 +38,14 @@ public abstract class DOFactory<T extends DataObject> {
     }
 
     public T get(ObjectId targetId){
-        return getDataInstance(collection.find(new Document("_id",targetId)).first());
+        return create(collection.find(new Document("_id",targetId)).first());
     }
 
     public List<T> convertDocList(List<Document> doDocList){
         ArrayList<T> arrayList = new ArrayList<>();
-        for (Document document : doDocList) arrayList.add(getDataInstance(document));
+        for (Document document : doDocList) arrayList.add(create(document));
         return arrayList;
     }
 
-    public abstract T getDataInstance(Document doDoc);
+    public abstract T create(Document doDoc);
 }

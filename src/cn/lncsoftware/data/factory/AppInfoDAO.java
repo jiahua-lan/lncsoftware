@@ -27,7 +27,7 @@ public class AppInfoDAO extends DOFactory<AppInfo>{
     }
 
     @Override
-    public AppInfo getDataInstance(Document doDoc) {
+    public AppInfo create(Document doDoc) {
         return new AppInfo(doDoc);
     }
 }

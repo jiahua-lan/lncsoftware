@@ -3,7 +3,8 @@
 <%@ page import="java.util.List" %>
 <%@ page import="cn.lncsoftware.data.Article" %>
 <%@ page import="org.bson.types.ObjectId" %>
-<%@ page import="java.util.Collections" %><%--
+<%@ page import="java.util.Collections" %>
+<%@ page import="cn.lncsoftware.data.Bulletin" %><%--
   Created by IntelliJ IDEA.
   User: catten
   Date: 16/2/3
@@ -31,6 +32,7 @@
                     passport = User.getDao().getUserByName(username);
                     if(passport == null || !passport.getPassword().equals(password)){
                         statusFlag = "authentication failed";
+                        passport = null;
                     }else{
                         boolean loginFlag = false;
                         for(String s : passport.getRights()){
@@ -73,7 +75,7 @@
 <%
     }else{
 %>
-Welcome, <%=passport.getName()%>. <a href="index.jsp?action=logout">logout</a>
+Welcome, <a href="user.jsp"><%=passport.getName()%></a>. <a href="index.jsp?action=logout">logout</a>
 <%
         for(String s : passport.getRights()){
             if(s.equals("admin")){
@@ -85,6 +87,16 @@ Welcome, <%=passport.getName()%>. <a href="index.jsp?action=logout">logout</a>
     }
 %>
 <hr>
+<%
+    Bulletin bulletin = Bulletin.getDao().getBulletinBoard("mainPage");
+    if(bulletin != null){
+%>
+<h6>Bulletin</h6>
+<label><%=bulletin.getContext()%></label>
+<hr>
+<%
+    }
+%>
 <%
     List<Article> articles = Article.getDao().getLatestPage();
     if(articles == null || articles.size() == 0){

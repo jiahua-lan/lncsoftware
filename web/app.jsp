@@ -1,5 +1,6 @@
 <%@ page import="java.util.List" %>
-<%@ page import="cn.lncsoftware.data.AppInfo" %><%--
+<%@ page import="cn.lncsoftware.data.AppInfo" %>
+<%@ page import="cn.lncsoftware.data.Bulletin" %><%--
   Created by IntelliJ IDEA.
   User: catten
   Date: 16/2/9
@@ -14,6 +15,25 @@
 <body>
 <h1>Applications</h1>
 <%
+    Bulletin[] bulletins = new Bulletin[2];
+    bulletins[0] = Bulletin.getDao().getBulletinBoard("app_guide");
+    bulletins[1] = Bulletin.getDao().getBulletinBoard("app_info");
+    if(bulletins[0] != null){
+%>
+<h6>Guide</h6>
+<label><%=bulletins[0].getContext()%></label>
+<hr>
+<%
+    }
+
+    if(bulletins[1] != null){
+%>
+<h6>Announce</h6>
+<label><%=bulletins[1].getContext()%></label>
+<hr>
+<%
+    }
+
     List<AppInfo> appInfos = AppInfo.getDao().find("title",".+");
     if(appInfos != null || appInfos.size() > 0){
         for(AppInfo appInfo : appInfos){

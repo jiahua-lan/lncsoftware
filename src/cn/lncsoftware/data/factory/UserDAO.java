@@ -37,7 +37,7 @@ public class UserDAO extends DOFactory<User>{
     }
 
     @Override
-    public User getDataInstance(Document doDoc) {
+    public User create(Document doDoc) {
         return new User(doDoc);
     }
 }

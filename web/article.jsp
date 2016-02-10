@@ -2,7 +2,8 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
 <%@ page import="cn.lncsoftware.data.User" %>
-<%@ page import="java.util.Collections" %><%--
+<%@ page import="java.util.Collections" %>
+<%@ page import="cn.lncsoftware.data.Bulletin" %><%--
   Created by IntelliJ IDEA.
   User: catten
   Date: 16/2/7
@@ -18,6 +19,16 @@
 <h1>Article</h1>
 <a href="writeArticle.jsp?action=new">Write new Article</a><br>
 <hr>
+<%
+    Bulletin bulletin = Bulletin.getDao().getBulletinBoard("article");
+    if(bulletin != null){
+%>
+<h6>Bulletin</h6>
+<label><%=bulletin.getContext()%></label>
+<hr>
+<%
+    }
+%>
 <%
     String spage = request.getParameter("page");
     int ipage = 1;

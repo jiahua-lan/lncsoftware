@@ -13,14 +13,22 @@ public class RegexTools {
     }
 
     public static boolean legalContactInfo(String s){
-        return s != null && (s.matches("[\\w\\d\\.-_]{1,64}@[\\w\\d\\.-_]{1,32}\\.[\\w\\d\\.-_]{1,10}") || s.matches("\\d{6,11}"));
+        return s != null && (isContactEmail(s) || isContactNumber(s));
     }
 
     public static boolean isContactNumber(String s){
-        return s != null && s.matches("\\d{6,11}");
+        return s != null && s.matches("\\d{6,15}");
     }
 
     public static boolean isContactEmail(String s){
         return s != null && s.matches("[\\w\\d\\.-_]{1,64}@[\\w\\d\\.-_]{1,32}\\.[\\w\\d\\.-_]{1,10}");
+    }
+
+    public static boolean isCellPhoneNumber(String s){
+        return  s != null && s.matches("1\\d{10}");
+    }
+
+    public static boolean isURL(String s){
+        return s != null && s.matches(".+://(.+/?)+");
     }
 }
