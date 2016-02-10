@@ -1,47 +1,44 @@
-<%--
+<%@ page import="java.util.List" %>
+<%@ page import="cn.lncsoftware.data.Bulletin" %><%--
   Created by IntelliJ IDEA.
   User: catten
-  Date: 16/1/11
-  Time: 下午9:15
+  Date: 16/2/11
+  Time: 上午12:42
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>岭南软件园协会 - 联系</title>
-    <jsp:include page="headInclude.html"></jsp:include>
+    <title>Contact</title>
 </head>
 <body>
-<div class="container">
-    <jsp:include page="navbar.jsp"></jsp:include>
-    <script>
-        document.getElementById("lnc-nav-contact").setAttribute("class","active");
-    </script>
-    <div class="page-header">
-        <h1>联系我们</h1>
-        <p>欢迎校友通过以下方式联系我们</p>
-    </div>
-    <div class="row">
-        <div class="col-sm-4 col-md-3 col-lg-2">
-            <div class="thumbnail">
-                <img data-src="holder.js/128x128">
-                <div class="caption">
-                    <h5>QQ</h5>
-                    <p>QQ群只接受同校同学</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-4 col-md-3 col-lg-2">
-            <div class="thumbnail">
-                <img data-src="holder.js/128x128">
-                <div class="caption">
-                    <h5>Github</h5>
-                    <p>会长的Github地址</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<jsp:include page="footInclude.html"></jsp:include>
+<h2>Contact us</h2>
+<%
+    List<Bulletin> contact = Bulletin.getDao().getBulletinItems("contactInfo");
+    if(contact != null && contact.size() > 0){
+        for (Bulletin b : contact){
+%>
+<img src="<%=b.getImageLink()%>" width="60pt" height="60pt"><br>
+<a href="<%=b.getLink()%>"><%=b.getContext()%></a>
+<hr>
+<%
+        }
+    }else{
+%>
+Nothings here...<br>
+<%
+    }
+%>
+<h2>Friends link</h2>
+<%
+    contact = Bulletin.getDao().getBulletinItems("contactFriendLink");
+    if(contact != null && contact.size() > 0){
+        for(Bulletin bulletin : contact){
+%>
+<a href="<%=bulletin.getLink()%>"><%=bulletin.getContext()%></a><br>
+<%
+        }
+    }
+%>
 </body>
 </html>

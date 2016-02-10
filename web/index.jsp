@@ -1,60 +1,125 @@
-<%--
+<%@ page import="cn.lncsoftware.data.User" %>
+<%@ page import="cn.lncsoftware.data.common.RegexTools" %>
+<%@ page import="java.util.List" %>
+<%@ page import="cn.lncsoftware.data.Article" %>
+<%@ page import="org.bson.types.ObjectId" %>
+<%@ page import="java.util.Collections" %>
+<%@ page import="cn.lncsoftware.data.Bulletin" %><%--
   Created by IntelliJ IDEA.
   User: catten
-  Date: 16/1/11
-  Time: 下午8:48
+  Date: 16/2/3
+  Time: 下午5:15
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>岭南软件园协会 - 首页</title>
-    <jsp:include page="headInclude.html"></jsp:include>
+    <title>Home Page</title>
 </head>
 <body>
-<div class="container">
-    <jsp:include page="navbar.jsp"></jsp:include>
-    <script>
-        document.getElementById("lnc-nav-main").setAttribute("class","active");
-    </script>
-    <div class="page-header">
-        <h1>岭南软件园协会 <small>form 广东岭南职业技术学院</small></h1>
-        <p>广东岭南职业技术学院软件园协会成立于2014年10月初，是电子信息工程学院下软件专业的协会。</p>
-    </div>
-    <row>
-        <div class="col-lg-8 col-md-7 col-sm-6">
-            <div class="lnc-marginBox" id="lnc-post-list">
-                <div class="media">
-                    <div class="media-body">
-                        <h4 class="media-heading"><a href="#">施工中</a></h4>
-                        <p>新网站正在建设中，敬请期待！</p>
-                    </div>
-                </div>
-                <div class="media">
-                    <div class="media-body">
-                        <h4 class="media-heading"><a href="#">Lorem ipsum dolor sit amet</a></h4>
-                        <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-4 col-md-5 col-sm-2">
-            <div class="lnc-marginBox">
-                <div class="input-group">
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
-                    <input type="text" class="form-control" id="lnc-post-searchField">
-                    <span class="input-group-btn"><button class="btn btn-default">搜索</button></span>
-                </div>
-            </div>
-            <div class="lnc-marginBox">
-                <div class="panel panel-default">
-                    <div class="panel-heading">公告板</div>
-                    <div class="panel-body">并没有什么内容</div>
-                </div>
-            </div>
-        </div>
-    </row>
-</div>
-<jsp:include page="footInclude.html"></jsp:include>
+<h1>LingNan College Software(Center) Association</h1>
+<%
+    User passport = (User)session.getAttribute("passport");
+    String action = request.getParameter("action");
+    String statusFlag = "";
+
+    if(action != null){
+        switch (action){
+            case "login":{
+                String username = request.getParameter("username");
+                String password = request.getParameter("password");
+                if(RegexTools.legalUsername(username) && RegexTools.legalPassword(password)){
+                    passport = User.getDao().getUserByName(username);
+                    if(passport == null || !passport.getPassword().equals(password)){
+                        statusFlag = "authentication failed";
+                        passport = null;
+                    }else{
+                        boolean loginFlag = false;
+                        for(String s : passport.getRights()){
+                            if(s.equals("login")){
+                                loginFlag = true;
+                                break;
+                            }
+                        }
+                        if(loginFlag){
+                            session.setAttribute("passport",passport);
+                            statusFlag = "authentication success";
+                        }else{
+                            session.removeAttribute("passport");
+                            passport = null;
+                            statusFlag = "authentication banned";
+                        }
+                    }
+                }
+            };break;
+
+            case "logout":{
+                session.removeAttribute("passport");
+                passport = null;
+                statusFlag = "logout successful";
+            };break;
+        }
+    }
+
+    if(!statusFlag.equals("")){
+%><%=statusFlag%><br><%
+    }
+
+    if(passport == null){
+%>
+<form action="index.jsp" method="post">
+    <input type="hidden" name="action" value="login">
+    <label>Username: <input type="text" name="username" value=""></label><a href="register.jsp">Register</a><br>
+    <label>Password: <input type="password" name="password" value=""></label><input type="submit" value="login">
+</form>
+<%
+    }else{
+%>
+Welcome, <a href="user.jsp"><%=passport.getName()%></a>. <a href="index.jsp?action=logout">logout</a>
+<%
+        for(String s : passport.getRights()){
+            if(s.equals("admin")){
+%>
+<a href="admin.sub/adminCenter.jsp">Management Center</a>
+<%
+            }
+        }
+    }
+%>
+<hr>
+<%
+    Bulletin bulletin = Bulletin.getDao().getBulletinBoard("mainPage");
+    if(bulletin != null){
+%>
+<h6>Bulletin</h6>
+<label><%=bulletin.getContext()%></label>
+<hr>
+<%
+    }
+%>
+<%
+    List<Article> articles = Article.getDao().getLatestPage();
+    if(articles == null || articles.size() == 0){
+%>
+Ooops, no articles here.<br>
+<%
+    }else{
+        Collections.reverse(articles);
+        for(Article article : articles){
+            String author;
+            User user = User.getDao().get(article.getAuthor());
+            if(user == null)
+                author = "**User not exist**";
+            else
+                author = user.getName();
+%>
+<label><%=article.getTitle()%></label> <small>by :<%=author%></small><br>
+<p><%=article.getPreviewSentences()%> <a href="article.jsp?actioin=details&articleID=<%=article.getObjectId().toHexString()%>">More&gt;</a></p>
+<hr>
+<%
+        }
+    }
+%>
+<a href="article.jsp">View More...</a>
 </body>
 </html>
