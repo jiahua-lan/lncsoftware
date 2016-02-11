@@ -16,6 +16,10 @@
 </head>
 <body>
 <div class="container">
+    <jsp:include page="navbar.jsp"/>
+    <script>
+        document.getElementById("nav-app").setAttribute("class","active");
+    </script>
     <div class="page-header">
         <h1>Applications</h1>
         <%

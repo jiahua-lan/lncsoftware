@@ -66,6 +66,10 @@
 %>
 <body>
 <div class="container">
+    <jsp:include page="navbar.jsp"/>
+    <script>
+        document.getElementById("nav-article").setAttribute("class","active");
+    </script>
     <div class="page-header">
         <h1>Write Article</h1>
     </div>

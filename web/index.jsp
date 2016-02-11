@@ -63,6 +63,10 @@
 %>
 <body>
 <div class="container">
+    <jsp:include page="navbar.jsp"/>
+    <script>
+        document.getElementById("nav-home").setAttribute("class","active");
+    </script>
     <div class="page-header">
         <h1>LingNan College Software(Center) Association</h1>
         <%
@@ -183,22 +187,22 @@
                         if(passport != null){
                     %>
                     <div class="list-group">
-                        <a class="list-group-item" href="user.jsp">User center</a>
+                        <a class="list-group-item" href="user.jsp"><span class="glyphicon glyphicon-user"></span> User center</a>
                         <%
                             for(String s : passport.getRights()){
                                 if(s.equals("admin")){
                         %>
-                        <a class="list-group-item" href="admin.sub/adminCenter.jsp">Management Center</a>
+                        <a class="list-group-item" href="admin.sub/adminCenter.jsp"><span class="glyphicon glyphicon-wrench"></span> Management Center</a>
                         <%
                                 }
                                 if(s.equals("article")){
                         %>
-                        <a class="list-group-item" href="writeArticle.jsp?action=new">Write new Article</a>
+                        <a class="list-group-item" href="writeArticle.jsp?action=new"><span class="glyphicon glyphicon-edit"></span> Write new Article</a>
                         <%
                                 }
                             }
                         %>
-                        <a class="list-group-item list-group-item-warning" href="index.jsp?action=logout">Logout</a>
+                        <a class="list-group-item list-group-item-warning" href="index.jsp?action=logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
                     </div>
                     <%
                         }

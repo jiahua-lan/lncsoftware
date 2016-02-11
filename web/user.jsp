@@ -47,6 +47,10 @@
 %>
 <body>
 <div class="container">
+    <jsp:include page="navbar.jsp"/>
+    <script>
+        document.getElementById("nav-user").setAttribute("class","active");
+    </script>
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
             <div class="panel panel-success" id="userPanel">

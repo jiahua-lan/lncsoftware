@@ -13,10 +13,14 @@
 </head>
 <body>
 <div class="container">
+    <jsp:include page="navbar.jsp"/>
+    <script>
+        document.getElementById("nav-contact").setAttribute("class","active");
+    </script>
     <div class="page-header">
         <h1>Contact</h1>
         <link rel="stylesheet" href="css/bootstrap.min.css">
-        <link rel="stylesheet" href="css/main.css">]
+        <link rel="stylesheet" href="css/main.css">
     </div>
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
