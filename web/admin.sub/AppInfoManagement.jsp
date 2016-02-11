@@ -49,7 +49,7 @@ Please <a href="../index.jsp">Login</a>.<br>
     <input type="hidden" name="action" value="create">
     <label>Title: <input type="text" name="title"></label><br>
     <label>Description: <input type="text" name="description"></label><br>
-    <label>Thumbnail Image: <input type="file" name="imageCode"></label><br>
+    <label>Thumbnail Image: <input type="url" name="imageCode"></label><br>
     <label>Link: <input type="text" name="link"></label><br>
     <label>Status:
         <input type="radio" name="status" value="working" checked>Working
@@ -116,7 +116,7 @@ Illegal title.<br>
     <label>Title: <input type="text" name="title" value="<%=appInfo.getTitle()%>"></label><br>
     <label>Link: <input type="url" name="link" value="<%=appInfo.getLink()%>"></label><br>
     <label>Description: <input type="text" name="description" value="<%=appInfo.getDescription()%>"></label><br>
-    <label>Image: <label><%=appInfo.getImageCode()%></label> <input type="file" name="image"></label><br>
+    <label>Image: <input type="url" name="imageCode" value="<%=appInfo.getImageCode()%>"></label><br>
     <label>Status:
         <input type="radio" name="status" value="working" <%=("working".equals(appInfo.getStatus()) ? "checked" : "")%>>Working
         <input type="radio" name="status" value="repairing" <%=("repairing".equals(appInfo.getStatus()) ? "checked" : "")%>>Repairing
