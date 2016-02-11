@@ -15,9 +15,9 @@
 <html>
 <head>
     <title>Home Page</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/main.css">
 </head>
-<body>
-<h1>LingNan College Software(Center) Association</h1>
 <%
     User passport = (User)session.getAttribute("passport");
     String action = request.getParameter("action");
@@ -60,66 +60,153 @@
             };break;
         }
     }
-
-    if(!statusFlag.equals("")){
-%><%=statusFlag%><br><%
-    }
-
-    if(passport == null){
 %>
-<form action="index.jsp" method="post">
-    <input type="hidden" name="action" value="login">
-    <label>Username: <input type="text" name="username" value=""></label><a href="register.jsp">Register</a><br>
-    <label>Password: <input type="password" name="password" value=""></label><input type="submit" value="login">
-</form>
-<%
-    }else{
-%>
-Welcome, <a href="user.jsp"><%=passport.getName()%></a>. <a href="index.jsp?action=logout">logout</a>
-<%
-        for(String s : passport.getRights()){
-            if(s.equals("admin")){
-%>
-<a href="admin.sub/adminCenter.jsp">Management Center</a>
-<%
+<body>
+<div class="container">
+    <div class="page-header">
+        <h1>LingNan College Software(Center) Association</h1>
+        <%
+            Bulletin bulletin = Bulletin.getDao().getBulletinBoard("mainPage");
+            if(bulletin != null){
+        %>
+        <p><%=bulletin.getContext()%></p>
+        <%
             }
-        }
-    }
-%>
-<hr>
-<%
-    Bulletin bulletin = Bulletin.getDao().getBulletinBoard("mainPage");
-    if(bulletin != null){
-%>
-<h6>Bulletin</h6>
-<label><%=bulletin.getContext()%></label>
-<hr>
-<%
-    }
-%>
-<%
-    List<Article> articles = Article.getDao().getLatestPage();
-    if(articles == null || articles.size() == 0){
-%>
-Ooops, no articles here.<br>
-<%
-    }else{
-        Collections.reverse(articles);
-        for(Article article : articles){
-            String author;
-            User user = User.getDao().get(article.getAuthor());
-            if(user == null)
-                author = "**User not exist**";
-            else
-                author = user.getName();
-%>
-<label><%=article.getTitle()%></label> <small>by :<%=author%></small><br>
-<p><%=article.getPreviewSentences()%> <a href="article.jsp?actioin=details&articleID=<%=article.getObjectId().toHexString()%>">More&gt;</a></p>
-<hr>
-<%
-        }
-    }
-%>
-<a href="article.jsp">View More...</a>
+        %>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="container-fluid">
+                <%
+                    List<Article> articles = Article.getDao().getLatestPage();
+                    if(articles == null || articles.size() == 0){
+                %>
+                Ooops, no articles here.<br>
+                <%
+                }else{
+                    Collections.reverse(articles);
+                    for(Article article : articles){
+                        String author;
+                        User user = User.getDao().get(article.getAuthor());
+                        if(user == null)
+                            author = "**User not exist**";
+                        else
+                            author = user.getName();
+                %>
+                <div class="media">
+                    <div class="media-body">
+                        <h4><a href="article.jsp?actioin=details&articleID=<%=article.getObjectId().toHexString()%>"><%=article.getTitle()%></a></h4>
+                        <%=article.getPreviewSentences()%>
+                        <hr>
+                    </div>
+                </div>
+                <%
+                        }
+                    }
+                %>
+                <a href="article.jsp">View More...</a>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="container-fluid">
+                <div class="panel <%=(passport == null ? "panel-primary" : "panel-success")%>">
+                    <div class="panel-heading">Login</div>
+                    <div class="panel-body">
+                        <div class="container-fluid">
+                            <%
+                                if(!statusFlag.equals("")){
+                                    String alertType = "";
+                                    switch (statusFlag){
+                                        case "authentication failed":
+                                            alertType = "alert-warning";
+                                            break;
+                                        case "authentication banned":
+                                            alertType = "alert-danger";
+                                            break;
+                                        case "authentication success":
+                                            alertType= "alert-success";
+                                            break;
+                                        case "logout successful":
+                                            alertType= "alert-success";
+                                            break;
+                                    }
+                            %>
+                            <div class="alert <%=alertType%>"><%=statusFlag%></div>
+                            <%
+                            }
+
+                            if(passport == null){
+                            %>
+                            <form class="form-horizontal" action="index.jsp" method="post">
+                                <input type="hidden" name="action" value="login">
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="Username" type="text" name="username" value="">
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="Password" type="password" name="password" value="">
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" class="btn btn-success col-md-12" value="Login">
+                                </div>
+                                <div class="form-group">
+                                    <a class="btn btn-default col-md-12" href="register.jsp">Register</a>
+                                </div>
+                            </form>
+                            <%
+                            }else{
+                            %>
+                            <b>Welcome, <%=passport.getName()%>
+                            <%
+                                for(String s : passport.getRights()){
+                                    switch (s){
+                                        case "article":
+                            %>
+                            <span class="label label-info">Writer</span>
+                            <%
+                                            break;
+
+                                        case "admin":
+                            %>
+                            <span class="label label-danger">Admin</span>
+                            <%
+                                    }
+                                }
+                            %>
+                            </b>
+                            <%
+                                }
+                            %>
+                        </div>
+                    </div>
+                    <%
+                        if(passport != null){
+                    %>
+                    <div class="list-group">
+                        <a class="list-group-item" href="user.jsp">User center</a>
+                        <%
+                            for(String s : passport.getRights()){
+                                if(s.equals("admin")){
+                        %>
+                        <a class="list-group-item" href="admin.sub/adminCenter.jsp">Management Center</a>
+                        <%
+                                }
+                                if(s.equals("article")){
+                        %>
+                        <a class="list-group-item" href="writeArticle.jsp?action=new">Write new Article</a>
+                        <%
+                                }
+                            }
+                        %>
+                        <a class="list-group-item list-group-item-warning" href="index.jsp?action=logout">Logout</a>
+                    </div>
+                    <%
+                        }
+                    %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
