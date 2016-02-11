@@ -23,7 +23,7 @@
         <link rel="stylesheet" href="css/main.css">
     </div>
     <div class="row">
-        <div class="col-md-6 col-md-offset-3">
+        <div class="col-md-8 col-md-offset-2">
             <h2>Contact Us</h2>
             <div class="list-group">
                 <%
@@ -41,7 +41,6 @@
                         </div>
                     </div>
                 </a>
-                <hr>
                 <%
                     }
                 }else{

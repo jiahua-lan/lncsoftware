@@ -34,51 +34,58 @@
             }
         %>
     </div>
-    <div class="container-fluid">
-        <%
-            String spage = request.getParameter("page");
-            int ipage = 1;
-            if(spage != null){
-                ipage = Integer.parseInt(spage);
-            }
-            List<Article> articles = Article.getDao().getPage(ipage);
-            if(articles == null || articles.size() == 0){
-        %>
-        Ooops, no articles here.
-        <%
-        }else{
-            Collections.reverse(articles);
-            for(Article article : articles){
-                String author = User.getDao().get(article.getAuthor()).getName();
-                if(author == null) author = "**User not exist**";
-        %>
-        <div class="media">
-            <div class="media-body">
-                <h4><a href="article.jsp?action=details&articleID=<%=article.getObjectId().toHexString()%>"><%=article.getTitle()%></a> <small>by :<%=author%></small></h4>
-                <%=article.getPreviewSentences()%>
-            </div>
-            <hr>
-        </div>
-        <%
-            }
-            int totalPages = Article.getDao().getPages();
-            if(totalPages > 0){
-        %>
-        <nav>
-            <ul class="pagination">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="list-group">
                 <%
-                    for(int i = 0; i < totalPages; i++){
+                    String spage = request.getParameter("page");
+                    int ipage = 1;
+                    if(spage != null){
+                        ipage = Integer.parseInt(spage);
+                    }
+                    List<Article> articles = Article.getDao().getPage(ipage);
+                    if(articles == null || articles.size() == 0){
                 %>
-                <li><a href="article.jsp?page=<%=i + 1%>"><%=i + 1%></a></li>
+                <a class="list-group-item disabled" href="#">Ooops, no articles here.</a>
+                <%
+                }else{
+                    Collections.reverse(articles);
+                    for(Article article : articles){
+                        String author = User.getDao().get(article.getAuthor()).getName();
+                        if(author == null) author = "**User not exist**";
+                %>
+                <a class="list-group-item" href="article.jsp?action=details&articleID=<%=article.getObjectId().toHexString()%>">
+                    <div class="media">
+                        <div class="media-body">
+                            <h4><%=article.getTitle()%> <small>by :<%=author%></small></h4>
+                            <%=article.getPreviewSentences()%>
+                        </div>
+                    </div>
+                </a>
                 <%
                     }
                 %>
-            </ul>
-        </nav>
-        <%
-            }
-        }
-    %>
+            </div>
+            <%
+                int totalPages = Article.getDao().getPages();
+                if(totalPages > 0){
+            %>
+            <nav>
+                <ul class="pagination">
+                    <%
+                        for(int i = 0; i < totalPages; i++){
+                    %>
+                    <li><a href="article.jsp?page=<%=i + 1%>"><%=i + 1%></a></li>
+                    <%
+                        }
+                    %>
+                </ul>
+            </nav>
+            <%
+                    }
+                }
+            %>
+        </div>
     </div>
 </div>
 </body>

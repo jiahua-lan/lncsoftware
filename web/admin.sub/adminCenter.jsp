@@ -9,16 +9,15 @@
 <html>
 <head>
     <title>Management Center</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/main.css">
 </head>
-<body>
 <%
     User passport = (User)session.getAttribute("passport");
     String statusFlag = "";
 
     if(passport == null){
-%>
-Please <a href="../index.jsp">Login</a>.<br>
-<%
+        statusFlag = "no login";
     }else{
         boolean adminFlag = false;
         for(String s : passport.getRights()){
@@ -30,25 +29,48 @@ Please <a href="../index.jsp">Login</a>.<br>
         if(!adminFlag){
             statusFlag = "permission denied";
         }else{
-            statusFlag = "permission recognition";
+            statusFlag = "permission recognised";
         }
     }
+%>
+<body>
+<div class="container">
+    <jsp:include page="navbar.jsp"/>
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <%
+                switch (statusFlag){
+                    case "no login":
+            %>
+            <div class="alert alert-warning">Please <a class="alert-link" href="../index.jsp">Login</a></div>
+            <%
+                    break;
 
-    if(passport != null){
-        if(!statusFlag.equals("")){
-%><%=statusFlag%><%
-        }
-        if(statusFlag.equals("permission recognition")){
-%>
-<label>Management:</label><br>
-<a href="UserManagement.jsp">User</a>
-<a href="AppInfoManagement.jsp">Application</a>
-<a href="ArticleManagement.jsp">Article</a>
-<a href="BulletinManagement.jsp">Bulletin</a>
-<br>
-<%
-        }
-    }
-%>
+                case "permission denied":
+            %>
+            <div class="alert alert-danger">Permission denied.</div>
+            <%            break;
+
+                case "permission recognised":
+                    break;
+            }
+
+                if(passport != null && statusFlag.equals("permission recognised")){
+            %>
+            <div class="panel panel-primary">
+                <div class="panel-heading">Management</div>
+                <div class="list-group">
+                    <a class="list-group-item" href="UserManagement.jsp"><span class="glyphicon glyphicon-user"></span> User</a>
+                    <a class="list-group-item" href="AppInfoManagement.jsp"><span class="glyphicon glyphicon-link"></span> Application</a>
+                    <a class="list-group-item" href="ArticleManagement.jsp"><span class="glyphicon glyphicon-edit"></span> Article</a>
+                    <a class="list-group-item" href="BulletinManagement.jsp"><span class="glyphicon glyphicon-bullhorn"></span> Bulletin</a>
+                </div>
+            </div>
+            <%
+                }
+            %>
+        </div>
+    </div>
+</div>
 </body>
 </html>

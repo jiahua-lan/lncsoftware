@@ -13,6 +13,8 @@
 <html>
 <head>
     <title>Application | Management</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/main.css">
 </head>
 <body>
 <%
@@ -21,9 +23,7 @@
     String action = request.getParameter("action");
 
     if(passport == null){
-%>
-Please <a href="../index.jsp">Login</a>.<br>
-<%
+        statusFlag = "no login";
     }else{
         boolean adminFlag = false;
         for(String s : passport.getRights()){
@@ -39,36 +39,7 @@ Please <a href="../index.jsp">Login</a>.<br>
         }
     }
 
-    if(!statusFlag.equals("")){
-%><%=statusFlag%><%
-    }
-
     if(passport != null && "permission recognition".equals(statusFlag)){
-%>
-<form action="AppInfoManagement.jsp" method="post">
-    <input type="hidden" name="action" value="create">
-    <label>Title: <input type="text" name="title"></label><br>
-    <label>Description: <input type="text" name="description"></label><br>
-    <label>Thumbnail Image: <input type="url" name="imageCode"></label><br>
-    <label>Link: <input type="text" name="link"></label><br>
-    <label>Status:
-        <input type="radio" name="status" value="working" checked>Working
-        <input type="radio" name="status" value="repairing">Repairing
-        <input type="radio" name="status" value="disable">Disable
-    </label><br>
-    <input type="submit" value="create">
-</form>
-<br>
-<form action="AppInfoManagement.jsp" method="post">
-    <input type="hidden" name="action" value="search">
-    <label>Search:
-        <input type="text" name="keyword">
-        <input type="checkbox" name="useRegex" value="useRegex">Use Regex
-        <input type="submit" value="search">
-    </label>
-</form>
-<br>
-<%
         if(action != null){
             switch (action){
                 case "create":{
@@ -87,46 +58,12 @@ Please <a href="../index.jsp">Login</a>.<br>
                             if(status != null) appInfo.setStatus(status); else appInfo.setStatus("disable");
                             appInfo.setDate(new Date());
                             AppInfo.getDao().insert(appInfo);
-%>
-Create successful.<br>
-<%
+                            statusFlag = "create successful";
                         }else{
-%>
-Link must in 256 chars.<br>
-<%
+                            statusFlag = "link too long";
                         }
                     }else{
-%>
-Illegal title.<br>
-<%
-                    }
-                };break;
-
-                case "search":{
-                    String keyword = request.getParameter("keyword");
-                    String useRegex = request.getParameter("useRegex");
-                    if(keyword != null){
-                        List<AppInfo> appInfos = AppInfo.getDao().find("title",("useRegex".equals(useRegex) ? keyword : ".*"+keyword+".*"));
-                        if(appInfos != null && appInfos.size() > 0){
-                            for(AppInfo appInfo : appInfos){
-%>
-<form action="AppInfoManagement.jsp" method="post">
-    <input type="hidden" name="action" value="update">
-    <input type="hidden" name="appID" value="<%=appInfo.getObjectId().toHexString()%>">
-    <label>Title: <input type="text" name="title" value="<%=appInfo.getTitle()%>"></label><br>
-    <label>Link: <input type="url" name="link" value="<%=appInfo.getLink()%>"></label><br>
-    <label>Description: <input type="text" name="description" value="<%=appInfo.getDescription()%>"></label><br>
-    <label>Image: <input type="url" name="imageCode" value="<%=appInfo.getImageCode()%>"></label><br>
-    <label>Status:
-        <input type="radio" name="status" value="working" <%=("working".equals(appInfo.getStatus()) ? "checked" : "")%>>Working
-        <input type="radio" name="status" value="repairing" <%=("repairing".equals(appInfo.getStatus()) ? "checked" : "")%>>Repairing
-        <input type="radio" name="status" value="disable" <%=("disable".equals(appInfo.getStatus()) ? "checked" : "")%>>Disable
-    </label><br>
-    <input type="submit" value="update">
-</form>
-<%
-                            }
-                        }
+                        statusFlag = "illegal title";
                     }
                 };break;
 
@@ -148,23 +85,15 @@ Illegal title.<br>
                                     String status = request.getParameter("status");
                                     if(status != null) appInfo.setStatus(status); else appInfo.setStatus("disable");
                                     AppInfo.getDao().update(appInfo);
-%>
-Update successful.<br>
-<%
-                                    }else{
-%>
-Link must in 256 chars.<br>
-<%
-                                    }
+                                    statusFlag = "update success";
+                                }else{
+                                    statusFlag = "link too long";
+                                }
                             }else{
-%>
-Illegal title.<br>
-<%
+                                statusFlag = "illegal title";
                             }
                         }else{
-%>
-App not exist.
-<%
+                            statusFlag = "not exist";
                         }
                     }
                 };break;
@@ -172,5 +101,175 @@ App not exist.
         }
     }
 %>
+<div class="container">
+    <jsp:include page="navbar.jsp"/>
+    <div class="page-header">
+        <h1>Application info management</h1>
+    </div>
+    <div class="row">
+        <%
+            if(passport != null && !"permission denied".equals(statusFlag)){
+        %>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">Create App Link</div>
+                <div class="panel-body">
+                    <div class="container-fluid">
+                        <form class="form-horizontal" action="AppInfoManagement.jsp" method="post">
+                            <input type="hidden" name="action" value="create">
+                            <div class="form-group">
+                                <label class="control-label">Title:</label>
+                                <input class="form-control" type="text" name="title">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Description:</label>
+                                <input class="form-control" type="text" name="description">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Thumbnail Image:</label>
+                                <input class="form-control" type="url" name="imageCode">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Link:</label>
+                                <input class="form-control" type="text" name="link">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Status:</label>
+                                <input type="radio" name="status" value="working" checked> Working
+                                <input type="radio" name="status" value="repairing"> Repairing
+                                <input type="radio" name="status" value="disable"> Disable
+                            </div>
+                            <div class="form-group">
+                                <input class="btn btn-primary btn-block" type="submit" value="create">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <%
+                switch (statusFlag){
+                    case "create successful":
+            %>
+            <div class="alert alert-success">Create successful.</div>
+            <%
+                        break;
+
+                    case "link too long":
+            %>
+            <div class="alert alert-warning">Link must under 256 chars</div>
+            <%
+                        break;
+
+                    case "illegal title":
+            %>
+            <div class="alert alert-warning">Title in a format illegal.</div>
+            <%
+                        break;
+
+                    case "update success":
+            %>
+            <div class="alert alert-success">Update success</div>
+            <%
+                        break;
+
+                    case "item not exist":
+            %>
+            <div class="alert alert-warning">Item not exist</div>
+            <%
+                        break;
+                }
+            %>
+            <div class="container-fluid">
+                <form class="form-horizontal" action="AppInfoManagement.jsp" method="post">
+                    <input type="hidden" name="action" value="search">
+                    <div class="input-group">
+                        <span class="input-group-addon"><input type="checkbox" name="useRegex" value="useRegex"> Use Regex</span>
+                        <input class="form-control" type="text" name="keyword" placeholder="Search">
+                        <span class="input-group-btn"><input class="btn btn-default" type="submit" value="Search"></span>
+                    </div>
+                </form>
+            </div>
+            <div class="container-fluid">
+                <%
+                    if("search".equals(action)){
+                        String keyword = request.getParameter("keyword");
+                        String useRegex = request.getParameter("useRegex");
+                        if(keyword != null){
+                            List<AppInfo> appInfos = AppInfo.getDao().find("title",("useRegex".equals(useRegex) ? keyword : ".*"+keyword+".*"));
+                            if(appInfos != null && appInfos.size() > 0){
+                %>
+                <ul class="list-group">
+                    <%
+                        for(AppInfo appInfo : appInfos){
+                    %>
+                    <li class="list-group-item">
+                        <div class="container-fluid">
+                            <form class="form-horizontal" action="AppInfoManagement.jsp" method="post">
+                                <input type="hidden" name="action" value="update">
+                                <input type="hidden" name="appID" value="<%=appInfo.getObjectId().toHexString()%>">
+                                <div class="form-group">
+                                    <label class="control-label">Title: </label>
+                                    <input class="form-control" type="text" name="title" value="<%=appInfo.getTitle()%>">
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Link:</label>
+                                    <input class="form-control" type="url" name="link" value="<%=appInfo.getLink()%>">
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Description:</label>
+                                    <input class="form-control" type="text" name="description" value="<%=appInfo.getDescription()%>">
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Image:</label>
+                                    <input class="form-control" type="url" name="imageCode" value="<%=appInfo.getImageCode()%>">
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Status:</label>
+                                    <input type="radio" name="status" value="working" <%=("working".equals(appInfo.getStatus()) ? "checked" : "")%>> Working
+                                    <input type="radio" name="status" value="repairing" <%=("repairing".equals(appInfo.getStatus()) ? "checked" : "")%>> Repairing
+                                    <input type="radio" name="status" value="disable" <%=("disable".equals(appInfo.getStatus()) ? "checked" : "")%>> Disable
+                                </div>
+                                <input class="btn btn-primary btn-block" type="submit" value="update">
+                            </form>
+                        </div>
+                    </li>
+                    <%
+                        }
+                    %>
+                </ul>
+                <%
+                            }
+                        }
+                    }
+                %>
+            </div>
+        </div>
+        <%
+            }else{
+        %>
+        <div class="col-md-6 col-md-offset-3">
+            <%
+                switch (statusFlag){
+                    case "no login":
+            %>
+            <div class="alert alert-warning">Please <a href="../index.jsp">Login</a>.</div>
+            <%
+                        break;
+
+                    case "permission denied":
+            %>
+            <div class="alert alert-danger">Permission denied.</div>
+            <%
+                        break;
+                }
+            %>
+        </div>
+        <%
+            }
+        %>
+    </div>
+</div>
 </body>
 </html>
