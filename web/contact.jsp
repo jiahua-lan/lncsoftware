@@ -12,33 +12,56 @@
     <title>Contact</title>
 </head>
 <body>
-<h2>Contact us</h2>
-<%
-    List<Bulletin> contact = Bulletin.getDao().getBulletinItems("contactInfo");
-    if(contact != null && contact.size() > 0){
-        for (Bulletin b : contact){
-%>
-<img src="<%=b.getImageLink()%>" width="60pt" height="60pt"><br>
-<a href="<%=b.getLink()%>"><%=b.getContext()%></a>
-<hr>
-<%
-        }
-    }else{
-%>
-Nothings here...<br>
-<%
-    }
-%>
-<h2>Friends link</h2>
-<%
-    contact = Bulletin.getDao().getBulletinItems("contactFriendLink");
-    if(contact != null && contact.size() > 0){
-        for(Bulletin bulletin : contact){
-%>
-<a href="<%=bulletin.getLink()%>"><%=bulletin.getContext()%></a><br>
-<%
-        }
-    }
-%>
+<div class="container">
+    <div class="page-header">
+        <h1>Contact</h1>
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/main.css">]
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <h2>Contact Us</h2>
+            <div class="list-group">
+                <%
+                    List<Bulletin> contact = Bulletin.getDao().getBulletinItems("contactInfo");
+                    if(contact != null && contact.size() > 0){
+                        for (Bulletin b : contact){
+                %>
+                <a class="list-group-item" href="<%=b.getLink()%>">
+                    <div class="media">
+                        <div class="media-left">
+                            <img class="media-object" src="<%=b.getImageLink()%>" width="60pt" height="60pt"><br>
+                        </div>
+                        <div class="media-body">
+                            <%=b.getContext()%>
+                        </div>
+                    </div>
+                </a>
+                <hr>
+                <%
+                    }
+                }else{
+                %>
+                <a class="list-group-item disabled" href="#">Nothings here...</a>
+                <%
+                    }
+                %>
+            </div>
+            <h2>Friend Links</h2>
+            <div class="list-group">
+                <%
+                    contact = Bulletin.getDao().getBulletinItems("contactFriendLink");
+                    if(contact != null && contact.size() > 0){
+                        for(Bulletin bulletin : contact){
+                %>
+                <a class="list-group-item" href="<%=bulletin.getLink()%>"><%=bulletin.getContext()%></a><br>
+                <%
+                        }
+                    }
+                %>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
