@@ -1,5 +1,5 @@
 <%@ page import="cn.lncsoftware.data.User" %>
-<%@ page import="cn.lncsoftware.data.common.RegexTools" %><%--
+<%@ page import="cn.lncsoftware.common.RegexTools" %><%--
   Created by IntelliJ IDEA.
   User: catten
   Date: 16/2/11

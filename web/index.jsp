@@ -1,5 +1,5 @@
 <%@ page import="cn.lncsoftware.data.User" %>
-<%@ page import="cn.lncsoftware.data.common.RegexTools" %>
+<%@ page import="cn.lncsoftware.common.RegexTools" %>
 <%@ page import="java.util.List" %>
 <%@ page import="cn.lncsoftware.data.Article" %>
 <%@ page import="org.bson.types.ObjectId" %>

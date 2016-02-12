@@ -1,4 +1,4 @@
-package cn.lncsoftware.data.common;
+package cn.lncsoftware.common;
 
 /**
  * Created by catten on 16/2/6.

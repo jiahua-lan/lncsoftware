@@ -60,6 +60,10 @@
                 <a class="list-group-item" href="<%=bulletin.getLink()%>"><%=bulletin.getContext()%></a><br>
                 <%
                         }
+                    }else{
+                %>
+                <a class="list-group-item disabled" href="#">Nothings here...</a>
+                <%
                     }
                 %>
             </div>

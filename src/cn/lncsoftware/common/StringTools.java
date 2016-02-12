@@ -1,6 +1,8 @@
-package cn.lncsoftware.data.common;
+package cn.lncsoftware.common;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -17,5 +19,10 @@ public class StringTools {
         if(tags == null) return "";
         for(String s : tags) result.append(tags).append(";");
         return result.toString();
+    }
+
+    private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd");
+    public static String convertDate(Date date){
+        return simpleDateFormat.format(date);
     }
 }

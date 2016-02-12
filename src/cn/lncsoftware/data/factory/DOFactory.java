@@ -38,7 +38,8 @@ public abstract class DOFactory<T extends DataObject> {
     }
 
     public T get(ObjectId targetId){
-        return create(collection.find(new Document("_id",targetId)).first());
+        Document document = collection.find(new Document("_id",targetId)).first();
+        if (document != null) return create(document); else return null;
     }
 
     public List<T> convertDocList(List<Document> doDocList){

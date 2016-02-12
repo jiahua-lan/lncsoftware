@@ -1,5 +1,5 @@
 <%@ page import="cn.lncsoftware.data.User" %>
-<%@ page import="cn.lncsoftware.data.common.RegexTools" %>
+<%@ page import="cn.lncsoftware.common.RegexTools" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.Collections" %><%--
   Created by IntelliJ IDEA.

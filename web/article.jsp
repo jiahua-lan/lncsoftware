@@ -3,7 +3,9 @@
 <%@ page import="java.util.List" %>
 <%@ page import="cn.lncsoftware.data.User" %>
 <%@ page import="java.util.Collections" %>
-<%@ page import="cn.lncsoftware.data.Bulletin" %><%--
+<%@ page import="cn.lncsoftware.data.Bulletin" %>
+<%@ page import="org.bson.types.ObjectId" %>
+<%@ page import="cn.lncsoftware.common.StringTools" %><%--
   Created by IntelliJ IDEA.
   User: catten
   Date: 16/2/7
@@ -17,12 +19,18 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/main.css">
 </head>
+<%
+    String action = request.getParameter("action");
+%>
 <body>
 <div class="container">
     <jsp:include page="navbar.jsp"/>
     <script>
         document.getElementById("nav-article").setAttribute("class","active");
     </script>
+    <%
+        if(action == null){
+    %>
     <div class="page-header">
         <h1>Article</h1>
         <%
@@ -34,7 +42,51 @@
             }
         %>
     </div>
+    <%
+        }
+    %>
     <div class="row">
+        <%
+            if(action != null){
+                switch (action){
+                    case "details":{
+                        String articleID = request.getParameter("articleID");
+                        if(articleID != null){
+                            Article article = Article.getDao().get(new ObjectId(articleID));
+                            if(article != null){
+                                User user = User.getDao().get(article.getAuthor());
+                                String authorName = "**User not exist**";
+                                if (user != null) authorName = user.getName();
+        %>
+        <div class="col-md-12">
+            <div class="container-fluid">
+                <div class="page-header">
+                    <h1><%=article.getTitle()%> <small>By: <%=authorName%> at <%=StringTools.convertDate(article.getDate())%></small></h1>
+                </div>
+                <p><%=article.getContext()%></p>
+            </div>
+        </div>
+        <%
+                            }else{
+        %>
+        <div class="col-md-6 col-md-offset-3"><div class="alert alert-warning">Article not exist.</div></div>
+        <%
+                            }
+                        }else{
+        %>
+        <div class="col-md-6 col-md-offset-3"><div class="alert alert-warning">Illegal request.</div></div>
+        <%
+                        }
+                    };break;
+
+                    default:
+        %>
+        <div class="col-md-6 col-md-offset-3"><div class="alert alert-warning">Article not exist.</div></div>
+        <%
+                        break;
+                }
+            }else{
+        %>
         <div class="col-md-8 col-md-offset-2">
             <div class="list-group">
                 <%
@@ -86,6 +138,9 @@
                 }
             %>
         </div>
+        <%
+            }
+        %>
     </div>
 </div>
 </body>

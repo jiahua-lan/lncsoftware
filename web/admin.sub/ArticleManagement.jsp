@@ -1,7 +1,7 @@
 <%@ page import="cn.lncsoftware.data.User" %>
 <%@ page import="cn.lncsoftware.data.Article" %>
 <%@ page import="java.util.List" %>
-<%@ page import="cn.lncsoftware.data.common.StringTools" %>
+<%@ page import="cn.lncsoftware.common.StringTools" %>
 <%@ page import="org.bson.types.ObjectId" %>
 <%@ page import="java.util.ArrayList" %><%--
   Created by IntelliJ IDEA.
@@ -14,18 +14,16 @@
 <html>
 <head>
     <title>Article | Management</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/main.css">
 </head>
-<body>
-<h1>Article Management</h1>
 <%
     User passport = (User)session.getAttribute("passport");
     String statusFlag = "";
     String action = request.getParameter("action");
 
     if(passport == null){
-%>
-Please <a href="../index.jsp">Login</a>.<br>
-<%
+        statusFlag = "no login";
     }else{
         boolean adminFlag = false;
         for(String s : passport.getRights()){
@@ -37,112 +35,203 @@ Please <a href="../index.jsp">Login</a>.<br>
         if(!adminFlag){
             statusFlag = "permission denied";
         }else{
-            statusFlag = "permission recognition";
+            statusFlag = "permission recognised";
         }
     }
+%>
+<body>
+<div class="container">
+    <jsp:include page="navbar.jsp"/>
+    <div class="page-header">
+        <h1>Article Management</h1>
+    </div>
+    <div class="row">
+        <%
+            if(passport == null && "permission denied".equals(statusFlag)) {
+        %>
+        <div class="col-md-6 col-md-offset-3">
+            <%
+                switch (statusFlag){
+                    case "no login":
+            %>
+            <div class="alert alert-warning">Please <a href="../index.jsp">Login</a></div>
+            <%
+                        break;
 
-    if(!statusFlag.equals("")){
-%><%=statusFlag%><%
-    }
+                    case "permission denied":
+            %>
+            <div class="alert alert-danger">Permission denied</div>
+            <%
+                        break;
+                }
+            %>
+        </div>
+        <%
+            }else{
+        %>
+        <div class="col-md-12">
+            <div class="container-fluid">
+                <form class="form-horizontal" action="ArticleManagement.jsp" method="post">
+                    <input type="hidden" name="action" value="search">
+                    <div class="input-group">
+                        <span class="input-group-addon"><input type="checkbox" name="useRegex" value="useRegex"> Use Regex</span>
+                        <input class="form-control" type="text" name="keyword" value="" placeholder="Search">
+                        <span class="input-group-btn"><input class="btn btn-default" type="submit" value="Search"></span>
+                    </div>
+                </form>
+            </div>
+            <div class="container-fluid">
+                <%
+                    if(action != null){
+                        switch (action){
+                            case "delete":{
+                                String articleID = request.getParameter("articleID");
+                                if(articleID != null){
+                                    Article.getDao().remove(Article.getDao().get(new ObjectId(articleID)));
+                                    statusFlag = "delete success";
+                                }else{
+                                    statusFlag = "delete failed";
+                                }
+                            };break;
 
-    if(passport != null && "permission recognition".equals(statusFlag)){
-%>
-<form action="ArticleManagement.jsp" method="post">
-    <input type="hidden" name="action" value="search">
-    <label>Search:
-        <input type="text" name="keyword" value="">
-        <input type="checkbox" name="useRegex" value="useRegex">use regex
-        <input type="submit" value="search">
-    </label>
-</form>
-<hr>
-<%
-        if(action != null){
-            switch (action){
-                case "search":{
-                    String keyword = request.getParameter("keyword");
-                    String useRegex = request.getParameter("useRegex");
-                    if(keyword != null){
-                        List<Article> articleList = Article.getDao().find("useRegex".equals(useRegex) ? keyword : ".*"+keyword+".*");
-                        if(articleList != null && articleList.size() > 0){
-                            for(Article article : articleList){
-                                User author = User.getDao().get(article.getAuthor());
-                                String authorName = "**User not exist**";
-                                if (author != null) authorName = author.getName();
-%>
-<form action="ArticleManagement.jsp" method="post">
-    <input type="hidden" name="action" value="update">
-    <input type="hidden" name="articleID" value="<%=article.getObjectId().toHexString()%>">
-    <label>Title: <input type="text" name="title" value="<%=article.getTitle()%>"></label><br>
-    <label>Author: <label><%=authorName%></label></label><br>
-    <label>Date : <label><%=article.getDate().toString()%></label></label><br>
-    <label>Tags: <input type="text" name="tags" value="<%=StringTools.listTags(article.getTags())%>"></label><br>
-    <label>Context:<br><textarea name="context"><%=article.getContext()%></textarea></label><br>
-    <label>Status:
-        <input type="radio" name="status" value="show" <%=("show".equals(article.getStatus())) ? "checked" : ""%>>show
-        <input type="radio" name="status" value="hidden" <%=("hidden".equals(article.getStatus()) ? "checked" : "")%>>hidden
-    </label><br>
-    <input type="submit" value="update">
-    <a href="ArticleManagement.jsp?action=delete&articleID=<%=article.getObjectId().toHexString()%>">Delete</a><br>
-</form>
-<br>
-<%
-                            }
-                        }else{
-%>
-No result<br>
-<%
+                            case "update":{
+                                String articleID = request.getParameter("articleID");
+                                if(articleID != null) {
+                                    Article article = Article.getDao().get(new ObjectId(articleID));
+                                    if(article != null){
+                                        String title = request.getParameter("title");
+                                        if(title != null && title.length() < 64 && !"".equals(title.trim())) {
+                                            article.setTitle(title);
+                                            String tags = request.getParameter("tags");
+                                            if (tags != null) article.setTags(StringTools.splitTags(tags));
+                                            String context = request.getParameter("context");
+                                            if (context != null) article.setContext(context);
+                                            String status = request.getParameter("status");
+                                            if (status != null) article.setStatus(status);
+                                            Article.getDao().update(article);
+                                            statusFlag = "update success";
+                                        }else{
+                                            statusFlag = "illegal title";
+                                        }
+                                    }else{
+                                        statusFlag = "article not exist";
+                                    }
+                                }
+                            };break;
                         }
                     }
-                };break;
 
-                case "delete":{
-                    String articleID = request.getParameter("articleID");
-                    if(articleID != null){
-                        Article.getDao().remove(Article.getDao().get(new ObjectId(articleID)));
-%>
-Delete success.<br>
-<%
-                    }else{
-%>
-Delete failed.<br>
-<%
+                    switch (statusFlag){
+                        case "delete success":
+                %>
+                <div class="alert-success alert">Delete success.</div>
+                <%                            break;
+
+                        case "delete failed":
+                %>
+                <div class="alert-warning alert">Delete failed.</div>
+                <%
+                            break;
+
+                        case "update success":
+                %>
+                <div class="alert-success alert">Update success.</div>
+                <%            break;
+
+                        case "illegal title":
+                %>
+                <div class="alert-warning alert">Title illegal.</div>
+                <%
+                            break;
+
+                        case "article not exist":
+                %>
+                <div class="alert-warning alert">Article not exist.</div>
+                <%
+                            break;
                     }
-                };break;
+                %>
+            </div>
+            <div class="container-fluid">
+                <%
+                    if("search".equals(action)){
 
-                case "update":{
-                    String articleID = request.getParameter("articleID");
-                    if(articleID != null) {
-                        Article article = Article.getDao().get(new ObjectId(articleID));
-                        if(article != null){
-                            String title = request.getParameter("title");
-                            if(title != null && title.length() < 64 && !"".equals(title.trim())) {
-                                article.setTitle(title);
-                                String tags = request.getParameter("tags");
-                                if (tags != null) article.setTags(StringTools.splitTags(tags));
-                                String context = request.getParameter("context");
-                                if (context != null) article.setContext(context);
-                                String status = request.getParameter("status");
-                                if (status != null) article.setStatus(status);
-                                Article.getDao().update(article);
-%>
-Update success.<br>
-<%
+                        String keyword = request.getParameter("keyword");
+                        boolean useRegex = "useRegex".equals(request.getParameter("useRegex"));
+                        if(keyword != null && (keyword.matches("[\\d\\w\\-_]{1,32}") || useRegex)){
+                            List<Article> articleList = Article.getDao().find(useRegex ? keyword : ".*"+keyword+".*");
+                            if(articleList != null && articleList.size() > 0){
+                %>
+                <ul class="list-group">
+                    <%
+                        for(Article article : articleList){
+                            User author = User.getDao().get(article.getAuthor());
+                            String authorName = "**User not exist**";
+                            if (author != null) authorName = author.getName();
+                    %>
+                    <li class="list-group-item">
+                        <div class="container-fluid">
+                            <form class="form-horizontal" action="ArticleManagement.jsp" method="post">
+                                <input type="hidden" name="action" value="update">
+                                <input type="hidden" name="articleID" value="<%=article.getObjectId().toHexString()%>">
+                                <div class="form-group">
+                                    <label class="control-label">Title: </label>
+                                    <input class="form-control" type="text" name="title" value="<%=article.getTitle()%>">
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        <label>Author:</label>
+                                        <label><%=authorName%></label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label>Date:</label>
+                                        <label><%=article.getDate().toString()%></label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label>Status:</label>
+                                        <input type="radio" name="status" value="show" <%=("show".equals(article.getStatus())) ? "checked" : ""%>> Show
+                                        <input type="radio" name="status" value="hidden" <%=("hidden".equals(article.getStatus()) ? "checked" : "")%>> Hidden
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Tags:</label>
+                                    <input class="form-control" type="text" name="tags" value="<%=StringTools.listTags(article.getTags())%>">
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Context:</label>
+                                    <textarea class="form-control" name="context"><%=article.getContext()%></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <input class="btn btn-default" type="submit" value="Update">
+                                    <a class="btn btn-danger" href="ArticleManagement.jsp?action=delete&articleID=<%=article.getObjectId().toHexString()%>">Delete</a>
+                                </div>
+                            </form>
+                        </div>
+                    </li>
+                    <%
+                        }
+                    %>
+                </ul>
+                <%
                             }else{
-%>
-Illegal title.<br>
-<%
+                %>
+                <div class="alert alert-warning">No result</div>
+                <%
                             }
                         }else{
-%>
-Article not exist.<br>
-<%
+                %>
+                <div class="alert alert-warning">Keyword illegal</div>
+                <%
                         }
                     }
-                };break;
+                %>
+            </div>
+        </div>
+        <%
             }
-        }
-    }
-%>
+        %>
+    </div>
+</div>
+
 </body>
 </html>

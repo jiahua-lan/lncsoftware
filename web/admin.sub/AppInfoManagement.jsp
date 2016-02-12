@@ -148,39 +148,6 @@
             </div>
         </div>
         <div class="col-md-8">
-            <%
-                switch (statusFlag){
-                    case "create successful":
-            %>
-            <div class="alert alert-success">Create successful.</div>
-            <%
-                        break;
-
-                    case "link too long":
-            %>
-            <div class="alert alert-warning">Link must under 256 chars</div>
-            <%
-                        break;
-
-                    case "illegal title":
-            %>
-            <div class="alert alert-warning">Title in a format illegal.</div>
-            <%
-                        break;
-
-                    case "update success":
-            %>
-            <div class="alert alert-success">Update success</div>
-            <%
-                        break;
-
-                    case "item not exist":
-            %>
-            <div class="alert alert-warning">Item not exist</div>
-            <%
-                        break;
-                }
-            %>
             <div class="container-fluid">
                 <form class="form-horizontal" action="AppInfoManagement.jsp" method="post">
                     <input type="hidden" name="action" value="search">
@@ -193,11 +160,43 @@
             </div>
             <div class="container-fluid">
                 <%
+                    switch (statusFlag){
+                        case "create successful":
+                %>
+                <div class="alert alert-success">Create successful.</div>
+                <%
+                        break;
+
+                    case "link too long":
+                %>
+                <div class="alert alert-warning">Link must under 256 chars</div>
+                <%
+                        break;
+
+                    case "illegal title":
+                %>
+                <div class="alert alert-warning">Title in a format illegal.</div>
+                <%
+                        break;
+
+                    case "update success":
+                %>
+                <div class="alert alert-success">Update success</div>
+                <%
+                        break;
+
+                    case "item not exist":
+                %>
+                <div class="alert alert-warning">Item not exist</div>
+                <%
+                            break;
+                    }
+
                     if("search".equals(action)){
                         String keyword = request.getParameter("keyword");
-                        String useRegex = request.getParameter("useRegex");
-                        if(keyword != null){
-                            List<AppInfo> appInfos = AppInfo.getDao().find("title",("useRegex".equals(useRegex) ? keyword : ".*"+keyword+".*"));
+                        boolean useRegex = "useRegex".equals(request.getParameter("useRegex"));
+                        if(keyword != null && (keyword.matches("[\\d\\w\\-_]{1,32}") || useRegex)){
+                            List<AppInfo> appInfos = AppInfo.getDao().find("title",(useRegex ? keyword : ".*"+keyword+".*"));
                             if(appInfos != null && appInfos.size() > 0){
                 %>
                 <ul class="list-group">
@@ -241,6 +240,10 @@
                 </ul>
                 <%
                             }
+                        }else{
+                %>
+                <div class="alert-warning alert">Keyword illegal</div>
+                <%
                         }
                     }
                 %>
