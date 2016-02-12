@@ -25,6 +25,7 @@
                     <h1 class="text-center">新用户注册</h1>
                     <%
                         User passport = (User)session.getAttribute("passport");
+                        request.setCharacterEncoding("utf-8");
                         String action = request.getParameter("action");
 
                         if(passport != null){

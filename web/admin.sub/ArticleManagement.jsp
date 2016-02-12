@@ -20,6 +20,7 @@
 </head>
 <%
     User passport = (User)session.getAttribute("passport");
+    request.setCharacterEncoding("utf-8");
     String statusFlag = "";
     String action = request.getParameter("action");
 
