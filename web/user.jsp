@@ -27,8 +27,14 @@
                 case "update":{
                     String contact = request.getParameter("contact");
                     String password = request.getParameter("password");
+                    String conPassword = request.getParameter("conPassword");
                     if(RegexTools.legalPassword(password)){
-                        passport.setPassword(password);
+                        if(passport.equals(conPassword)){
+                            passport.setPassword(password);
+                        }else{
+                            statusFlag = "password not same";
+                            break;
+                        }
                     }else if(passport != null && !"".equals(password)){
                         statusFlag = "illegal password";
                         break;
@@ -82,7 +88,12 @@
                         %>
                         <div class="alert alert-warning">联系方式格式不正确</div>
                         <%
-                                    break;
+                                break;
+                            case "password not same":
+                        %>
+                        <div class="alert alert-warning">密码不一致</div>
+                        <%
+                                break;
                             }
 
                             if(passport != null){
@@ -125,6 +136,11 @@
                                 <label class="control-label">密码 </label>
                                 <input class="form-control" type="password" name="password" placeholder="如果不想更改请留空">
                                 <small>此网站并没有加密用户密码，所以请不要把您的常用密码泄露给我们，谢谢</small>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">确认密码 </label>
+                                <input class="form-control" type="password" name="conPassword" placeholder="再确认一次密码">
+                                <small>请确认并牢记您的新密码，我们还没有密码找回机制</small>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">联系信息 </label>

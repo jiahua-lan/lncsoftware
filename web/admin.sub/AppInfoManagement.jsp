@@ -167,31 +167,31 @@
                     switch (statusFlag){
                         case "create successful":
                 %>
-                <div class="alert alert-success">Create successful.</div>
+                <div class="alert alert-success">创建成功</div>
                 <%
                         break;
 
                     case "link too long":
                 %>
-                <div class="alert alert-warning">Link must under 256 chars</div>
+                <div class="alert alert-warning">链接字数请不要超过256个</div>
                 <%
                         break;
 
                     case "illegal title":
                 %>
-                <div class="alert alert-warning">Title in a format illegal.</div>
+                <div class="alert alert-warning">标题格式不正确</div>
                 <%
                         break;
 
                     case "update success":
                 %>
-                <div class="alert alert-success">Update success</div>
+                <div class="alert alert-success">更新成功</div>
                 <%
                         break;
 
                     case "item not exist":
                 %>
-                <div class="alert alert-warning">Item not exist</div>
+                <div class="alert alert-warning">噢。。可能它刚刚被删除了</div>
                 <%
                             break;
                     }
@@ -229,7 +229,7 @@
                                     <input class="form-control" type="url" name="imageCode" value="<%=appInfo.getImageCode()%>">
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">Status:</label>
+                                    <label class="control-label">状态:</label>
                                     <input type="radio" name="status" value="working" <%=("working".equals(appInfo.getStatus()) ? "checked" : "")%>> 工作中
                                     <input type="radio" name="status" value="repairing" <%=("repairing".equals(appInfo.getStatus()) ? "checked" : "")%>> 维护期
                                     <input type="radio" name="status" value="disable" <%=("disable".equals(appInfo.getStatus()) ? "checked" : "")%>> 已失效

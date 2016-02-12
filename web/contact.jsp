@@ -58,7 +58,7 @@
                     if(contact != null && contact.size() > 0){
                         for(Bulletin bulletin : contact){
                 %>
-                <a class="list-group-item list-group-item-success" href="<%=bulletin.getLink()%>"><%=bulletin.getContext()%></a><br>
+                <a class="list-group-item list-group-item-success" href="<%=bulletin.getLink()%>"><%=bulletin.getContext()%></a>
                 <%
                         }
                     }else{

@@ -1,6 +1,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="cn.lncsoftware.data.AppInfo" %>
-<%@ page import="cn.lncsoftware.data.Bulletin" %><%--
+<%@ page import="cn.lncsoftware.data.Bulletin" %>
+<%@ page import="cn.lncsoftware.common.StringTools" %><%--
   Created by IntelliJ IDEA.
   User: catten
   Date: 16/2/9
@@ -92,7 +93,7 @@
                 <%
                     if(bulletin1 != null){
                 %>
-                <div class="panel-footer"><%=bulletin1.getDate()%></div>
+                <div class="panel-footer"><%=StringTools.convertDate(bulletin1.getDate())%></div>
                 <%
                     }
                 %>

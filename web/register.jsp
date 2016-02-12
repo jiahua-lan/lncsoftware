@@ -37,6 +37,7 @@
                             if(action.equals("register")){
                                 String username = request.getParameter("username");
                                 String password = request.getParameter("password");
+                                String conPassword = request.getParameter("conPassword");
                                 String contact = request.getParameter("contact");
                                 if(RegexTools.legalUsername(username) && RegexTools.legalPassword(password) & RegexTools.legalContactInfo(contact)){
                                     if(User.getDao().getUserByName(username) != null){
@@ -45,20 +46,28 @@
                         <a class="alert-link" href="register.jsp">回到注册页面</a> or <a class="alert-link" href="index.jsp">回到首页</a>
                     </div>
                     <%
-                    }else{
-                        User user = new User();
-                        user.setName(username);
-                        user.setPassword(password);
-                        user.setContactInfo(contact);
-                        ArrayList<String> arrayList = new ArrayList<>();
-                        Collections.addAll(arrayList, "login");
-                        user.setRights(arrayList);
-                        User.getDao().insert(user);
+                                    }else{
+                                        if(password.equals(conPassword)){
+                                            User user = new User();
+                                            user.setName(username);
+                                            user.setPassword(password);
+                                            user.setContactInfo(contact);
+                                            ArrayList<String> arrayList = new ArrayList<>();
+                                            Collections.addAll(arrayList, "login");
+                                            user.setRights(arrayList);
+                                            User.getDao().insert(user);
                     %>
                     <div class="alert alert-success">注册成功。<a class="alert-link" href="index.jsp">回到首页</a></div>
                     <%
-                        }
-                    }else{
+                                        }else{
+                    %>
+                    <div class="alert alert-warning">密码不一致。
+                        <a class="alert-link" href="register.jsp">回到注册页面</a> or <a class="alert-link" href="index.jsp">回到首页</a>
+                    </div>
+                    <%
+                                        }
+                                    }
+                                }else{
                     %>
                     <div class="alert alert-warning">注册失败，一个或者多个字段不符合格式<br>
                         <a class="alert-link" href="register.jsp">回到注册页面</a> or <a class="alert-link" href="index.jsp">回到首页</a>
@@ -78,6 +87,10 @@
                             <div class="form-group">
                                 <input type="password" name="password" class="form-control" placeholder="不建议使用自己的常用密码">
                                 <label>可以使用：A-Z a-z and 0-9, = &lt; &gt; 以及 _ @ &amp; % # &quot; ! &yen;</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="password" name="conPassword" class="form-control" placeholder="再次重复您的密码">
+                                <label>请认真重新输入密码并牢记，我们暂时还没有密码找回机制</label>
                             </div>
                             <div class="form-group">
                                 <input type="text" name="contact" class="form-control" placeholder="联系信息">
