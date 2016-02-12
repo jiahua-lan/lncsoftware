@@ -50,7 +50,7 @@
                         user.setPassword(password);
                         user.setContactInfo(contact);
                         ArrayList<String> arrayList = new ArrayList<>();
-                        Collections.addAll(arrayList, "login","article");
+                        Collections.addAll(arrayList, "login");
                         user.setRights(arrayList);
                         User.getDao().insert(user);
                     %>

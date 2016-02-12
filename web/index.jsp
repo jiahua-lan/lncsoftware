@@ -123,24 +123,29 @@
                     <div class="panel-body">
                         <div class="container-fluid">
                             <%
+                            String bannerText = "";
                                 if(!statusFlag.equals("")){
                                     String alertType = "";
                                     switch (statusFlag){
                                         case "authentication failed":
                                             alertType = "alert-warning";
+                                            bannerText = "认证失败";
                                             break;
                                         case "authentication banned":
                                             alertType = "alert-danger";
+                                            bannerText = "抱歉，你被禁止登陆";
                                             break;
                                         case "authentication success":
                                             alertType= "alert-success";
+                                            bannerText = "认证成功";
                                             break;
                                         case "logout successful":
                                             alertType= "alert-success";
+                                            bannerText = "您已登出";
                                             break;
                                     }
                             %>
-                            <div class="alert <%=alertType%>"><%=statusFlag%></div>
+                            <div class="alert <%=alertType%>"><%=bannerText%></div>
                             <%
                             }
 
