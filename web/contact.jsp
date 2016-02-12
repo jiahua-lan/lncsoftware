@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Contact</title>
+    <title>岭南软件园 联系</title>
 </head>
 <body>
 <div class="container">
@@ -24,7 +24,7 @@
     </div>
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-            <h2>Contact Us</h2>
+            <h2>联系我们</h2>
             <div class="list-group">
                 <%
                     List<Bulletin> contact = Bulletin.getDao().getBulletinItems("contactInfo");
@@ -45,12 +45,12 @@
                     }
                 }else{
                 %>
-                <a class="list-group-item disabled" href="#">Nothings here...</a>
+                <a class="list-group-item disabled" href="#">噢，并没有什么东西……</a>
                 <%
                     }
                 %>
             </div>
-            <h2>Friend Links</h2>
+            <h2>友情链接</h2>
             <div class="list-group">
                 <%
                     contact = Bulletin.getDao().getBulletinItems("contactFriendLink");
@@ -62,7 +62,7 @@
                         }
                     }else{
                 %>
-                <a class="list-group-item disabled" href="#">Nothings here...</a>
+                <a class="list-group-item disabled" href="#">噢，这里没东西……</a>
                 <%
                     }
                 %>

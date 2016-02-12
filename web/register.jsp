@@ -11,7 +11,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Register</title>
+    <title>岭南软件园 注册</title>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/main.css">
 </head>
@@ -22,14 +22,14 @@
         <div class="col-md-6 col-md-offset-3">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <h1 class="text-center">Register</h1>
+                    <h1 class="text-center">新用户注册</h1>
                     <%
                         User passport = (User)session.getAttribute("passport");
                         String action = request.getParameter("action");
 
                         if(passport != null){
                     %>
-                    <div class="alert alert-warning">You already registered. <a class="alert-link" href="index.jsp">Back to Homepage</a></div>
+                    <div class="alert alert-warning">您已经注册 <a class="alert-link" href="index.jsp">回到首页</a></div>
                     <%
                     }else{
                         if(action != null){
@@ -40,8 +40,8 @@
                                 if(RegexTools.legalUsername(username) && RegexTools.legalPassword(password) & RegexTools.legalContactInfo(contact)){
                                     if(User.getDao().getUserByName(username) != null){
                     %>
-                    <div class="alert alert-warning">User exists.
-                        <a class="alert-link" href="register.jsp">Back to register page</a> or <a class="alert-link" href="index.jsp">Back to Homepage</a>
+                    <div class="alert alert-warning">用户已存在
+                        <a class="alert-link" href="register.jsp">回到注册页面</a> or <a class="alert-link" href="index.jsp">回到首页</a>
                     </div>
                     <%
                     }else{
@@ -54,13 +54,13 @@
                         user.setRights(arrayList);
                         User.getDao().insert(user);
                     %>
-                    <div class="alert alert-success">Register success. <a class="alert-link" href="index.jsp">Back to Homepage</a></div>
+                    <div class="alert alert-success">注册成功。<a class="alert-link" href="index.jsp">回到首页</a></div>
                     <%
                         }
                     }else{
                     %>
-                    <div class="alert alert-warning">Register failed, there are one or more legal fields.<br>
-                        <a class="alert-link" href="register.jsp">Back to register page</a> or <a class="alert-link" href="index.jsp">Back to Homepage</a>
+                    <div class="alert alert-warning">注册失败，一个或者多个字段不符合格式<br>
+                        <a class="alert-link" href="register.jsp">回到注册页面</a> or <a class="alert-link" href="index.jsp">回到首页</a>
                     </div>
                     <%
                             }
@@ -72,21 +72,21 @@
                             <input type="hidden" name="action" value="register">
                             <div class="form-group">
                                 <input type="text" class="form-control" name="username" placeholder="Username">
-                                <label>A-Z a-z and 0-9, also &quot;-&quot; and &quot;_&quot;, 6 - 32 chars</label>
+                                <label>可以使用：A-Z a-z 和 0-9 之间的字符, 以及 &quot;-&quot; 和 &quot;_&quot;, 6 - 32 个字符</label>
                             </div>
                             <div class="form-group">
                                 <input type="password" name="password" class="form-control" placeholder="Password">
-                                <label>A-Z a-z and 0-9, = &lt; &gt; , _ @ &amp; % # &quot; ! &yen; are legal.</label>
+                                <label>可以使用：A-Z a-z and 0-9, = &lt; &gt; 以及 _ @ &amp; % # &quot; ! &yen;</label>
                             </div>
                             <div class="form-group">
                                 <input type="text" name="contact" class="form-control" placeholder="Contact info">
-                                <label>Email address or QQ number</label>
+                                <label>电子邮件、QQ（最好，因为只有协会成员才能享受在此网站的支持服务）或者手机号码</label>
                             </div>
                             <div class="form-group">
-                                <input type="submit" class="btn btn-success col-md-12" value="Register">
+                                <input type="submit" class="btn btn-success col-md-12" value="注册">
                             </div>
                             <div class="form-group">
-                                <a href="index.jsp" class="btn btn-warning col-md-12">Back to Homepage</a>
+                                <a href="index.jsp" class="btn btn-warning col-md-12">回到主页</a>
                             </div>
                         </div>
                     </form>

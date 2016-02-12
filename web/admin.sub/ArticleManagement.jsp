@@ -13,7 +13,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Article | Management</title>
+    <title>岭南软件园 文章管理</title>
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/main.css">
 </head>
@@ -54,13 +54,13 @@
                 switch (statusFlag){
                     case "no login":
             %>
-            <div class="alert alert-warning">Please <a href="../index.jsp">Login</a></div>
+            <div class="alert alert-warning">请先 <a href="../index.jsp">登录</a></div>
             <%
                         break;
 
                     case "permission denied":
             %>
-            <div class="alert alert-danger">Permission denied</div>
+            <div class="alert alert-danger">抱歉，您没有权限</div>
             <%
                         break;
                 }
@@ -74,9 +74,9 @@
                 <form class="form-horizontal" action="ArticleManagement.jsp" method="post">
                     <input type="hidden" name="action" value="search">
                     <div class="input-group">
-                        <span class="input-group-addon"><input type="checkbox" name="useRegex" value="useRegex"> Use Regex</span>
-                        <input class="form-control" type="text" name="keyword" value="" placeholder="Search">
-                        <span class="input-group-btn"><input class="btn btn-default" type="submit" value="Search"></span>
+                        <span class="input-group-addon"><input type="checkbox" name="useRegex" value="useRegex"> 使用正则表达式</span>
+                        <input class="form-control" type="text" name="keyword" value="" placeholder="输入文章标题或者部分内容">
+                        <span class="input-group-btn"><input class="btn btn-default" type="submit" value="搜索"></span>
                     </div>
                 </form>
             </div>
@@ -124,29 +124,29 @@
                     switch (statusFlag){
                         case "delete success":
                 %>
-                <div class="alert-success alert">Delete success.</div>
+                <div class="alert-success alert">删除成功</div>
                 <%                            break;
 
                         case "delete failed":
                 %>
-                <div class="alert-warning alert">Delete failed.</div>
+                <div class="alert-warning alert">删除失败</div>
                 <%
                             break;
 
                         case "update success":
                 %>
-                <div class="alert-success alert">Update success.</div>
+                <div class="alert-success alert">更新成功</div>
                 <%            break;
 
                         case "illegal title":
                 %>
-                <div class="alert-warning alert">Title illegal.</div>
+                <div class="alert-warning alert">标题格式不正确</div>
                 <%
                             break;
 
                         case "article not exist":
                 %>
-                <div class="alert-warning alert">Article not exist.</div>
+                <div class="alert-warning alert">文章已经不存在了噢</div>
                 <%
                             break;
                     }
@@ -166,7 +166,7 @@
                     <%
                         for(Article article : articleList){
                             User author = User.getDao().get(article.getAuthor());
-                            String authorName = "**User not exist**";
+                            String authorName = "**用户不存在**";
                             if (author != null) authorName = author.getName();
                     %>
                     <li class="list-group-item">
@@ -175,35 +175,35 @@
                                 <input type="hidden" name="action" value="update">
                                 <input type="hidden" name="articleID" value="<%=article.getObjectId().toHexString()%>">
                                 <div class="form-group">
-                                    <label class="control-label">Title: </label>
+                                    <label class="control-label">标题: </label>
                                     <input class="form-control" type="text" name="title" value="<%=article.getTitle()%>">
                                 </div>
                                 <div class="form-group">
                                     <div class="col-md-4">
-                                        <label>Author:</label>
+                                        <label>作者:</label>
                                         <label><%=authorName%></label>
                                     </div>
                                     <div class="col-md-4">
-                                        <label>Date:</label>
+                                        <label>日期:</label>
                                         <label><%=article.getDate().toString()%></label>
                                     </div>
                                     <div class="col-md-4">
-                                        <label>Status:</label>
-                                        <input type="radio" name="status" value="show" <%=("show".equals(article.getStatus())) ? "checked" : ""%>> Show
-                                        <input type="radio" name="status" value="hidden" <%=("hidden".equals(article.getStatus()) ? "checked" : "")%>> Hidden
+                                        <label>状态:</label>
+                                        <input type="radio" name="status" value="show" <%=("show".equals(article.getStatus())) ? "checked" : ""%>> 显示
+                                        <input type="radio" name="status" value="hidden" <%=("hidden".equals(article.getStatus()) ? "checked" : "")%>> 隐藏
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">Tags:</label>
+                                    <label class="control-label">标签:</label>
                                     <input class="form-control" type="text" name="tags" value="<%=StringTools.listTags(article.getTags())%>">
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">Context:</label>
+                                    <label class="control-label">内容:</label>
                                     <textarea class="form-control" name="context"><%=article.getContext()%></textarea>
                                 </div>
                                 <div class="form-group">
-                                    <input class="btn btn-default" type="submit" value="Update">
-                                    <a class="btn btn-danger" href="ArticleManagement.jsp?action=delete&articleID=<%=article.getObjectId().toHexString()%>">Delete</a>
+                                    <input class="btn btn-default" type="submit" value="更新">
+                                    <a class="btn btn-danger" href="ArticleManagement.jsp?action=delete&articleID=<%=article.getObjectId().toHexString()%>">删除</a>
                                 </div>
                             </form>
                         </div>
@@ -215,12 +215,12 @@
                 <%
                             }else{
                 %>
-                <div class="alert alert-warning">No result</div>
+                <div class="alert alert-warning">无结果</div>
                 <%
                             }
                         }else{
                 %>
-                <div class="alert alert-warning">Keyword illegal</div>
+                <div class="alert alert-warning">关键字格式不正确</div>
                 <%
                         }
                     }

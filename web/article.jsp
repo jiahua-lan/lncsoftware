@@ -15,7 +15,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Article</title>
+    <title>岭南软件园 文章</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/main.css">
 </head>
@@ -55,7 +55,7 @@
                             Article article = Article.getDao().get(new ObjectId(articleID));
                             if(article != null){
                                 User user = User.getDao().get(article.getAuthor());
-                                String authorName = "**User not exist**";
+                                String authorName = "**用户不存在**";
                                 if (user != null) authorName = user.getName();
         %>
         <div class="col-md-12">
@@ -69,19 +69,19 @@
         <%
                             }else{
         %>
-        <div class="col-md-6 col-md-offset-3"><div class="alert alert-warning">Article not exist.</div></div>
+        <div class="col-md-6 col-md-offset-3"><div class="alert alert-warning">文章不存在.</div></div>
         <%
                             }
                         }else{
         %>
-        <div class="col-md-6 col-md-offset-3"><div class="alert alert-warning">Illegal request.</div></div>
+        <div class="col-md-6 col-md-offset-3"><div class="alert alert-warning">未知请求，臣做不到嗷.</div></div>
         <%
                         }
                     };break;
 
                     default:
         %>
-        <div class="col-md-6 col-md-offset-3"><div class="alert alert-warning">Article not exist.</div></div>
+        <div class="col-md-6 col-md-offset-3"><div class="alert alert-warning">文章不存在.</div></div>
         <%
                         break;
                 }
@@ -98,13 +98,13 @@
                     List<Article> articles = Article.getDao().getPage(ipage);
                     if(articles == null || articles.size() == 0){
                 %>
-                <a class="list-group-item disabled" href="#">Ooops, no articles here.</a>
+                <a class="list-group-item disabled" href="#">噢，现在还没有文章.</a>
                 <%
                 }else{
                     Collections.reverse(articles);
                     for(Article article : articles){
                         String author = User.getDao().get(article.getAuthor()).getName();
-                        if(author == null) author = "**User not exist**";
+                        if(author == null) author = "**用户不存在**";
                 %>
                 <a class="list-group-item" href="article.jsp?action=details&articleID=<%=article.getObjectId().toHexString()%>">
                     <div class="media">

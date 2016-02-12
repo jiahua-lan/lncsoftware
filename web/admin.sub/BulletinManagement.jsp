@@ -12,7 +12,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Bulletin | Management</title>
+    <title>岭南软件园 公告设置</title>
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/main.css">
 </head>
@@ -44,7 +44,7 @@
 <div class="container">
     <jsp:include page="navbar.jsp"/>
     <div class="page-header">
-        <h1>Bulletins</h1>
+        <h1>公告设置</h1>
     </div>
     <div class="row">
         <%
@@ -55,13 +55,13 @@
                 switch (statusFlag){
                     case "no login":
             %>
-            <div class="alert alert-warning">Please <a class="alert-link" href="../index.jsp">Login</a></div>
+            <div class="alert alert-warning">请先 <a class="alert-link" href="../index.jsp">登录</a></div>
             <%
                         break;
 
                     case "permission denied":
             %>
-            <div class="alert alert-danger">Permission denied</div>
+            <div class="alert alert-danger">抱歉，你没有权限</div>
             <%
                         break;
                 }
@@ -72,10 +72,10 @@
         %>
         <div class="col-md-12 lnc-marginBox">
             <div class="btn-group btn-group-justified">
-                <a class="btn btn-default <%="mainPage".equals(type) ? "active" : "" %>" href="BulletinManagement.jsp?type=mainPage">MainPage</a>
-                <a class="btn btn-default <%="article".equals(type) ? "active" : "" %>" href="BulletinManagement.jsp?type=article">Article</a>
-                <a class="btn btn-default <%="app".equals(type) ? "active" : "" %>" href="BulletinManagement.jsp?type=app">App</a>
-                <a class="btn btn-default <%="contact".equals(type) ? "active" : "" %>" href="BulletinManagement.jsp?type=contact">Contact</a>
+                <a class="btn btn-default <%="mainPage".equals(type) ? "active" : "" %>" href="BulletinManagement.jsp?type=mainPage">主页</a>
+                <a class="btn btn-default <%="article".equals(type) ? "active" : "" %>" href="BulletinManagement.jsp?type=article">文章</a>
+                <a class="btn btn-default <%="app".equals(type) ? "active" : "" %>" href="BulletinManagement.jsp?type=app">应用</a>
+                <a class="btn btn-default <%="contact".equals(type) ? "active" : "" %>" href="BulletinManagement.jsp?type=contact">联系</a>
             </div>
         </div>
         <%
@@ -173,48 +173,48 @@
                 switch (statusFlag){
                     case "update success":
             %>
-            <div class="alert alert-success">Update success.</div>
+            <div class="alert alert-success">更新成功</div>
             <%
                     break;
 
                 case "require context":
             %>
-            <div class="alert alert-warning">Context required</div>
+            <div class="alert alert-warning">内容必须填写</div>
             <%
                     break;
 
                 case "bulletin deleted":
             %>
-            <div class="alert alert-warning">Bulletin deleted</div>
+            <div class="alert alert-warning">噢，这个公告已经被删除了</div>
             <%          break;
 
                 case "add success":
             %>
-            <div class="alert alert-success">Add success.</div>
+            <div class="alert alert-success">添加成功</div>
             <%
                     break;
 
                 case "bulletin exist":
             %>
-            <div class="alert alert-warning">Bulletin exist.</div>
+            <div class="alert alert-warning">这个公告已经存在啦</div>
             <%
                     break;
 
                 case "require link":
             %>
-            <div class="alert alert-warning">Link was required.</div>
+            <div class="alert alert-warning">请填写连接</div>
             <%
                     break;
 
                 case "type illegal":
             %>
-            <div class="alert alert-warning">Type illegal.</div>
+            <div class="alert alert-warning">类型错误</div>
             <%
                     break;
 
                 case "delete success":
             %>
-            <div class="alert alert-success">Delete success.</div>
+            <div class="alert alert-success">删除成功</div>
             <%
                         break;
                 }
@@ -233,11 +233,11 @@
                             <%
                                 if("mainPage".equals(type)) {
                             %>
-                            Mainpage Bulletin Board
+                            主页标题下公告
                             <%
                                 } else if("article".equals(type)) {
                             %>
-                            Article Bulletin Board
+                            文章页面标题下公告
                             <%
                                 }
                             %>
@@ -251,14 +251,14 @@
                                     <input type="hidden" name="action" value="<%=bulletin == null ? "add" : "update"%>">
                                     <input type="hidden" name="type" value="<%=type%>">
                                     <div class="form-group">
-                                        <label class="control-label">Context:</label>
+                                        <label class="control-label">内容:</label>
                                         <textarea class="form-control" name="context"><%=bulletin == null ? "" : bulletin.getContext()%></textarea>
                                     </div>
                                     <div class="form-group">
-                                        <input class="btn btn-primary" type="submit" value="<%=bulletin == null ? "Create" : "Update"%>">
+                                        <input class="btn btn-primary" type="submit" value="<%=bulletin == null ? "创建" : "更新"%>">
                                         <% if(bulletin != null) {%>
                                         <input type="hidden" name="bulletinID" value="<%=bulletin.getObjectId().toHexString()%>">
-                                        <a class="btn btn-danger" href="BulletinManagement.jsp?action=delete&bulletinID=<%=bulletin.getObjectId().toHexString()%>">Delete</a>
+                                        <a class="btn btn-danger" href="BulletinManagement.jsp?action=delete&bulletinID=<%=bulletin.getObjectId().toHexString()%>">删除</a>
                                         <%}else{%>
                                         <input type="hidden" name="btype" value="<%=type%>">
                                         <%}%>
@@ -283,13 +283,13 @@
                                 switch (s1){
                                     case "app_guide":
                             %>
-                            Guide Bulletin
+                            应用标题下公告
                             <%
                                         break;
 
                                     case "app_info":
                             %>
-                            Information Bulletin
+                            应用信息公告
                             <%
                                         break;
                                 }
@@ -301,14 +301,14 @@
                                     <input type="hidden" name="action" value="<%=bulletin == null ? "add" : "update"%>">
                                     <input type="hidden" name="type" value="<%=type%>">
                                     <div class="form-group">
-                                        <label class="control-label">Context:</label>
+                                        <label class="control-label">内容:</label>
                                         <textarea class="form-control" name="context"><%=bulletin == null ? "" : bulletin.getContext()%></textarea>
                                     </div>
                                     <div class="form-group">
-                                        <input class="btn btn-primary" type="submit" value="<%=bulletin == null ? "Create" : "Update"%>">
+                                        <input class="btn btn-primary" type="submit" value="<%=bulletin == null ? "创建" : "更新"%>">
                                         <%if(bulletin != null){%>
                                         <input type="hidden" name="bulletinID" value="<%=bulletin.getObjectId().toHexString()%>">
-                                        <a class="btn btn-danger" href="BulletinManagement.jsp?action=delete&bulletinID=<%=bulletin.getObjectId().toHexString()%>&type=app">Delete</a>
+                                        <a class="btn btn-danger" href="BulletinManagement.jsp?action=delete&bulletinID=<%=bulletin.getObjectId().toHexString()%>&type=app">删除</a>
                                         <%}else{%>
                                         <input type="hidden" name="btype" value="<%=s1%>">
                                         <%}%>
@@ -326,7 +326,7 @@
                 %>
                 <div class="col-md-6">
                     <div class="panel panel-info">
-                        <div class="panel-heading">Contact info</div>
+                        <div class="panel-heading">联系我们列表</div>
                         <%
                             List<Bulletin> bulletins = Bulletin.getDao().getBulletinItems("contactInfo");
                         %>
@@ -342,20 +342,20 @@
                                         <input type="hidden" name="type" value="<%=type%>">
                                         <input type="hidden" name="bulletinID" value="<%=bulletin.getObjectId().toHexString()%>">
                                         <div class="form-group input-group">
-                                            <span class="input-group-addon">Context</span>
+                                            <span class="input-group-addon">内容</span>
                                             <input class="form-control" type="text" name="context" value="<%=bulletin.getContext()%>">
                                         </div>
                                         <div class="form-group input-group">
-                                            <span class="input-group-addon">Link</span>
+                                            <span class="input-group-addon">连接</span>
                                             <input class="form-control" type="url" name="link" value="<%=bulletin.getLink()%>">
                                         </div>
                                         <div class="form-group input-group">
-                                            <span class="input-group-addon">Image</span>
+                                            <span class="input-group-addon">图像</span>
                                             <input class="form-control" type="url" name="imageLin" value="<%=bulletin.getImageLink()%>">
                                         </div>
                                         <div class="form-group form-group">
-                                            <input class="btn btn-primary" type="submit" value="update">
-                                            <a class="btn btn-danger" href="BulletinManagement.jsp?action=delete&bulletinID=<%=bulletin.getObjectId().toHexString()%>&type=<%=type%>">Delete</a>
+                                            <input class="btn btn-primary" type="submit" value="更新">
+                                            <a class="btn btn-danger" href="BulletinManagement.jsp?action=delete&bulletinID=<%=bulletin.getObjectId().toHexString()%>&type=<%=type%>">删除</a>
                                         </div>
                                     </form>
                                 </div>
@@ -364,7 +364,7 @@
                                     }
                                 }else{
                             %>
-                            <li class="list-group-item list-group-item-heading disabled">Nothing here...</li>
+                            <li class="list-group-item list-group-item-heading disabled">现在并没有什么东西</li>
                             <%
                                 }
                             %>
@@ -375,15 +375,15 @@
                                         <input type="hidden" name="btype" value="contactInfo">
                                         <input type="hidden" name="type" value="<%=type%>">
                                         <div class="form-group input-group">
-                                            <span class="input-group-addon">Context</span>
+                                            <span class="input-group-addon">内容</span>
                                             <input class="form-control" type="text" name="context">
                                         </div>
                                         <div class="form-group input-group">
-                                            <label class="input-group-addon">Link</label>
+                                            <label class="input-group-addon">连接</label>
                                             <input class="form-control" type="text" name="link">
                                         </div>
                                         <div class="form-group input-group">
-                                            <span class="input-group-addon">ImageLink</span>
+                                            <span class="input-group-addon">图片</span>
                                             <input class="form-control" type="url" name="imageLink">
                                         </div>
                                         <div class="form-group form-group">
@@ -397,7 +397,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="panel panel-success">
-                        <div class="panel-heading">Friend Links</div>
+                        <div class="panel-heading">友情链接列表</div>
                         <ul class="list-group">
                             <%
                                 bulletins = Bulletin.getDao().getBulletinItems("contactFriendLink");
@@ -411,16 +411,16 @@
                                         <input type="hidden" name="type" value="<%=type%>">
                                         <input type="hidden" name="bulletinID" value="<%=bulletin.getObjectId().toHexString()%>">
                                         <div class="form-group input-group">
-                                            <span class="input-group-addon">Context</span>
+                                            <span class="input-group-addon">内容</span>
                                             <input class="form-control" type="text" name="context" value="<%=bulletin.getContext()%>">
                                         </div>
                                         <div class="form-group input-group">
-                                            <span class="input-group-addon">Link</span>
+                                            <span class="input-group-addon">链接</span>
                                             <input class="form-control" type="url" name="link" value="<%=bulletin.getLink()%>">
                                         </div>
                                         <div class="form-group">
-                                            <input class="btn btn-primary" type="submit" value="Update">
-                                            <a class="btn btn-danger" href="BulletinManagement.jsp?action=delete&bulletinID=<%=bulletin.getObjectId().toHexString()%>&type=<%=type%>">Delete</a>
+                                            <input class="btn btn-primary" type="submit" value="更新">
+                                            <a class="btn btn-danger" href="BulletinManagement.jsp?action=delete&bulletinID=<%=bulletin.getObjectId().toHexString()%>&type=<%=type%>">删除</a>
                                         </div>
                                     </form>
                                 </div>
@@ -429,7 +429,7 @@
                                 }
                             }else{
                             %>
-                            <li class="list-group-item list-group-item-heading disabled">Nothings here..</li>
+                            <li class="list-group-item list-group-item-heading disabled">这里并没有什么东西</li>
                             <%
                                 }
                             %>
@@ -440,15 +440,15 @@
                                         <input type="hidden" name="btype" value="contactFriendLink">
                                         <input type="hidden" name="type" value="<%=type%>">
                                         <div class="form-group input-group">
-                                            <span class="input-group-addon">Context</span>
+                                            <span class="input-group-addon">内容</span>
                                             <input class="form-control" type="text" name="context">
                                         </div>
                                         <div class="form-group input-group">
-                                            <span class="input-group-addon">Link</span>
+                                            <span class="input-group-addon">链接</span>
                                             <input class="form-control" type="text" name="link">
                                         </div>
                                         <div class="form-group">
-                                            <input class="btn btn-success" type="submit" value="Add">
+                                            <input class="btn btn-success" type="submit" value="添加">
                                         </div>
                                     </form>
                                 </div>

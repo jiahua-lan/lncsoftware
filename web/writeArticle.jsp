@@ -13,7 +13,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Write Article</title>
+    <title>岭南软件园 写文章</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/main.css">
 </head>
@@ -71,14 +71,19 @@
         document.getElementById("nav-article").setAttribute("class","active");
     </script>
     <div class="page-header">
-        <h1>Write Article</h1>
+        <h1>写文章</h1>
+        <p>写文章之前先在其它文本编辑器里写一遍，然后粘贴到此。网站不提供保存草稿功能。<br>
+          网站文章统一使用Markdown格式，如你并不清楚什么是Markdown格式，请先
+          <a href="http://baike.baidu.com/link?url=IuGaek4XNBNB7cC2_7WcyffLr5-SfsaWb8brCguNCZHnQbl3gxLLdc5aZPX2bpUK1sQu2UxHz8ggxbFTWQ3ySq">了解</a>
+          此格式后再下笔。
+        </p>
     </div>
     <div class="container-fluid">
         <%
             switch (statusFlag){
                 case "no login":
         %>
-        <div class="alert alert-warning">Please <a class="alert-link" href="index.jsp">Login</a></div>
+        <div class="alert alert-warning">请先 <a class="alert-link" href="index.jsp">登录</a></div>
         <%
                     break;
 
@@ -87,19 +92,19 @@
 
                 case "permission denied":
         %>
-        <div class="alert alert-danger">You have no permission to write articles.</div>
+        <div class="alert alert-danger">您并没有写文章的权限。若要写文章，请通知管理员为您开放此权限</div>
         <%
                     break;
 
                 case "submit success":
         %>
-        <div class="alert alert-success">Article submit successful.</div>
+        <div class="alert alert-success">文章提交成功</div>
         <%
                     break;
 
                 case "illegal title":
         %>
-        <div class="alert alert-warning">Title illegal.</div>
+        <div class="alert alert-warning">标题格式不正确</div>
         <%
                     break;
             }
@@ -109,19 +114,19 @@
         <form class="form-horizontal" action="writeArticle.jsp" method="post">
             <input type="hidden" name="action" value="upload">
             <div class="form-group">
-                <label class="control-label">Title </label>
-                <input class="form-control" type="text" name="title" placeholder="less than 64 chars">
+                <label class="control-label">标题 </label>
+                <input class="form-control" type="text" name="title" placeholder="标题必须小于64个字符">
             </div>
             <div class="form-group">
-                <label class="control-label">Tags:</label>
-                <input class="form-control" type="text" name="tags" placeholder="tags1;tags2;">
+                <label class="control-label">标签 </label>
+                <input class="form-control" type="text" name="tags" placeholder="选填，例如：tags1;tags2;">
             </div>
             <div class="form-group">
-                <label class="control-label">Context:</label>
+                <label class="control-label">内容 </label>
                 <textarea class="form-control" name="context"></textarea>
             </div>
             <div class="form-group">
-                <input class="btn btn-success" type="submit" value="submit">
+                <input class="btn btn-success" type="submit" value="提交">
             </div>
         </form>
         <%

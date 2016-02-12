@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>User</title>
+    <title>岭南软件园 用户中心</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/main.css">
 </head>
@@ -61,25 +61,25 @@
                             switch (statusFlag){
                                 case "no login":
                         %>
-                        <div class="alert alert-warning">Please <a class="alert-link" href="index.jsp">Login</a>.</div>
+                        <div class="alert alert-warning">请先 <a class="alert-link" href="index.jsp">登录</a>.</div>
                         <%
                                 break;
 
                             case "illegal password":
                         %>
-                        <div class="alert alert-warning">Password in a illegal format</div>
+                        <div class="alert alert-warning">密码格式不正确</div>
                         <%
                                 break;
 
                             case "update success":
                         %>
-                        <div class="alert alert-success">User info update success.</div>
+                        <div class="alert alert-success">用户信息更改成功</div>
                         <%
                                 break;
 
                             case "illegal contact":
                         %>
-                        <div class="alert alert-warning">Contact in a illegal format</div>
+                        <div class="alert alert-warning">联系方式格式不正确</div>
                         <%
                                     break;
                             }
@@ -89,11 +89,11 @@
                         <form class="form-horizontal" action="user.jsp" method="post">
                             <input type="hidden" name="action" value="update">
                             <div class="form-group">
-                                <label class="control-label">Username:</label>
+                                <label class="control-label">用户名 </label>
                                 <input type="text" class="form-control" value="<%=passport.getName()%>" disabled>
                             </div>
                             <div class="form-group">
-                                <label class="control-label">Permissions:</label>
+                                <label class="control-label">权限</label>
                                 <div class="form-control">
                                     <%
                                         for(String s : passport.getRights()){
@@ -121,18 +121,18 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label">Password: </label>
+                                <label class="control-label">密码 </label>
                                 <input class="form-control" type="password" name="password" placeholder="Fill nothing if not change it.">
                             </div>
                             <div class="form-group">
-                                <label class="control-label">Contact info:</label>
+                                <label class="control-label">联系信息 </label>
                                 <input class="form-control" type="text" name="contact" value="<%=passport.getContactInfo()%>">
                             </div>
                             <div class="form-group">
-                                <input class="btn btn-primary col-md-12" type="submit" value="Update">
+                                <input class="btn btn-primary col-md-12" type="submit" value="更新">
                             </div>
                             <div class="form-group">
-                                <a href="index.jsp" class="btn btn-default col-md-12">Back to Homepage</a>
+                                <a href="index.jsp" class="btn btn-default col-md-12">回到主页</a>
                             </div>
                         </form>
                         <%

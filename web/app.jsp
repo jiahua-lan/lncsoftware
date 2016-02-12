@@ -10,7 +10,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Applications</title>
+    <title>岭南软件园 应用</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/main.css">
 </head>
@@ -21,7 +21,7 @@
         document.getElementById("nav-app").setAttribute("class","active");
     </script>
     <div class="page-header">
-        <h1>Applications</h1>
+        <h1>应用</h1>
         <%
             Bulletin bulletin = Bulletin.getDao().getBulletinBoard("app_guide");
             if(bulletin != null){
@@ -48,19 +48,19 @@
                             switch (appInfo.getStatus()){
                                 case "working":
                         %>
-                        <span class="label label-success">Working</span>
+                        <span class="label label-success">工作中</span>
                         <%
                                     break;
 
                                 case "repairing":
                         %>
-                        <span class="label label-warning">Repairing</span>
+                        <span class="label label-warning">维护期</span>
                         <%
                                     break;
 
                                 case "disable":
                         %>
-                        <span class="label label-default">Disable</span>
+                        <span class="label label-default">已失效</span>
                         <%
                                     break;
                             }
@@ -76,7 +76,7 @@
         </div>
         <div class="col-md-4">
             <div class="panel panel-primary">
-                <div class="panel-heading">Announcement</div>
+                <div class="panel-heading">通知</div>
                 <div class="panel-body">
                     <%
                         Bulletin bulletin1 = Bulletin.getDao().getBulletinBoard("app_info");
@@ -85,7 +85,7 @@
                     <%=bulletin1.getContext()%>
                     <%
                         }else{
-                    %>Nothings here...<%
+                    %>现在并没有什么通知<%
                         }
                     %>
                 </div>

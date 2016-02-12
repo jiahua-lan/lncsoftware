@@ -12,7 +12,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Application | Management</title>
+    <title>岭南软件园 应用链接管理</title>
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/main.css">
 </head>
@@ -104,7 +104,7 @@
 <div class="container">
     <jsp:include page="navbar.jsp"/>
     <div class="page-header">
-        <h1>Application info management</h1>
+        <h1>应用链接管理</h1>
     </div>
     <div class="row">
         <%
@@ -112,35 +112,35 @@
         %>
         <div class="col-md-4">
             <div class="panel panel-default">
-                <div class="panel-heading">Create App Link</div>
+                <div class="panel-heading">创建应用链接</div>
                 <div class="panel-body">
                     <div class="container-fluid">
                         <form class="form-horizontal" action="AppInfoManagement.jsp" method="post">
                             <input type="hidden" name="action" value="create">
                             <div class="form-group">
-                                <label class="control-label">Title:</label>
+                                <label class="control-label">标题:</label>
                                 <input class="form-control" type="text" name="title">
                             </div>
                             <div class="form-group">
-                                <label class="control-label">Description:</label>
+                                <label class="control-label">描述:</label>
                                 <input class="form-control" type="text" name="description">
                             </div>
                             <div class="form-group">
-                                <label class="control-label">Thumbnail Image:</label>
+                                <label class="control-label">缩略图:</label>
                                 <input class="form-control" type="url" name="imageCode">
                             </div>
                             <div class="form-group">
-                                <label class="control-label">Link:</label>
+                                <label class="control-label">链接:</label>
                                 <input class="form-control" type="text" name="link">
                             </div>
                             <div class="form-group">
-                                <label class="control-label">Status:</label>
-                                <input type="radio" name="status" value="working" checked> Working
-                                <input type="radio" name="status" value="repairing"> Repairing
-                                <input type="radio" name="status" value="disable"> Disable
+                                <label class="control-label">状态:</label>
+                                <input type="radio" name="status" value="working" checked> 工作中
+                                <input type="radio" name="status" value="repairing"> 维护期
+                                <input type="radio" name="status" value="disable"> 已失效
                             </div>
                             <div class="form-group">
-                                <input class="btn btn-primary btn-block" type="submit" value="create">
+                                <input class="btn btn-primary btn-block" type="submit" value="创建">
                             </div>
                         </form>
                     </div>
@@ -152,9 +152,9 @@
                 <form class="form-horizontal" action="AppInfoManagement.jsp" method="post">
                     <input type="hidden" name="action" value="search">
                     <div class="input-group">
-                        <span class="input-group-addon"><input type="checkbox" name="useRegex" value="useRegex"> Use Regex</span>
-                        <input class="form-control" type="text" name="keyword" placeholder="Search">
-                        <span class="input-group-btn"><input class="btn btn-default" type="submit" value="Search"></span>
+                        <span class="input-group-addon"><input type="checkbox" name="useRegex" value="useRegex"> 正则表达式</span>
+                        <input class="form-control" type="text" name="keyword" placeholder="搜索应用连接">
+                        <span class="input-group-btn"><input class="btn btn-default" type="submit" value="搜索"></span>
                     </div>
                 </form>
             </div>
@@ -209,26 +209,26 @@
                                 <input type="hidden" name="action" value="update">
                                 <input type="hidden" name="appID" value="<%=appInfo.getObjectId().toHexString()%>">
                                 <div class="form-group">
-                                    <label class="control-label">Title: </label>
+                                    <label class="control-label">标题: </label>
                                     <input class="form-control" type="text" name="title" value="<%=appInfo.getTitle()%>">
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">Link:</label>
+                                    <label class="control-label">连接:</label>
                                     <input class="form-control" type="url" name="link" value="<%=appInfo.getLink()%>">
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">Description:</label>
+                                    <label class="control-label">描述:</label>
                                     <input class="form-control" type="text" name="description" value="<%=appInfo.getDescription()%>">
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">Image:</label>
+                                    <label class="control-label">缩略图:</label>
                                     <input class="form-control" type="url" name="imageCode" value="<%=appInfo.getImageCode()%>">
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">Status:</label>
-                                    <input type="radio" name="status" value="working" <%=("working".equals(appInfo.getStatus()) ? "checked" : "")%>> Working
-                                    <input type="radio" name="status" value="repairing" <%=("repairing".equals(appInfo.getStatus()) ? "checked" : "")%>> Repairing
-                                    <input type="radio" name="status" value="disable" <%=("disable".equals(appInfo.getStatus()) ? "checked" : "")%>> Disable
+                                    <input type="radio" name="status" value="working" <%=("working".equals(appInfo.getStatus()) ? "checked" : "")%>> 工作中
+                                    <input type="radio" name="status" value="repairing" <%=("repairing".equals(appInfo.getStatus()) ? "checked" : "")%>> 维护期
+                                    <input type="radio" name="status" value="disable" <%=("disable".equals(appInfo.getStatus()) ? "checked" : "")%>> 已失效
                                 </div>
                                 <input class="btn btn-primary btn-block" type="submit" value="update">
                             </form>
@@ -242,7 +242,7 @@
                             }
                         }else{
                 %>
-                <div class="alert-warning alert">Keyword illegal</div>
+                <div class="alert-warning alert">关键字格式错误</div>
                 <%
                         }
                     }
@@ -257,13 +257,13 @@
                 switch (statusFlag){
                     case "no login":
             %>
-            <div class="alert alert-warning">Please <a href="../index.jsp">Login</a>.</div>
+            <div class="alert alert-warning">请先 <a href="../index.jsp">登录</a>.</div>
             <%
                         break;
 
                     case "permission denied":
             %>
-            <div class="alert alert-danger">Permission denied.</div>
+            <div class="alert alert-danger">抱歉，你没有权限</div>
             <%
                         break;
                 }

@@ -14,7 +14,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>User | Management</title>
+    <title>岭南软件园 用户管理</title>
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/main.css">
 </head>
@@ -79,7 +79,7 @@
 <div class="container">
     <jsp:include page="navbar.jsp"/>
     <div class="page-header">
-        <h1>User Management</h1>
+        <h1>用户管理</h1>
     </div>
     <div class="row">
         <%
@@ -90,13 +90,13 @@
                 switch (statusFlag){
                     case "no login":
             %>
-            <div class="alert alert-warning">Please <a class="alert-link" href="../index.jsp">Login</a></div>
+            <div class="alert alert-warning">请先 <a class="alert-link" href="../index.jsp">登录</a></div>
             <%
                         break;
 
                     case "permission denied":
             %>
-            <div class="alert alert-danger">Permission denied</div>
+            <div class="alert alert-danger">抱歉，你没有权限</div>
             <%
                         break;
                 }
@@ -110,9 +110,9 @@
                 <form class="form-horizontal" action="UserManagement.jsp" method="post">
                     <input type="hidden" name="action" value="search">
                     <div class="input-group">
-                        <span class="input-group-addon"><input type="checkbox" name="useRegex" value="useRegex"> Use Regex</span>
-                        <input class="form-control" type="text" name="keyword" placeholder="Search User">
-                        <span class="input-group-btn"><input class="btn btn-primary" type="submit" value="Go!"></span>
+                        <span class="input-group-addon"><input type="checkbox" name="useRegex" value="useRegex"> 正则表达式</span>
+                        <input class="form-control" type="text" name="keyword" placeholder="输入用户名称">
+                        <span class="input-group-btn"><input class="btn btn-primary" type="submit" value="搜索"></span>
                     </div>
                 </form>
             </div>
@@ -121,19 +121,19 @@
                     switch (statusFlag){
                         case "update success":
                 %>
-                <div class="alert alert-success">Update success</div>
+                <div class="alert alert-success">更新成功</div>
                 <%
                         break;
 
                     case "illegal field":
                 %>
-                <div class="alert alert-warning">Illegal field</div>
+                <div class="alert alert-warning">字段格式不对</div>
                 <%
                         break;
 
                     case "user not exist":
                 %>
-                <div class="alert alert-warning">User not exist</div>
+                <div class="alert alert-warning">用户已经不存在了</div>
                 <%
                             break;
                     }
@@ -144,7 +144,7 @@
                         List<User> users = User.getDao().search("name",(useRegex ? keyword : (".*"+keyword+".*")));
                         if(users != null && users.size() > 0){
                 %>
-                <div class="alert alert-success"><%=users.size()%> result(s) with <%=keyword%></div>
+                <div class="alert alert-success"><%=users.size()%> 结果。 关键字： <%=keyword%></div>
                 <ul class="list-group">
                     <%
                             for(User user : users){
@@ -157,22 +157,22 @@
                                 <div class="form-group">
                                     <div class="col-md-6">
                                         <div class="input-group">
-                                            <label class="input-group-addon">Username</label>
+                                            <label class="input-group-addon">用户名</label>
                                             <input class="form-control" type="text" name="username" value="<%=user.getName()%>">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="input-group">
-                                            <label class="input-group-addon">Contact</label>
+                                            <label class="input-group-addon">联系方式</label>
                                             <input class="form-control" type="text" name="contact" value="<%=user.getContactInfo()%>">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">Rights:</label>
-                                    <input type="checkbox" name="rights" value="login" <%=(user.getRights().contains("login") ? "checked" : "")%>> login
-                                    <input type="checkbox" name="rights" value="admin" <%=(user.getRights().contains("admin") ? "checked" : "")%>> admin
-                                    <input type="checkbox" name="rights" value="article" <%=(user.getRights().contains("article") ? "checked" : "")%>> article
+                                    <label class="control-label">权限</label>
+                                    <input type="checkbox" name="rights" value="login" <%=(user.getRights().contains("login") ? "checked" : "")%>> 登陆
+                                    <input type="checkbox" name="rights" value="admin" <%=(user.getRights().contains("admin") ? "checked" : "")%>> 管理员
+                                    <input type="checkbox" name="rights" value="article" <%=(user.getRights().contains("article") ? "checked" : "")%>> 写作
                                 </div>
                                 <div class="form-group">
                                     <input class="btn btn-default btn-block" type="submit" value="update change">
@@ -187,12 +187,12 @@
                 <%
                         }else{
                 %>
-                <div class="alert alert-warning">No result.</div>
+                <div class="alert alert-warning">无结果</div>
                 <%
                         }
                     }else{
                 %>
-                <div class="alert alert-warning">Keyword illegal.</div>
+                <div class="alert alert-warning">关键字格式有误.</div>
                 <%
                     }
                 }
