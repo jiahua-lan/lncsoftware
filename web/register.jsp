@@ -71,15 +71,15 @@
                         <div class="container-fluid">
                             <input type="hidden" name="action" value="register">
                             <div class="form-group">
-                                <input type="text" class="form-control" name="username" placeholder="Username">
+                                <input type="text" class="form-control" name="username" placeholder="用户名">
                                 <label>可以使用：A-Z a-z 和 0-9 之间的字符, 以及 &quot;-&quot; 和 &quot;_&quot;, 6 - 32 个字符</label>
                             </div>
                             <div class="form-group">
-                                <input type="password" name="password" class="form-control" placeholder="Password">
+                                <input type="password" name="password" class="form-control" placeholder="不建议使用自己的常用密码">
                                 <label>可以使用：A-Z a-z and 0-9, = &lt; &gt; 以及 _ @ &amp; % # &quot; ! &yen;</label>
                             </div>
                             <div class="form-group">
-                                <input type="text" name="contact" class="form-control" placeholder="Contact info">
+                                <input type="text" name="contact" class="form-control" placeholder="联系信息">
                                 <label>电子邮件、QQ（最好，因为只有协会成员才能享受在此网站的支持服务）或者手机号码</label>
                             </div>
                             <div class="form-group">

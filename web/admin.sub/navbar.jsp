@@ -11,7 +11,9 @@
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
-            <div class="navbar-brand">岭南软件园管理</div>
+            <div class="navbar-brand">
+                <a class="navbar-link" href="index.jsp">岭南软件园管理</a>
+            </div>
         </div>
         <ul class="nav navbar-nav">
             <%
@@ -44,10 +46,11 @@
             %>
         </ul>
         <ul class="nav navbar-nav navbar-right">
+            <li><a href="../index.jsp">网站首页</a></li>
             <%
                 if(nav_passport != null){
             %>
-            <li id="nav-user"><a href="../user.jsp"><%=nav_passport.getName()%></a></li>
+            <li><a href="../user.jsp"><%=nav_passport.getName()%></a></li>
             <li><a href="../index.jsp?action=logout">登出</a></li>
             <%
             }else{

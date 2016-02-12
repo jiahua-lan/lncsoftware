@@ -18,7 +18,7 @@
         document.getElementById("nav-contact").setAttribute("class","active");
     </script>
     <div class="page-header">
-        <h1>Contact</h1>
+        <h1>联系信息</h1>
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <link rel="stylesheet" href="css/main.css">
     </div>
@@ -31,13 +31,14 @@
                     if(contact != null && contact.size() > 0){
                         for (Bulletin b : contact){
                 %>
-                <a class="list-group-item" href="<%=b.getLink()%>">
+                <a class="list-group-item list-group-item-text" href="<%=b.getLink()%>">
                     <div class="media">
                         <div class="media-left">
-                            <img class="media-object" src="<%=b.getImageLink()%>" width="60pt" height="60pt"><br>
+                            <img class="media-object" <%="".equals(b.getImageLink().trim()) || b.getImageLink().equals(null) ? "data-src='holder.js/60x60'" : "src='" +
+                             b.getImageLink() +"'"%> width="60pt" height="60pt">
                         </div>
                         <div class="media-body">
-                            <%=b.getContext()%>
+                            <p class="markdown-context"><%=b.getContext()%></p>
                         </div>
                     </div>
                 </a>
@@ -57,7 +58,7 @@
                     if(contact != null && contact.size() > 0){
                         for(Bulletin bulletin : contact){
                 %>
-                <a class="list-group-item" href="<%=bulletin.getLink()%>"><%=bulletin.getContext()%></a><br>
+                <a class="list-group-item list-group-item-success" href="<%=bulletin.getLink()%>"><%=bulletin.getContext()%></a><br>
                 <%
                         }
                     }else{
@@ -70,5 +71,14 @@
         </div>
     </div>
 </div>
+<script src="js/jquery-1.11.3.min.js"></script>
+<script src="js/holder.min.js"></script>
+<script src="js/markdown.min.js"></script>
+<script>
+    $(".markdown-context").each(function () {
+        context = $(this).html();
+        $(this).html(markdown.toHTML(context));
+    });
+</script>
 </body>
 </html>

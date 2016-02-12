@@ -43,6 +43,9 @@
 <body>
 <div class="container">
     <jsp:include page="navbar.jsp"/>
+    <script>
+        document.getElementById("nav-bulletin").setAttribute("class","active");
+    </script>
     <div class="page-header">
         <h1>公告设置</h1>
     </div>
@@ -341,17 +344,17 @@
                                         <input type="hidden" name="action" value="update">
                                         <input type="hidden" name="type" value="<%=type%>">
                                         <input type="hidden" name="bulletinID" value="<%=bulletin.getObjectId().toHexString()%>">
-                                        <div class="form-group input-group">
-                                            <span class="input-group-addon">内容</span>
-                                            <input class="form-control" type="text" name="context" value="<%=bulletin.getContext()%>">
+                                        <div class="form-group">
+                                            <label class="control-label">内容</label>
+                                            <textarea class="form-control" name="context" rows="3" placeholder="内容，允许使用Markdown"><%=bulletin.getContext()%></textarea>
                                         </div>
                                         <div class="form-group input-group">
                                             <span class="input-group-addon">连接</span>
-                                            <input class="form-control" type="url" name="link" value="<%=bulletin.getLink()%>">
+                                            <input class="form-control" type="url" placeholder="导航到何处？" name="link" value="<%=bulletin.getLink()%>">
                                         </div>
                                         <div class="form-group input-group">
                                             <span class="input-group-addon">图像</span>
-                                            <input class="form-control" type="url" name="imageLin" value="<%=bulletin.getImageLink()%>">
+                                            <input class="form-control" type="url" placeholder="图片链接" name="imageLin" value="<%=bulletin.getImageLink()%>">
                                         </div>
                                         <div class="form-group form-group">
                                             <input class="btn btn-primary" type="submit" value="更新">
@@ -374,17 +377,17 @@
                                         <input type="hidden" name="action" value="add">
                                         <input type="hidden" name="btype" value="contactInfo">
                                         <input type="hidden" name="type" value="<%=type%>">
-                                        <div class="form-group input-group">
-                                            <span class="input-group-addon">内容</span>
-                                            <input class="form-control" type="text" name="context">
+                                        <div class="form-group">
+                                            <label class="control-label">内容</label>
+                                            <textarea class="form-control" name="context" rows="3" placeholder="内容，允许使用Markdown"></textarea>
                                         </div>
                                         <div class="form-group input-group">
                                             <label class="input-group-addon">连接</label>
-                                            <input class="form-control" type="text" name="link">
+                                            <input class="form-control" placeholder="导航到何处？" type="text" name="link">
                                         </div>
                                         <div class="form-group input-group">
                                             <span class="input-group-addon">图片</span>
-                                            <input class="form-control" type="url" name="imageLink">
+                                            <input class="form-control" placeholder="图片链接" type="url" name="imageLink">
                                         </div>
                                         <div class="form-group form-group">
                                             <input class="btn btn-success" type="submit" value="Add">
@@ -411,12 +414,12 @@
                                         <input type="hidden" name="type" value="<%=type%>">
                                         <input type="hidden" name="bulletinID" value="<%=bulletin.getObjectId().toHexString()%>">
                                         <div class="form-group input-group">
-                                            <span class="input-group-addon">内容</span>
+                                            <span class="input-group-addon">标题</span>
                                             <input class="form-control" type="text" name="context" value="<%=bulletin.getContext()%>">
                                         </div>
                                         <div class="form-group input-group">
                                             <span class="input-group-addon">链接</span>
-                                            <input class="form-control" type="url" name="link" value="<%=bulletin.getLink()%>">
+                                            <input class="form-control" type="url" placeholder="导航到何处？" name="link" value="<%=bulletin.getLink()%>">
                                         </div>
                                         <div class="form-group">
                                             <input class="btn btn-primary" type="submit" value="更新">
@@ -441,11 +444,11 @@
                                         <input type="hidden" name="type" value="<%=type%>">
                                         <div class="form-group input-group">
                                             <span class="input-group-addon">内容</span>
-                                            <input class="form-control" type="text" name="context">
+                                            <input class="form-control" placeholder="标题" type="text" name="context">
                                         </div>
                                         <div class="form-group input-group">
                                             <span class="input-group-addon">链接</span>
-                                            <input class="form-control" type="text" name="link">
+                                            <input class="form-control" placeholder="导航到何处？" type="text" name="link">
                                         </div>
                                         <div class="form-group">
                                             <input class="btn btn-success" type="submit" value="添加">

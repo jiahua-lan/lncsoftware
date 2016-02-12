@@ -4,7 +4,8 @@
 <%@ page import="cn.lncsoftware.data.Article" %>
 <%@ page import="org.bson.types.ObjectId" %>
 <%@ page import="java.util.Collections" %>
-<%@ page import="cn.lncsoftware.data.Bulletin" %><%--
+<%@ page import="cn.lncsoftware.data.Bulletin" %>
+<%@ page import="cn.lncsoftware.common.StringTools" %><%--
   Created by IntelliJ IDEA.
   User: catten
   Date: 16/2/3
@@ -68,7 +69,7 @@
         document.getElementById("nav-home").setAttribute("class","active");
     </script>
     <div class="page-header">
-        <h1>LingNan College Software(Center) Association</h1>
+        <h1>软件园协会 <small>at 广东岭南职业技术学院</small></h1>
         <%
             Bulletin bulletin = Bulletin.getDao().getBulletinBoard("mainPage");
             if(bulletin != null){
@@ -82,39 +83,43 @@
     <div class="row">
         <div class="col-md-8">
             <div class="container-fluid">
-                <%
-                    List<Article> articles = Article.getDao().getLatestPage();
-                    if(articles == null || articles.size() == 0){
-                %>
-                Ooops, no articles here.<br>
-                <%
-                }else{
-                    Collections.reverse(articles);
-                    for(Article article : articles){
-                        String author;
-                        User user = User.getDao().get(article.getAuthor());
-                        if(user == null)
-                            author = "**User not exist**";
-                        else
-                            author = user.getName();
-                %>
-                <div class="media">
-                    <div class="media-body">
-                        <h4><a href="article.jsp?actioin=details&articleID=<%=article.getObjectId().toHexString()%>"><%=article.getTitle()%></a></h4>
-                        <%=article.getPreviewSentences()%>
-                        <hr>
-                    </div>
-                </div>
-                <%
+                <div class="list-group">
+                    <%
+                        List<Article> articles = Article.getDao().getLatestPage();
+                        if(articles == null || articles.size() == 0){
+                    %>
+                    <a class="list-group-item list-group-item-heading disabled">噢，现在我们还没有任何文章</a>
+                    <%
+                    }else{
+                        Collections.reverse(articles);
+                        for(Article article : articles){
+                            String author;
+                            User user = User.getDao().get(article.getAuthor());
+                            if(user == null)
+                                author = "**User not exist**";
+                            else
+                                author = user.getName();
+                    %>
+                    <a class="list-group-item" href="article.jsp?action=details&articleID=<%=article.getObjectId().toHexString()%>">
+                        <div class="media">
+                            <div class="media-body">
+                                <h4><%=article.getTitle()%></h4>
+                                <p><%=article.getPreviewSentences()%></p>
+                                <small>By:<%=author%> at <%=StringTools.convertDate(article.getDate())%></small>
+                            </div>
+                        </div>
+                    </a>
+                    <%
+                            }
                         }
-                    }
-                %>
+                    %>
+                </div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="container-fluid">
                 <div class="panel <%=(passport == null ? "panel-primary" : "panel-success")%>">
-                    <div class="panel-heading">Login</div>
+                    <div class="panel-heading">用户</div>
                     <div class="panel-body">
                         <div class="container-fluid">
                             <%
@@ -150,19 +155,25 @@
                                     <input class="form-control" placeholder="Password" type="password" name="password" value="">
                                 </div>
                                 <div class="form-group">
-                                    <input type="submit" class="btn btn-success col-md-12" value="Login">
+                                    <input type="submit" class="btn btn-success col-md-12" value="登陆">
                                 </div>
                                 <div class="form-group">
-                                    <a class="btn btn-default col-md-12" href="register.jsp">Register</a>
+                                    <a class="btn btn-default col-md-12" href="register.jsp">注册</a>
                                 </div>
                             </form>
                             <%
                             }else{
                             %>
-                            <b>Welcome, <%=passport.getName()%>
+                            <b><%=passport.getName()%></b><br>
                             <%
                                 for(String s : passport.getRights()){
                                     switch (s){
+                                        case "login":
+                            %>
+                            <span class="label label-success">Login</span>
+                            <%
+                                            break;
+
                                         case "article":
                             %>
                             <span class="label label-info">Writer</span>
@@ -175,10 +186,7 @@
                             <%
                                     }
                                 }
-                            %>
-                            </b>
-                            <%
-                                }
+                            }
                             %>
                         </div>
                     </div>
@@ -186,22 +194,22 @@
                         if(passport != null){
                     %>
                     <div class="list-group">
-                        <a class="list-group-item" href="user.jsp"><span class="glyphicon glyphicon-user"></span> User center</a>
+                        <a class="list-group-item" href="user.jsp"><span class="glyphicon glyphicon-user"></span> 用户中心</a>
                         <%
                             for(String s : passport.getRights()){
                                 if(s.equals("admin")){
                         %>
-                        <a class="list-group-item" href="admin.sub/adminCenter.jsp"><span class="glyphicon glyphicon-wrench"></span> Management Center</a>
+                        <a class="list-group-item" href="admin.sub/index.jsp"><span class="glyphicon glyphicon-wrench"></span> 管理中心</a>
                         <%
                                 }
                                 if(s.equals("article")){
                         %>
-                        <a class="list-group-item" href="writeArticle.jsp?action=new"><span class="glyphicon glyphicon-edit"></span> Write new Article</a>
+                        <a class="list-group-item" href="writeArticle.jsp?action=new"><span class="glyphicon glyphicon-edit"></span> 写文章</a>
                         <%
                                 }
                             }
                         %>
-                        <a class="list-group-item list-group-item-warning" href="index.jsp?action=logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
+                        <a class="list-group-item list-group-item-warning" href="index.jsp?action=logout"><span class="glyphicon glyphicon-log-out"></span> 登出</a>
                     </div>
                     <%
                         }

@@ -78,6 +78,9 @@
 <body>
 <div class="container">
     <jsp:include page="navbar.jsp"/>
+    <script>
+        document.getElementById("nav-user").setAttribute("class","active");
+    </script>
     <div class="page-header">
         <h1>用户管理</h1>
     </div>

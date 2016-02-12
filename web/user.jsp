@@ -122,7 +122,8 @@
                             </div>
                             <div class="form-group">
                                 <label class="control-label">密码 </label>
-                                <input class="form-control" type="password" name="password" placeholder="Fill nothing if not change it.">
+                                <input class="form-control" type="password" name="password" placeholder="如果不想更改请留空">
+                                <small>此网站并没有加密用户密码，所以请不要把您的常用密码泄露给我们，谢谢</small>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">联系信息 </label>

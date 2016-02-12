@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="css/main.css">
 </head>
 <%
+    User passport = (User)session.getAttribute("passport");
     String action = request.getParameter("action");
 %>
 <body>
@@ -32,7 +33,7 @@
         if(action == null){
     %>
     <div class="page-header">
-        <h1>Article</h1>
+        <h1>文章</h1>
         <%
             Bulletin bulletin = Bulletin.getDao().getBulletinBoard("article");
             if(bulletin != null){
@@ -63,7 +64,7 @@
                 <div class="page-header">
                     <h1><%=article.getTitle()%> <small>By: <%=authorName%> at <%=StringTools.convertDate(article.getDate())%></small></h1>
                 </div>
-                <p><%=article.getContext()%></p>
+                <p id="markdown-context"><%=article.getContext()%></p>
             </div>
         </div>
         <%
@@ -143,5 +144,10 @@
         %>
     </div>
 </div>
+<script src="js/markdown.min.js"></script>
+<script>
+    var context = document.getElementById("markdown-context").innerHTML;
+    document.getElementById("markdown-context").innerHTML = markdown.toHTML(context);
+</script>
 </body>
 </html>

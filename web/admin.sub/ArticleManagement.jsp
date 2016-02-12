@@ -16,6 +16,7 @@
     <title>岭南软件园 文章管理</title>
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/bootstrap-markdown.min.css">
 </head>
 <%
     User passport = (User)session.getAttribute("passport");
@@ -42,6 +43,9 @@
 <body>
 <div class="container">
     <jsp:include page="navbar.jsp"/>
+    <script>
+        document.getElementById("nav-article").setAttribute("class","active");
+    </script>
     <div class="page-header">
         <h1>Article Management</h1>
     </div>
@@ -199,7 +203,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">内容:</label>
-                                    <textarea class="form-control" name="context"><%=article.getContext()%></textarea>
+                                    <textarea class="form-control markdown" name="context"><%=article.getContext()%></textarea>
                                 </div>
                                 <div class="form-group">
                                     <input class="btn btn-default" type="submit" value="更新">
@@ -232,6 +236,18 @@
         %>
     </div>
 </div>
-
+<script src="../js/jquery-1.11.3.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/markdown.min.js"></script>
+<script src="../js/bootstrap-markdown.js"></script>
+<script>
+    $(".markdown").markdown(
+            {
+                onPreview: function(e) {
+                    return markdown.toHTML(e.getContent());
+                }
+            }
+    );
+</script>
 </body>
 </html>

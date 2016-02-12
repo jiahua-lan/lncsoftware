@@ -16,6 +16,7 @@
     <title>岭南软件园 写文章</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/bootstrap-markdown.min.css">
 </head>
 <%
     User passport = (User)session.getAttribute("passport");
@@ -123,7 +124,7 @@
             </div>
             <div class="form-group">
                 <label class="control-label">内容 </label>
-                <textarea class="form-control" name="context"></textarea>
+                <textarea class="form-control markdown" name="context" rows="10"></textarea>
             </div>
             <div class="form-group">
                 <input class="btn btn-success" type="submit" value="提交">
@@ -134,5 +135,18 @@
         %>
     </div>
 </div>
+<script src="js/jquery-1.11.3.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/markdown.min.js"></script>
+<script src="js/bootstrap-markdown.js"></script>
+<script>
+    $(".markdown").markdown(
+            {
+                onPreview: function(e) {
+                    return markdown.toHTML(e.getContent());
+                }
+            }
+    );
+</script>
 </body>
 </html>
