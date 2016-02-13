@@ -82,7 +82,7 @@
     </div>
 
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-sm-8">
             <div class="container-fluid">
                 <div class="list-group">
                     <%
@@ -117,7 +117,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-sm-4">
             <div class="container-fluid">
                 <div class="panel <%=(passport == null ? "panel-primary" : "panel-success")%>">
                     <div class="panel-heading">用户</div>
@@ -161,10 +161,10 @@
                                     <input class="form-control" placeholder="密码" type="password" name="password" value="">
                                 </div>
                                 <div class="form-group">
-                                    <input type="submit" class="btn btn-success col-md-12" value="登陆">
+                                    <input type="submit" class="btn btn-success col-sm-12" value="登陆">
                                 </div>
                                 <div class="form-group">
-                                    <a class="btn btn-default col-md-12" href="register.jsp">注册</a>
+                                    <a class="btn btn-default col-sm-12" href="register.jsp">注册</a>
                                 </div>
                             </form>
                             <%
@@ -176,19 +176,19 @@
                                     switch (s){
                                         case "login":
                             %>
-                            <span class="label label-success">Login</span>
+                            <label class="label label-success hidden-sm">Login</label>
                             <%
                                             break;
 
                                         case "article":
                             %>
-                            <span class="label label-info">Writer</span>
+                            <label class="label label-info">Writer</label>
                             <%
                                             break;
 
                                         case "admin":
                             %>
-                            <span class="label label-danger">Admin</span>
+                            <label class="label label-danger">Admin</label>
                             <%
                                     }
                                 }

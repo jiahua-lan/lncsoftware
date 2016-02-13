@@ -89,7 +89,7 @@
         <%
             if(passport == null || "permission denied".equals(statusFlag)){
         %>
-        <div class="col-md-6 col-md-offset-3">
+        <div class="col-sm-6 col-sm-offset-3">
             <%
                 switch (statusFlag){
                     case "no login":
@@ -109,7 +109,7 @@
         <%
             }else{
         %>
-        <div class="col-md-12">
+        <div class="col-sm-12">
             <div class="container-fluid">
                 <form class="form-horizontal" action="UserManagement.jsp" method="post">
                     <input type="hidden" name="action" value="search">
@@ -120,7 +120,7 @@
                     </div>
                 </form>
             </div>
-            <div class="col-md-10 col-md-offset-1">
+            <div class="col-sm-10 col-sm-offset-1">
                 <%
                     switch (statusFlag){
                         case "update success":

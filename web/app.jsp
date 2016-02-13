@@ -33,70 +33,78 @@
         %>
     </div>
     <div class="row">
-        <div class="col-md-8">
-            <%
-                List<AppInfo> appInfos = AppInfo.getDao().find("title",".+");
-                if(appInfos != null || appInfos.size() > 0){
-                    for(AppInfo appInfo : appInfos){
-            %>
-            <div class="media">
-                <div class="media-left">
-                    <img class="media-object" <%=("".equals(appInfo.getImageCode().trim()) ? "data-src='holder.js/60x60'" : "src='" + appInfo.getImageCode() + "' width='60pt' height='60pt'")%>>
-                </div>
-                <div class="media-body">
-                    <h4 class="media-heading"><a href="<%=("disable".equals(appInfo.getStatus()) ? "" : appInfo.getLink())%>"><%=appInfo.getTitle()%></a>
-                        <%
-                            switch (appInfo.getStatus()){
-                                case "working":
-                        %>
-                        <span class="label label-success">工作中</span>
-                        <%
-                                    break;
-
-                                case "repairing":
-                        %>
-                        <span class="label label-warning">维护期</span>
-                        <%
-                                    break;
-
-                                case "disable":
-                        %>
-                        <span class="label label-default">已失效</span>
-                        <%
-                                    break;
-                            }
-                        %>
-                    </h4>
-                    <%=appInfo.getDescription()%>
-                </div>
-            </div>
-            <%
-                    }
-                }
-            %>
-        </div>
-        <div class="col-md-4">
-            <div class="panel panel-primary">
-                <div class="panel-heading">通知</div>
-                <div class="panel-body">
+        <div class="col-sm-8">
+            <div class="container-fluid">
+                <div class="list-group">
                     <%
-                        Bulletin bulletin1 = Bulletin.getDao().getBulletinBoard("app_info");
-                        if(bulletin1 != null){
+                        List<AppInfo> appInfos = AppInfo.getDao().find("title",".+");
+                        if(appInfos != null || appInfos.size() > 0){
+                            for(AppInfo appInfo : appInfos){
                     %>
-                    <%=bulletin1.getContext()%>
+                    <a class="list-group-item <%=("disable".equals(appInfo.getStatus())) ? "disable" : ""%>" href="<%=("disable".equals(appInfo.getStatus()) ? "" : appInfo.getLink())%>">
+                        <div class="media">
+                            <div class="media-left">
+                                <img class="media-object" <%=("".equals(appInfo.getImageCode().trim()) ? "data-src='holder.js/60x60'" : "src='" + appInfo.getImageCode() + "' width='60pt' height='60pt'")%>>
+                            </div>
+                            <div class="media-body">
+                                <h4 class="media-heading"><%=appInfo.getTitle()%>
+                                    <%
+                                        switch (appInfo.getStatus()){
+                                            case "working":
+                                    %>
+                                    <span class="label label-success">工作中</span>
+                                    <%
+                                            break;
+
+                                        case "repairing":
+                                    %>
+                                    <span class="label label-warning">维护期</span>
+                                    <%
+                                            break;
+
+                                        case "disable":
+                                    %>
+                                    <span class="label label-default">已失效</span>
+                                    <%
+                                                break;
+                                        }
+                                    %>
+                                </h4>
+                                <%=appInfo.getDescription()%>
+                            </div>
+                        </div>
+                    </a>
                     <%
-                        }else{
-                    %>现在并没有什么通知<%
+                            }
                         }
                     %>
                 </div>
-                <%
-                    if(bulletin1 != null){
-                %>
-                <div class="panel-footer"><%=StringTools.convertDate(bulletin1.getDate())%></div>
-                <%
-                    }
-                %>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="container-fluid">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">通知</div>
+                    <div class="panel-body">
+                        <%
+                            Bulletin bulletin1 = Bulletin.getDao().getBulletinBoard("app_info");
+                            if(bulletin1 != null){
+                        %>
+                        <%=bulletin1.getContext()%>
+                        <%
+                        }else{
+                        %>现在并没有什么通知<%
+                        }
+                    %>
+                    </div>
+                    <%
+                        if(bulletin1 != null){
+                    %>
+                    <div class="panel-footer"><%=StringTools.convertDate(bulletin1.getDate())%></div>
+                    <%
+                        }
+                    %>
+                </div>
             </div>
         </div>
     </div>

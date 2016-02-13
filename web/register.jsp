@@ -19,7 +19,7 @@
 <div class="container">
     <jsp:include page="navbar.jsp"/>
     <div class="row">
-        <div class="col-md-6 col-md-offset-3">
+        <div class="col-sm-6 col-sm-offset-3">
             <div class="panel panel-default">
                 <div class="panel-body">
                     <h1 class="text-center">新用户注册</h1>
@@ -97,10 +97,10 @@
                                 <label>电子邮件、QQ（最好，因为只有协会成员才能享受在此网站的支持服务）或者手机号码</label>
                             </div>
                             <div class="form-group">
-                                <input type="submit" class="btn btn-success col-md-12" value="注册">
+                                <input type="submit" class="btn btn-success col-sm-12" value="注册">
                             </div>
                             <div class="form-group">
-                                <a href="index.jsp" class="btn btn-warning col-md-12">回到主页</a>
+                                <a href="index.jsp" class="btn btn-warning col-sm-12">回到主页</a>
                             </div>
                         </div>
                     </form>
