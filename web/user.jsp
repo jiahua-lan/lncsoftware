@@ -29,7 +29,7 @@
                     String password = request.getParameter("password");
                     String conPassword = request.getParameter("conPassword");
                     if(RegexTools.legalPassword(password)){
-                        if(passport.equals(conPassword)){
+                        if(password.equals(conPassword)){
                             passport.setPassword(password);
                         }else{
                             statusFlag = "password not same";
@@ -61,7 +61,7 @@
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
             <div class="panel panel-success" id="userPanel">
-                <div class="panel-heading">User Info</div>
+                <div class="panel-heading">用户信息</div>
                 <div class="panel-body">
                     <div class="container-fluid">
                         <%

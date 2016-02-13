@@ -63,7 +63,21 @@
         <div class="col-md-12">
             <div class="container-fluid">
                 <div class="page-header">
-                    <h1><%=article.getTitle()%> <small>By: <%=authorName%> at <%=StringTools.convertDate(article.getDate())%></small></h1>
+                    <h1><%=article.getTitle()%> <small>By: <%=authorName%> at <%=StringTools.convertDate(article.getDate())%></small>
+                    <%if(passport.getObjectId().equals(article.getAuthor())){%><a class="btn btn-sm btn-info" href="writeArticle.jsp?action=load&articleID=<%=articleID%>">修改</a><%}%></h1>
+                    <small>标签:
+                        <%
+                            if(article.getTags() != null && article.getTags().size() > 0){
+                                for(String s : article.getTags()){
+                        %><span class="label label-default"><%=s%></span> <%
+                                }
+                            }else{
+                        %>
+                        无
+                        <%
+                            }
+                        %>
+                    </small>
                 </div>
                 <p id="markdown-context"><%=article.getContext()%></p>
             </div>

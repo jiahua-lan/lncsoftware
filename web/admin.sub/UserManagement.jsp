@@ -120,7 +120,7 @@
                     </div>
                 </form>
             </div>
-            <div class="container-fluid">
+            <div class="col-md-10 col-md-offset-1">
                 <%
                     switch (statusFlag){
                         case "update success":
@@ -159,17 +159,15 @@
                                 <input type="hidden" name="userID" value="<%=user.getObjectId().toHexString()%>">
                                 <input type="hidden" name="action" value="update">
                                 <div class="form-group">
-                                    <div class="col-md-6">
-                                        <div class="input-group">
-                                            <label class="input-group-addon">用户名</label>
-                                            <input class="form-control" type="text" name="username" value="<%=user.getName()%>">
-                                        </div>
+                                    <div class="input-group">
+                                        <label class="input-group-addon">用户名</label>
+                                        <input class="form-control" type="text" name="username" value="<%=user.getName()%>">
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="input-group">
-                                            <label class="input-group-addon">联系方式</label>
-                                            <input class="form-control" type="text" name="contact" value="<%=user.getContactInfo()%>">
-                                        </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <label class="input-group-addon">联系方式</label>
+                                        <input class="form-control" type="text" name="contact" value="<%=user.getContactInfo()%>">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -179,7 +177,7 @@
                                     <input type="checkbox" name="rights" value="article" <%=(user.getRights().contains("article") ? "checked" : "")%>> 写作
                                 </div>
                                 <div class="form-group">
-                                    <input class="btn btn-default btn-block" type="submit" value="update change">
+                                    <input class="btn btn-default btn-block" type="submit" value="更新">
                                 </div>
                             </form>
                         </div>

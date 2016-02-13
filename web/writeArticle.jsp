@@ -3,7 +3,8 @@
 <%@ page import="cn.lncsoftware.data.Article" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.Collections" %>
-<%@ page import="org.bson.types.ObjectId" %><%--
+<%@ page import="org.bson.types.ObjectId" %>
+<%@ page import="cn.lncsoftware.common.StringTools" %><%--
   Created by IntelliJ IDEA.
   User: catten
   Date: 16/2/7
@@ -23,6 +24,7 @@
     request.setCharacterEncoding("utf-8");
     String action = request.getParameter("action");
     String statusFlag = "";
+    Article preloadArticle = null;
     if(passport == null){
         statusFlag = "no login";
 }else{
@@ -58,6 +60,55 @@
                             statusFlag = "submit success";
                         }else{
                             statusFlag = "illegal title";
+                        }
+                    };break;
+
+                    case "load":{
+                        String articleID = request.getParameter("articleID");
+                        if(articleID != null){
+                            Article article = Article.getDao().get(new ObjectId(articleID));
+                            if(article != null){
+                                if(article.getAuthor().equals(passport.getObjectId())){
+                                    preloadArticle = article;
+                                }else{
+                                    statusFlag = "not author";
+                                }
+                            }else{
+                                statusFlag = "article not exist";
+                            }
+                        }else{
+                            statusFlag = "request illegal";
+                        }
+                    };break;
+
+                    case "update":{
+                        String articleID = request.getParameter("articleID");
+                        if(articleID != null){
+                            Article article = Article.getDao().get(new ObjectId(articleID));
+                            if(article != null){
+                                String title = request.getParameter("title");
+                                String tags = request.getParameter("tags");
+                                String context = request.getParameter("context");
+                                if(title != null && title.length() < 64 && !"".equals(title.trim())){
+                                    article.setTitle(title);
+                                    if(tags != null && !"".equals(tags.trim())){
+                                        ArrayList<String> arrayList = new ArrayList<>();
+                                        Collections.addAll(arrayList,tags.split(";"));
+                                        article.setTags(arrayList);
+                                    }
+                                    article.setContext(context);
+                                    article.setAuthor(passport.getObjectId());
+                                    article.setDate(new Date());
+                                    Article.getDao().update(article);
+                                    statusFlag = "update success";
+                                }else{
+                                    statusFlag = "illegal title";
+                                }
+                            }else{
+                                statusFlag = "article not exist";
+                            }
+                        }else{
+                            statusFlag = "request illegal";
                         }
                     };break;
                 }
@@ -109,23 +160,51 @@
         <div class="alert alert-warning">标题格式不正确</div>
         <%
                     break;
+
+                case "not author":
+        %>
+        <div class="alert alert-danger">你不是文章的作者</div>
+        <%
+                    break;
+
+                case "article not exist":
+        %>
+        <div class="alert alert-warning">文章已经不存在了</div>
+        <%
+                    break;
+
+                case "request illegal":
+        %>
+        <div class="alert alert-danger">无法识别的请求</div>
+        <%
+                    break;
+
+                case "update success":
+        %>
+        <div class="alert alert-success">更新成功</div>
+        <%
+                    break;
             }
 
-            if(passport != null && !"permission denied".equals(statusFlag)){
+            if(passport != null && (!"permission denied".equals(statusFlag) && !"not author".equals(statusFlag))){
+                boolean modifyFlag = preloadArticle != null;
         %>
         <form class="form-horizontal" action="writeArticle.jsp" method="post">
-            <input type="hidden" name="action" value="upload">
+            <input type="hidden" name="action" value="<%=modifyFlag ? "update" : "upload"%>">
+            <% if(modifyFlag) {%>
+            <input type="hidden" name="articleID" value="<%=preloadArticle.getObjectId().toHexString()%>">
+            <%}%>
             <div class="form-group">
                 <label class="control-label">标题 </label>
-                <input class="form-control" type="text" name="title" placeholder="标题必须小于64个字符">
+                <input class="form-control" type="text" name="title" placeholder="标题必须小于64个字符" value="<%=modifyFlag ? preloadArticle.getTitle() : ""%>">
             </div>
             <div class="form-group">
                 <label class="control-label">标签 </label>
-                <input class="form-control" type="text" name="tags" placeholder="选填，例如：tags1;tags2;">
+                <input class="form-control" type="text" name="tags" placeholder="选填，例如：tags1;tags2;" value="<%=modifyFlag ? StringTools.listTags(preloadArticle.getTags()) : ""%>">
             </div>
             <div class="form-group">
                 <label class="control-label">内容 </label>
-                <textarea class="form-control markdown" name="context" rows="10"></textarea>
+                <textarea class="form-control markdown" name="context" rows="10"><%=modifyFlag ? preloadArticle.getContext() : ""%></textarea>
             </div>
             <div class="form-group">
                 <input class="btn btn-success" type="submit" value="提交">

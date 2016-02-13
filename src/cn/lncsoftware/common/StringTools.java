@@ -21,8 +21,13 @@ public class StringTools {
         return result.toString();
     }
 
-    private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd");
+    private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
     public static String convertDate(Date date){
         return simpleDateFormat.format(date);
     }
+
+    public static void main(String[] args) {
+        System.out.print(StringTools.convertDate(new Date()));
+    }
+
 }

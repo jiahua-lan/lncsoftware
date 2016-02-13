@@ -155,10 +155,10 @@
                             <form class="form-horizontal" action="index.jsp" method="post">
                                 <input type="hidden" name="action" value="login">
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="Username" type="text" name="username" value="">
+                                    <input class="form-control" placeholder="用户名" type="text" name="username" value="">
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="Password" type="password" name="password" value="">
+                                    <input class="form-control" placeholder="密码" type="password" name="password" value="">
                                 </div>
                                 <div class="form-group">
                                     <input type="submit" class="btn btn-success col-md-12" value="登陆">
