@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/main.css">
 </head>
+<script src="js/tools.js"></script>
 <%
     User passport = (User)session.getAttribute("passport");
     request.setCharacterEncoding("utf-8");
@@ -83,6 +84,35 @@
 
     <div class="row">
         <div class="col-sm-8">
+            <%
+                bulletin = Bulletin.getDao().getBulletinBoard("mainPageTopBoard");
+                if(bulletin != null){
+            %>
+            <div class="container-fluid">
+                <div class="panel panel-primary">
+                    <div class="panel-body">
+                        <div class="media">
+                            <%
+                                if(bulletin.getImageLink() != null && !"".equals(bulletin.getImageLink())){
+                            %>
+                            <div class="media-left">
+                                <div class="media-object">
+                                    <a href="<%=bulletin.getLink()%>"><img src="<%=bulletin.getImageLink()%>" onload="DrawImage(this,128,128)"></a>
+                                </div>
+                            </div>
+                            <%
+                                }
+                            %>
+                            <div class="media-body">
+                                <p id="topBoard"><%=bulletin.getContext()%></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <%
+                }
+            %>
             <div class="container-fluid">
                 <div class="list-group">
                     <%
@@ -225,5 +255,11 @@
         </div>
     </div>
 </div>
+<script src="js/jquery-1.11.3.min.js"></script>
+<script src="js/markdown.min.js"></script>
+<script>
+    context = $("#topBoard").html();
+    $("#topBoard").html(markdown.toHTML(context));
+</script>
 </body>
 </html>

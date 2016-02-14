@@ -76,7 +76,8 @@
         %>
         <div class="col-md-12 lnc-marginBox">
             <div class="btn-group btn-group-justified">
-                <a class="btn btn-default <%="mainPage".equals(type) ? "active" : "" %>" href="BulletinManagement.jsp?type=mainPage">主页</a>
+                <a class="btn btn-default <%="mainPage".equals(type) ? "active" : "" %>" href="BulletinManagement.jsp?type=mainPage">主页标题</a>
+                <a class="btn btn-default <%="mainPageTopBoard".equals(type) ? "active" : "" %>" href="BulletinManagement.jsp?type=mainPageTopBoard">主页公告</a>
                 <a class="btn btn-default <%="article".equals(type) ? "active" : "" %>" href="BulletinManagement.jsp?type=article">文章</a>
                 <a class="btn btn-default <%="app".equals(type) ? "active" : "" %>" href="BulletinManagement.jsp?type=app">应用</a>
                 <a class="btn btn-default <%="contact".equals(type) ? "active" : "" %>" href="BulletinManagement.jsp?type=contact">联系</a>
@@ -130,8 +131,9 @@
                                     }
                                 };break;
 
+                                case "mainPageTopBoard":
                                 case "contactInfo":
-                                case "contactFriendLink":{
+                                case "contactFriendLink": {
                                     String context = request.getParameter("context");
                                     if(context != null && !"".equals(context)){
                                         String link = request.getParameter("link");
@@ -228,6 +230,7 @@
             <div class="container-fluid">
                 <%
                     switch (type){
+                        case "mainPageTopBoard":
                         case "mainPage":
                         case "article": {
                 %>
@@ -237,11 +240,15 @@
                             <%
                                 if("mainPage".equals(type)) {
                             %>
-                            主页标题下公告
+                            主页标题下说明
                             <%
                                 } else if("article".equals(type)) {
                             %>
                             文章页面标题下公告
+                            <%
+                                } else if("mainPageTopBoard".equals(type)){
+                            %>
+                            主页文章列表顶部说明
                             <%
                                 }
                             %>
@@ -256,8 +263,22 @@
                                     <input type="hidden" name="type" value="<%=type%>">
                                     <div class="form-group">
                                         <label class="control-label">内容:</label>
-                                        <textarea class="form-control" name="context"><%=bulletin == null ? "" : bulletin.getContext()%></textarea>
+                                        <textarea class="form-control" name="context" <%=("mainPageTopBoard".equals(type) ? "placeholder='允许使用Markdown格式'" : "")%>><%=bulletin == null ? "" : bulletin.getContext()%></textarea>
                                     </div>
+                                    <%
+                                        if("mainPageTopBoard".equals(type)){
+                                    %>
+                                    <div class="form-group input-group">
+                                        <span class="input-group-addon">链接</span>
+                                        <input class="form-control" type="url" name="link" placeholder="导航到何处？" value="<%=(bulletin == null ? "" : bulletin.getLink())%>">
+                                    </div>
+                                    <div class="form-group input-group">
+                                        <span class="input-group-addon">图片链接</span>
+                                        <input class="form-control" type="url" name="imageLink" placeholder="左侧图片链接" value="<%=bulletin == null ? "" : bulletin.getImageLink()%>">
+                                    </div>
+                                    <%
+                                        }
+                                    %>
                                     <div class="form-group">
                                         <input class="btn btn-primary" type="submit" value="<%=bulletin == null ? "创建" : "更新"%>">
                                         <% if(bulletin != null) {%>
@@ -355,7 +376,7 @@
                                         </div>
                                         <div class="form-group input-group">
                                             <span class="input-group-addon">图像</span>
-                                            <input class="form-control" type="url" placeholder="图片链接" name="imageLin" value="<%=bulletin.getImageLink()%>">
+                                            <input class="form-control" type="url" placeholder="图片链接" name="imageLink" value="<%=bulletin.getImageLink()%>">
                                         </div>
                                         <div class="form-group form-group">
                                             <input class="btn btn-primary" type="submit" value="更新">
