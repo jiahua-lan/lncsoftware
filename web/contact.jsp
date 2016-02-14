@@ -31,7 +31,7 @@
                     if(contact != null && contact.size() > 0){
                         for (Bulletin b : contact){
                 %>
-                <a class="list-group-item list-group-item-text" href="<%=b.getLink()%>">
+                <a class="list-group-item" href="<%=b.getLink()%>">
                     <div class="media">
                         <div class="media-left">
                             <img class="media-object" <%="".equals(b.getImageLink().trim()) || b.getImageLink().equals(null) ? "data-src='holder.js/60x60'" : "src='" +
@@ -58,7 +58,7 @@
                     if(contact != null && contact.size() > 0){
                         for(Bulletin bulletin : contact){
                 %>
-                <a class="list-group-item list-group-item-success" href="<%=bulletin.getLink()%>"><%=bulletin.getContext()%></a>
+                <a class="list-group-item" href="<%=bulletin.getLink()%>"><%=bulletin.getContext()%></a>
                 <%
                         }
                     }else{
