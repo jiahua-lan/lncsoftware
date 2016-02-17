@@ -109,7 +109,7 @@ public class Article extends DataObject implements Serializable{
             if(context.length() < 100){
                 previewSentences = context;
             }else{
-                previewSentences = String.format("%s ...(total %s words)",context.substring(0,100),context.length());
+                previewSentences = context.substring(0,100);
             }
         }
         return previewSentences;

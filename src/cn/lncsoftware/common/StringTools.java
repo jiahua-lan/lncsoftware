@@ -17,7 +17,7 @@ public class StringTools {
     public static String listTags(List<String> tags){
         StringBuilder result = new StringBuilder();
         if(tags == null) return "";
-        for(String s : tags) result.append(tags).append(";");
+        for(String s : tags) result.append(s).append(";");
         return result.toString();
     }
 

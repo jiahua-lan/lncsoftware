@@ -99,6 +99,7 @@
                                     article.setContext(context);
                                     article.setAuthor(passport.getObjectId());
                                     article.setDate(new Date());
+                                    article.setPreviewSentences(article.getContext().substring(0,100));
                                     Article.getDao().update(article);
                                     statusFlag = "update success";
                                 }else{
@@ -204,7 +205,7 @@
             </div>
             <div class="form-group">
                 <label class="control-label">内容 </label>
-                <textarea class="form-control markdown" name="context" rows="10"><%=modifyFlag ? preloadArticle.getContext() : ""%></textarea>
+                <textarea class="form-control markdown" name="context" rows="20"><%=modifyFlag ? preloadArticle.getContext() : ""%></textarea>
             </div>
             <div class="form-group">
                 <input class="btn btn-success" type="submit" value="提交">

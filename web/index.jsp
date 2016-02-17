@@ -135,7 +135,7 @@
                         <div class="media">
                             <div class="media-body">
                                 <h4><%=article.getTitle()%></h4>
-                                <p><%=article.getPreviewSentences()%></p>
+                                <p><%=article.getPreviewSentences()%><%=(article.getContext().length() > 100 ? " ...(共"+ article.getContext().length() +"字)":"")%></p>
                                 <small>By:<%=author%> at <%=StringTools.convertDate(article.getDate())%></small>
                             </div>
                         </div>

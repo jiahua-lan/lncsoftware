@@ -64,8 +64,10 @@
             <div class="container-fluid">
                 <div class="page-header">
                     <h1><%=article.getTitle()%> <small>By: <%=authorName%> at <%=StringTools.convertDate(article.getDate())%></small>
-                    <%if(passport.getObjectId().equals(article.getAuthor())){%><a class="btn btn-sm btn-info" href="writeArticle.jsp?action=load&articleID=<%=articleID%>">修改</a><%}%></h1>
-                    <small>标签:
+                        <%if(passport.getObjectId() != null && passport.getObjectId().equals(article.getAuthor())){%>
+                        <a class="btn btn-sm btn-info" href="writeArticle.jsp?action=load&articleID=<%=articleID%>">修改</a>
+                        <%}%></h1>
+                    <label>标签:
                         <%
                             if(article.getTags() != null && article.getTags().size() > 0){
                                 for(String s : article.getTags()){
@@ -77,7 +79,7 @@
                         <%
                             }
                         %>
-                    </small>
+                    </label>
                 </div>
                 <p id="markdown-context"><%=article.getContext()%></p>
             </div>
@@ -126,7 +128,7 @@
                     <div class="media">
                         <div class="media-body">
                             <h4><%=article.getTitle()%> <small>by :<%=author%></small></h4>
-                            <%=article.getPreviewSentences()%>
+                            <p><%=article.getPreviewSentences()%><%=(article.getContext().length() > 100 ? " ...(共"+ article.getContext().length() +"字)":"")%></p>
                         </div>
                     </div>
                 </a>

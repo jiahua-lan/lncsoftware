@@ -94,6 +94,8 @@
                                 String context = request.getParameter("context");
                                 if(context != null && !"".equals(context)){
                                     bulletin.setContext(context);
+                                    bulletin.setLink(request.getParameter("link"));
+                                    bulletin.setImageLink(request.getParameter("imageLink"));
                                     bulletin.setDate(new Date());
                                     Bulletin.getDao().update(bulletin);
                                     statusFlag = "update success";
@@ -412,7 +414,7 @@
                                             <input class="form-control" placeholder="图片链接" type="url" name="imageLink">
                                         </div>
                                         <div class="form-group form-group">
-                                            <input class="btn btn-success" type="submit" value="Add">
+                                            <input class="btn btn-success" type="submit" value="添加">
                                         </div>
                                     </form>
                                 </div>
