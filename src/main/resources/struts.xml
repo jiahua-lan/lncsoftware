@@ -5,9 +5,12 @@
         "http://struts.apache.org/dtds/struts-2.3.dtd">
 
 <struts>
+    <!--
     <constant name="struts.devMode" value="false"/>
     <constant name="struts.serve.static.browserCache" value="false"/>
+    -->
     <package name="homepage" extends="struts-default">
+        <default-action-ref name="index"/>
         <action name="index" class="cn.lncsa.actions.IndexAction" method="show">
             <result name="success">/WEB-INF/views/index.jsp</result>
         </action>
@@ -16,6 +19,12 @@
     <package name="article" extends="struts-default">
         <action name="articles" class="cn.lncsa.actions.ArticleAction" method="list">
             <result name="success">/WEB-INF/views/articleList.jsp</result>
+        </action>
+    </package>
+
+    <package name="users" extends="struts-default">
+        <action name="login">
+            <result>/WEB-INF/views/loginForm.jsp</result>
         </action>
     </package>
 </struts>

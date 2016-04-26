@@ -67,7 +67,7 @@
                         <div class="list-group-item disabled">No Article.</div>
                     </s:if>
 
-                    <s:elseif test="articleList.size >= 10">
+                    <s:elseif test="articleList.size>=10">
                         <a class="list-group-item" href="javascript:">More...</a>
                     </s:elseif>
                 </div>

@@ -19,7 +19,7 @@
         <nav>
             <ul class="nav nav-pills">
                 <li><a href="index">Home</a></li>
-                <li class="active"><a href="articles">Article</a></li>
+                <li><a href="articles">Article</a></li>
                 <li><a href="javascript:">Apps</a></li>
                 <li><a href="javascript:">Contact</a></li>
             </ul>
@@ -31,8 +31,31 @@
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <div class="page-header text-center">
-                            Login
+                            <h1>Login</h1>
                         </div>
+                        <form class="form-horizontal" method="post">
+                            <div class="form-group">
+                                <div class="col-sm-2">
+                                    <label class="control-label">Username</label>
+                                </div>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-2">
+                                    <label class="control-label">Password</label>
+                                </div>
+                                <div class="col-sm-10">
+                                    <input type="password" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group text-center">
+                                <div class="col-sm-6 col-sm-offset-3">
+                                    <input class="btn btn-success btn-block" type="submit" value="Login">
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
