@@ -12,10 +12,9 @@
     <title>Lingnan Software(Center) Association</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/main.css">
-    <script src="js/tools.js"/>
 </head>
 <body>
-
+<script src="js/tools.js"></script>
 <div class="container">
     <div class="page-header">
         <h1>Lingnan Software(Center) Association</h1>
@@ -40,7 +39,8 @@
                                 <s:if test="#request.topBoard.imageLink!=null">
                                     <div class="media-left">
                                         <div class="media-object">
-                                            <a href="${topBoard.link}"><img src="${topBoard.imageLink}" onload="DrawImage(this,128,128)"></a>
+                                            <a href="${topBoard.link}"><img src="${topBoard.imageLink}"
+                                                                            onload="DrawImage(this,128,128)"></a>
                                         </div>
                                     </div>
                                 </s:if>
@@ -95,7 +95,6 @@
                                 <a class="btn btn-default">Sign up</a>
                             </div>
                         </s:else>
-
                     </div>
                 </div>
             </div>

@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <html>
 <head>
     <title>Articles</title>
@@ -25,7 +26,24 @@
                 </ul>
             </nav>
         </div>
-
+        <div class="row">
+            <div class="col-md-8">
+                <div class="list-group">
+                    <s:iterator value="#request.articleList">
+                        <a class="list-group-item" href="javascript:">
+                            <h4>${title}</h4>
+                            <p>${previewSentences}</p>
+                            <small>By ${authorName} at ${createDate}</small>
+                        </a>
+                    </s:iterator>
+                    <s:if test="#request.articleList.size==0">
+                        <div class="list-group-item disabled">
+                            No Article...
+                        </div>
+                    </s:if>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>

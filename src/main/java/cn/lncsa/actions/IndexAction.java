@@ -6,7 +6,6 @@ import cn.lncsa.data.model.Bulletin;
 import com.opensymphony.xwork2.ActionSupport;
 import org.apache.struts2.interceptor.RequestAware;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -19,10 +18,6 @@ public class IndexAction extends ActionSupport implements RequestAware {
     @Override
     public void setRequest(Map<String, Object> map) {
         requestContext = map;
-    }
-
-    public Map<String, Object> getRequestContext() {
-        return requestContext;
     }
 
     public String show() {
