@@ -15,6 +15,7 @@ public class ArticleInfo{
     private String authorName;
     private String createDate;
 
+    private String id;
     private String title;
     private String previewSentences;
     private String status;
@@ -30,6 +31,7 @@ public class ArticleInfo{
         previewSentences = article.getPreviewSentences();
         tags = article.getTags();
         status = article.getStatus();
+        id = article.getObjectId().toHexString();
     }
 
     public ArticleInfo(){
@@ -66,5 +68,13 @@ public class ArticleInfo{
             l.add(new ArticleInfo(article));
         }
         return l;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

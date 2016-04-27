@@ -20,7 +20,7 @@ public class IndexAction extends ActionSupport implements RequestAware {
         requestContext = map;
     }
 
-    public String show() {
+    public String execute() {
         requestContext.put("bulletin", Bulletin.getDao().getBulletinBoard("mainPage"));
         requestContext.put("topBoard", Bulletin.getDao().getBulletinBoard("mainPageTopBoard"));
         requestContext.put("articleList", ArticleInfo.convertArticleList(Article.getDao().getLatestPage()));

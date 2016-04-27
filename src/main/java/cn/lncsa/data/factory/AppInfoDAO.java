@@ -23,6 +23,10 @@ public class AppInfoDAO extends DOFactory<AppInfo>{
         return convertDocList(documents);
     }
 
+    public List<AppInfo> listAll(){
+        return query("title",".+");
+    }
+
     @Override
     public AppInfo create(Document doDoc) {
         return new AppInfo(doDoc);

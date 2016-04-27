@@ -18,17 +18,35 @@ public class UserAction extends ActionSupport implements SessionAware,RequestAwa
     private String username;
     private String password;
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     @Override
     public void setRequest(Map<String, Object> map) {
-        sessionContext = map;
+        requestContext = map;
     }
 
     @Override
     public void setSession(Map<String, Object> map) {
-        requestContext = map;
+        sessionContext = map;
     }
 
     public String login(){
+        if(sessionContext.get("passport") != null) return "success";
+        if(username == null && password == null) return "login";
         User user;
         if(username != null && RegexTools.legalUsername(username)){
             user = User.getDao().getUserByName(username);
@@ -41,7 +59,8 @@ public class UserAction extends ActionSupport implements SessionAware,RequestAwa
                                 return "success";
 
                             case "banned":
-                                return "banned";
+                                requestContext.put("loginResult","banned");
+                                return "failed";
                         }
                     }
                 }
@@ -49,5 +68,10 @@ public class UserAction extends ActionSupport implements SessionAware,RequestAwa
         }
         requestContext.put("loginResult","failed");
         return "failed";
+    }
+
+    public String logout(){
+        sessionContext.remove("passport");
+        return "success";
     }
 }

@@ -1,7 +1,11 @@
 body{
-    margin-top: 3pt;
+    padding-top: 3pt;
 }
 
 .lnc-marginBox{
     margin-top: 5pt;
+}
+
+.label{
+    display: inline-block;
 }

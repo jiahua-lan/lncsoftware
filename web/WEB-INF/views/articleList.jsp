@@ -16,31 +16,34 @@
 <body>
     <div class="container">
         <div class="page-header">
-            <h1>Lingnan Software(Center) Association</h1>
-            <nav>
-                <ul class="nav nav-pills">
-                    <li><a href="index">Home</a></li>
-                    <li class="active"><a href="articles">Article</a></li>
-                    <li><a href="javascript:">Apps</a></li>
-                    <li><a href="javascript:">Contact</a></li>
-                </ul>
-            </nav>
+            <jsp:include page="temps/homepageHead.jsp"/>
+            <script>document.getElementById("page-head-article").setAttribute("class","active")</script>
         </div>
-        <div class="row">
-            <div class="col-md-8">
-                <div class="list-group">
-                    <s:iterator value="#request.articleList">
-                        <a class="list-group-item" href="javascript:">
-                            <h4>${title}</h4>
-                            <p>${previewSentences}</p>
-                            <small>By ${authorName} at ${createDate}</small>
-                        </a>
-                    </s:iterator>
-                    <s:if test="#request.articleList.size==0">
-                        <div class="list-group-item disabled">
-                            No Article...
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-8">
+                    <div class="list-group">
+                        <jsp:include page="widgets/articleWidget.jsp"/>
+                        <s:if test="#request.articleList.size==0">
+                            <div class="list-group-item disabled">
+                                No Article...
+                            </div>
+                        </s:if>
+                    </div>
+                    <s:if test="#request.pageList!=null">
+                        <div class="text-center">
+                            <nav>
+                                <ul class="pagination">
+                                    <s:iterator value="#request.pageList" var="item">
+                                        <li><a href="articles?page=${item}">${item}</a></li>
+                                    </s:iterator>
+                                </ul>
+                            </nav>
                         </div>
                     </s:if>
+                </div>
+                <div class="col-sm-4">
+                    <jsp:include page="widgets/userWidget.jsp"/>
                 </div>
             </div>
         </div>

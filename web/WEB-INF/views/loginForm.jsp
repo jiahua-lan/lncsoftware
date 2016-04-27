@@ -1,3 +1,4 @@
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <%--
   Created by IntelliJ IDEA.
   User: catten
@@ -15,15 +16,7 @@
 <body>
 <div class="container">
     <div class="page-header">
-        <h1>Lingnan Software(Center) Association</h1>
-        <nav>
-            <ul class="nav nav-pills">
-                <li><a href="index">Home</a></li>
-                <li><a href="articles">Article</a></li>
-                <li><a href="javascript:">Apps</a></li>
-                <li><a href="javascript:">Contact</a></li>
-            </ul>
-        </nav>
+        <jsp:include page="temps/homepageHead.jsp"/>
     </div>
     <div style="margin-top: 10pt">
         <div class="row">
@@ -33,13 +26,18 @@
                         <div class="page-header text-center">
                             <h1>Login</h1>
                         </div>
-                        <form class="form-horizontal" method="post">
+                        <form class="form-horizontal" method="post" action="login.action" id="loginForm">
+                            <s:if test="#request.loginResult != null">
+                                <div class="alert alert-warning">
+                                    Login failed. cause ${loginResult}.
+                                </div>
+                            </s:if>
                             <div class="form-group">
                                 <div class="col-sm-2">
                                     <label class="control-label">Username</label>
                                 </div>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" name="username" id="username">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -47,7 +45,7 @@
                                     <label class="control-label">Password</label>
                                 </div>
                                 <div class="col-sm-10">
-                                    <input type="password" class="form-control">
+                                    <input type="password" class="form-control" name="password" id="password">
                                 </div>
                             </div>
                             <div class="form-group text-center">

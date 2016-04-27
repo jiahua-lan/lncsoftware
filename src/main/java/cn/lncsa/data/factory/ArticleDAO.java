@@ -13,6 +13,7 @@ import java.util.List;
  */
 public class ArticleDAO extends DOFactory<Article>{
     private MongoCollection<Document> collection;
+    private static int itemPerPage = 5;
 
     public ArticleDAO() {
         super("article");
@@ -23,7 +24,7 @@ public class ArticleDAO extends DOFactory<Article>{
         return getPage(1);
     }
 
-    public int getPages(){
+    public int getPageCount(){
         long count = collection.count();
         if(count < 1) return 0;
         int pages = (int) (count / 10);

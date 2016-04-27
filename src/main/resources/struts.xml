@@ -11,7 +11,7 @@
     -->
     <package name="homepage" extends="struts-default">
         <default-action-ref name="index"/>
-        <action name="index" class="cn.lncsa.actions.IndexAction" method="show">
+        <action name="index" class="cn.lncsa.actions.IndexAction" method="execute">
             <result name="success">/WEB-INF/views/index.jsp</result>
         </action>
     </package>
@@ -20,11 +20,32 @@
         <action name="articles" class="cn.lncsa.actions.ArticleAction" method="list">
             <result name="success">/WEB-INF/views/articleList.jsp</result>
         </action>
+        <action name="article" class="cn.lncsa.actions.ArticleAction" method="rend">
+            <result name="success">/WEB-INF/views/articleDetails.jsp</result>
+        </action>
     </package>
 
     <package name="users" extends="struts-default">
-        <action name="login">
-            <result>/WEB-INF/views/loginForm.jsp</result>
+        <action name="login" class="cn.lncsa.actions.UserAction" method="login">
+            <result name="success" type="redirectAction">index</result>
+            <result name="login">/WEB-INF/views/loginForm.jsp</result>
+            <result name="failed">/WEB-INF/views/loginForm.jsp</result>
+        </action>
+
+        <action name="logout" class="cn.lncsa.actions.UserAction" method="logout">
+            <result name="success" type="redirectAction">index</result>
+        </action>
+    </package>
+
+    <package name="apps" extends="struts-default">
+        <action name="apps" class="cn.lncsa.actions.AppAction" method="list">
+            <result name="success">/WEB-INF/views/appList.jsp</result>
+        </action>
+    </package>
+
+    <package name="contact" extends="struts-default">
+        <action name="contact" class="cn.lncsa.actions.ContactAction" method="list">
+            <result name="success">/WEB-INF/views/contact.jsp</result>
         </action>
     </package>
 </struts>
