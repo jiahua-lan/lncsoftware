@@ -49,6 +49,7 @@ public class ArticleAction extends ActionSupport implements RequestAware, ModelD
         List<Article> articles;
         int pagePerList = 10;
         int pageNum;
+        int totalPage;
         if(page == null){
             pageNum = 1;
         }else {
@@ -61,8 +62,11 @@ public class ArticleAction extends ActionSupport implements RequestAware, ModelD
             }
         }
         articles = Article.getDao().getPage(pageNum);
+        totalPage = Article.getDao().getPageCount();
         requestContext.put("articleList",ArticleInfo.convertArticleList(articles));
-        requestContext.put("pageList",rendPageList(pageNum,Article.getDao().getPageCount(),pagePerList));
+        requestContext.put("pageList",rendPageList(pageNum,totalPage,pagePerList));
+        requestContext.put("currentPage",pageNum);
+        requestContext.put("pageCount",totalPage);
         return "success";
     }
 
@@ -105,6 +109,7 @@ public class ArticleAction extends ActionSupport implements RequestAware, ModelD
                 end = pagesPerList;
             }else {
                 start = (int) (position - Math.floor(pagesPerList / 2));
+                if(start == 0) start = 1;
                 end = (start + pagesPerList) > totalPage ? totalPage : start + pagesPerList;
             }
             if(start != 1) list.add("<<");

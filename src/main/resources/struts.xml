@@ -28,12 +28,32 @@
     <package name="users" extends="struts-default">
         <action name="login" class="cn.lncsa.actions.UserAction" method="login">
             <result name="success" type="redirectAction">index</result>
-            <result name="login">/WEB-INF/views/loginForm.jsp</result>
-            <result name="failed">/WEB-INF/views/loginForm.jsp</result>
+            <result name="login">/WEB-INF/views/sub_user/loginForm.jsp</result>
+            <result name="failed">/WEB-INF/views/sub_user/loginForm.jsp</result>
         </action>
 
         <action name="logout" class="cn.lncsa.actions.UserAction" method="logout">
             <result name="success" type="redirectAction">index</result>
+        </action>
+
+        <action name="self" class="cn.lncsa.actions.UserAction" method="self">
+            <result name="login" type="redirectAction">login</result>
+            <result name="success">/WEB-INF/views/sub_user/userCenter.jsp</result>
+        </action>
+
+        <action name="registry" class="cn.lncsa.actions.UserAction" method="registry">
+            <result name="form">/WEB-INF/views/sub_user/registry.jsp</result>
+            <result name="success">/WEB-INF/views/sub_user/registrySuccess.jsp</result>
+        </action>
+
+        <action name="updateContact" class="cn.lncsa.actions.UserAction" method="updateContact">
+            <result name="success" type="redirectAction">self</result>
+            <result name="login" type="redirectAction">login</result>
+        </action>
+
+        <action name="updatePassword" class="cn.lncsa.actions.UserAction" method="updatePassword">
+            <result name="success" type="redirectAction">self</result>
+            <result name="login" type="redirectAction">login</result>
         </action>
     </package>
 

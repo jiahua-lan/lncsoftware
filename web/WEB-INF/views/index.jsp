@@ -9,12 +9,11 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <html>
 <head>
-    <title>Lingnan Software(Center) Association</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/main.css">
+    <title>岭南软件园协会</title>
+    <jsp:include page="temps/includeCSS.jsp"/>
+    <jsp:include page="temps/includeScript.jsp"/>
 </head>
 <body>
-<script src="js/tools.js"></script>
 <div class="container">
     <div class="page-header">
         <jsp:include page="temps/homepageHead.jsp"/>
@@ -27,10 +26,10 @@
                 <div class="list-group">
                     <jsp:include page="widgets/articleWidget.jsp"/>
                     <s:if test="#request.articleList==null">
-                        <div class="list-group-item disabled">No Article.</div>
+                        <div class="list-group-item disabled">没有文章……</div>
                     </s:if>
                     <s:elseif test="articleList.size>=10">
-                        <a class="list-group-item" href="javascript:">More...</a>
+                        <a class="list-group-item" href="javascript:">查看更多……</a>
                     </s:elseif>
                 </div>
             </div>
@@ -40,6 +39,5 @@
         </div>
     </div>
 </div>
-
 </body>
 </html>

@@ -9,39 +9,57 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <div class="panel panel-default">
     <div class="panel-heading">
-        User
+        用户
     </div>
     <s:if test="#session.passport!=null">
         <div class="panel-body">
-            <div>Welcome <b>${passport.name}</b></div>
+            <div>欢迎， <b>${passport.name}！</b></div>
             <s:iterator value="#session.passport.rights" var="item">
                 <span class="label label-success">${item}</span>
             </s:iterator>
         </div>
         <div class="list-group">
-            <a class="list-group-item" href="javascript:">User Center</a>
+            <a class="list-group-item" href="self" id="widget-user-center">
+                <span class="glyphicon glyphicon-user"> </span>
+                用户中心
+            </a>
             <s:iterator value="#session.passport.rights" var="item">
                 <s:if test="#item=='article'">
-                    <a class="list-group-item" href="javascript:">Write Article</a>
+                    <a class="list-group-item" href="javascript:">
+                        <span class="glyphicon glyphicon-edit"> </span>
+                        写文章
+                    </a>
                 </s:if>
                 <s:if test="#item=='admin'">
-                    <a class="list-group-item" href="javascript:">Administrator</a>
+                    <a class="list-group-item" href="javascript:">
+                        <span class="glyphicon glyphicon-wrench"> </span>
+                        后台管理
+                    </a>
                 </s:if>
             </s:iterator>
         </div>
         <div class="panel-footer">
-            <a class="btn btn-warning btn-sm" href="logout.action">Logout</a>
+            <a class="btn btn-warning btn-sm" href="logout.action">
+                <span class="glyphicon glyphicon-log-out"> </span>
+                登出
+            </a>
         </div>
     </s:if>
     <s:else>
         <div class="panel-body">
             <div class="text-center" style="margin: 3pt 0pt">
-                Welcome, Guest!
+                欢迎您，游客！
             </div>
         </div>
         <div class="panel-footer">
-            <a class="btn btn-success btn-sm" href="login.action">Login</a>
-            <a class="btn btn-default btn-sm">Sign up</a>
+            <a class="btn btn-success btn-sm" href="login.action">
+                <span class="glyphicon glyphicon-log-in"> </span>
+                登陆
+            </a>
+            <a class="btn btn-default btn-sm" href="registry">
+                <span class="glyphicon glyphicon-registration-mark"> </span>
+                注册
+            </a>
         </div>
     </s:else>
 </div>

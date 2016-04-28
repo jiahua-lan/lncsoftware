@@ -27,8 +27,8 @@ public class ArticleDAO extends DOFactory<Article>{
     public int getPageCount(){
         long count = collection.count();
         if(count < 1) return 0;
-        int pages = (int) (count / 10);
-        if(count % 10 != 0) pages++;
+        int pages = (int) (count / itemPerPage);
+        if(count % itemPerPage != 0) pages++;
         return pages;
     }
 
@@ -36,19 +36,19 @@ public class ArticleDAO extends DOFactory<Article>{
         long count = collection.count();
         if(count < 1) return null;
         List<Document> documents;
-        if(page > count / 10 && count % 10 != 0) {
-            count %= 10;
+        if(page > count / itemPerPage && count % itemPerPage != 0) {
+            count %= itemPerPage;
             documents = collection
                     .find()
                     .limit((int) count)
-                    .skip((int) (collection.count() - 10 * (page - 1) - count))
+                    .skip((int) (collection.count() - itemPerPage * (page - 1) - count))
                     .into(new ArrayList<Document>());
         }
         else{
             documents = collection
                     .find()
-                    .limit(10)
-                    .skip((int) (collection.count() - 10 * page))
+                    .limit(itemPerPage)
+                    .skip((int) (collection.count() - itemPerPage * page))
                     .into(new ArrayList<Document>());
         }
         return convertDocList(documents);

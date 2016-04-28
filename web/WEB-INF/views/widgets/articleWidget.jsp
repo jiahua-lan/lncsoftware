@@ -10,7 +10,7 @@
 <s:iterator value="#request.articleList">
     <a class="list-group-item" href="article?id=${id}">
         <h4>${title}</h4>
-        <p>${previewSentences}</p>
+        <p>${previewSentences}....</p>
         <small>By ${authorName} at ${createDate}</small>
     </a>
 </s:iterator>

@@ -9,10 +9,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Contact Us</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/main.css">
-    <script src="js/holder.min.js"></script>
+    <title>联系方式</title>
+    <jsp:include page="temps/includeCSS.jsp"/>
+    <jsp:include page="temps/includeScript.jsp"/>
 </head>
 <body>
 <div class="container">
@@ -23,11 +22,11 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-6">
-                <h2>Contact Us</h2>
+                <h2>联系我们</h2>
                 <jsp:include page="widgets/contactListWidget.jsp"/>
             </div>
             <div class="col-sm-6">
-                <h2>Friend Links</h2>
+                <h2>友情链接</h2>
                 <jsp:include page="widgets/friendLinksWidget.jsp"/>
             </div>
         </div>

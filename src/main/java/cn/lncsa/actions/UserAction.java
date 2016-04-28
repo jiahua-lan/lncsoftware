@@ -1,11 +1,15 @@
 package cn.lncsa.actions;
 
 import cn.lncsa.common.RegexTools;
+import cn.lncsa.data.factory.UserDAO;
 import cn.lncsa.data.model.User;
 import com.opensymphony.xwork2.ActionSupport;
 import org.apache.struts2.interceptor.RequestAware;
 import org.apache.struts2.interceptor.SessionAware;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Map;
 
 /**
@@ -17,6 +21,8 @@ public class UserAction extends ActionSupport implements SessionAware,RequestAwa
 
     private String username;
     private String password;
+    private String confirmedPassword;
+    private String contactInfo;
 
     public String getUsername() {
         return username;
@@ -70,8 +76,84 @@ public class UserAction extends ActionSupport implements SessionAware,RequestAwa
         return "failed";
     }
 
+    public String self(){
+        User user = (User) sessionContext.get("passport");
+        if(user == null){
+            return "login";
+        }
+        requestContext.put("userInfo",user);
+        return "success";
+    }
+
+    public String registry(){
+        if (username == null || password == null || contactInfo == null) {
+            return "form";
+        }
+        if (!RegexTools.legalUsername(username) || !RegexTools.legalPassword(password) || !RegexTools.legalContactInfo(contactInfo)){
+            requestContext.put("error","field");
+            return "form";
+        }
+        if(!password.equals(confirmedPassword)){
+            requestContext.put("error","field");
+            return "form";
+        }
+        User user = User.getDao().getUserByName(username);
+        if(user != null){
+            requestContext.put("error","duplicate");
+            return "form";
+        }else user = new User();
+        user.setName(username);
+        user.setPassword(password);
+        user.setContactInfo(contactInfo);
+        ArrayList<String> rights = new ArrayList<>(1);
+        rights.add("login");
+        user.setRights(rights);
+        User.getDao().create(user);
+        return "success";
+    }
+
+    public String updateContact(){
+        if(sessionContext.get("passport")==null) return "login";
+        if(contactInfo != null && RegexTools.legalContactInfo(contactInfo)){
+            User user = (User) sessionContext.get("passport");
+            user.setContactInfo(contactInfo);
+            User.getDao().update(user);
+            sessionContext.put("passport",User.getDao().read(user.getObjectId()));
+        }
+        return "success";
+    }
+
+    public String updatePassword(){
+        User user = (User) sessionContext.get("passport");
+        if(user == null) return "login";
+        if(password != null){
+            if(RegexTools.legalPassword(password) && password.equals(confirmedPassword)){
+                user.setPassword(password);
+                User.getDao().update(user);
+                sessionContext.put("passport",User.getDao().read(user.getObjectId()));
+            }
+        }
+        return "success";
+    }
+
     public String logout(){
         sessionContext.remove("passport");
         return "success";
+    }
+
+    public String getContactInfo() {
+        return contactInfo;
+    }
+
+    public void setContactInfo(String contactInfo) {
+        this.contactInfo = contactInfo;
+    }
+
+    public String getConfirmedPassword() {
+        return confirmedPassword;
+    }
+
+    public void setConfirmedPassword(String confirmedPassword) {
+        this.confirmedPassword = confirmedPassword;
     }
 }

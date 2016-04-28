@@ -9,9 +9,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>${article.title} | LNCSA</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/main.css">
+    <title>${article.title} | 岭南软件园协会</title>
+    <jsp:include page="temps/includeCSS.jsp"/>
+    <jsp:include page="temps/includeScript.jsp"/>
 </head>
 <body>
 <div class="container">
@@ -26,7 +26,7 @@
                 <div class="panel-body">
                     <div class="page-header">
                         <h2>${article.title} <small style="display: inline-block">By ${article.authorName} at ${article.createDate}</small></h2>
-                        <div>Tags:
+                        <div>标签 :
                             <s:iterator value="#request.article.tags" id="tagName">
                                 <span class="label label-info">${tagName}</span>
                             </s:iterator>

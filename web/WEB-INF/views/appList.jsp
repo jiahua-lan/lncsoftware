@@ -9,11 +9,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Applications</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/main.css">
+    <title>应用｜岭南软件园协会</title>
+    <jsp:include page="temps/includeCSS.jsp"/>
+    <jsp:include page="temps/includeScript.jsp"/>
 </head>
-<script src="js/holder.min.js"></script>
 <body>
 <div class="container">
     <div class="page-header">
@@ -54,7 +53,7 @@
                     </s:if>
                     <s:if test="#request.appList.size<=0">
                         <div class="list-group-item disabled">
-                            No Applications....
+                            暂时没有应用……
                         </div>
                     </s:if>
                 </div>
@@ -64,13 +63,13 @@
                 <s:if test="#request.bulletinBoard!=null">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            Bulletin Board
+                            小喇叭
                         </div>
                         <div class="panel-body">
                             ${bulletinBoard.context}
                         </div>
                         <div class="panel-footer">
-                            <s:date name="#request.bulletinBoard.date" format="yyyy-MM-DD hh:mm"/>
+                            发布于 <s:date name="#request.bulletinBoard.date" format="yyyy年MM月DD日 hh时mm分"/>
                         </div>
                     </div>
                 </s:if>
@@ -78,6 +77,5 @@
         </div>
     </div>
 </div>
-<s:debug></s:debug>
 </body>
 </html>

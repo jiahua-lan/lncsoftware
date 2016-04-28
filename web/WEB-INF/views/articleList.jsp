@@ -9,9 +9,9 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <html>
 <head>
-    <title>Articles</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/main.css">
+    <title>文章｜岭南软件园协会</title>
+    <jsp:include page="temps/includeCSS.jsp"/>
+    <jsp:include page="temps/includeScript.jsp"/>
 </head>
 <body>
     <div class="container">
@@ -26,24 +26,21 @@
                         <jsp:include page="widgets/articleWidget.jsp"/>
                         <s:if test="#request.articleList.size==0">
                             <div class="list-group-item disabled">
-                                No Article...
+                                暂时没有文章……
                             </div>
                         </s:if>
+                        <jsp:include page="widgets/pageNavWidget.jsp"/>
                     </div>
-                    <s:if test="#request.pageList!=null">
-                        <div class="text-center">
-                            <nav>
-                                <ul class="pagination">
-                                    <s:iterator value="#request.pageList" var="item">
-                                        <li><a href="articles?page=${item}">${item}</a></li>
-                                    </s:iterator>
-                                </ul>
-                            </nav>
-                        </div>
-                    </s:if>
                 </div>
                 <div class="col-sm-4">
                     <jsp:include page="widgets/userWidget.jsp"/>
+                    <form class="form-inline" action="articles.action" method="post">
+                        <div class="input-group">
+                            <span class="input-group-addon">共 ${pageCount} 页</span>
+                            <input type="number" name="page" class="form-control" value="${currentPage}">
+                            <span class="input-group-btn"><input class="btn btn-default" type="submit" value="跳转"></span>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
