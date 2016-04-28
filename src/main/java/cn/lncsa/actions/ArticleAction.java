@@ -1,28 +1,64 @@
 package cn.lncsa.actions;
 
+import cn.lncsa.common.RegexTools;
+import cn.lncsa.common.StringTools;
 import cn.lncsa.data.ArticleInfo;
+import cn.lncsa.data.PureAppInfo;
 import cn.lncsa.data.model.Article;
 import cn.lncsa.data.model.Bulletin;
+import cn.lncsa.data.model.User;
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import org.apache.struts2.interceptor.RequestAware;
+import org.apache.struts2.interceptor.SessionAware;
 import org.bson.types.ObjectId;
 import org.pegdown.PegDownProcessor;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 /**
  * Created by catten on 16/4/25.
  */
-public class ArticleAction extends ActionSupport implements RequestAware, ModelDriven<Article>{
+public class ArticleAction extends ActionSupport implements RequestAware, SessionAware{
     private static PegDownProcessor pegDownProcessor = new PegDownProcessor();
 
     private Article article = new Article();
 
     private String id;
+    private String title;
+    private String tags;
+    private String context;
+    private String previewSentences;
+
     private String page;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getTags() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
+    }
+
+    public String getContext() {
+        return context;
+    }
+
+    public void setContext(String context) {
+        this.context = context;
+    }
 
     public String getId() {
         return id;
@@ -80,6 +116,10 @@ public class ArticleAction extends ActionSupport implements RequestAware, ModelD
         if(article == null) return "not-found";
         requestContext.put("renderedArticle",pegDownProcessor.markdownToHtml(article.getContext()));
         requestContext.put("article",new ArticleInfo(article));
+        User user = (User) ActionContext.getContext().getSession().get("passport");
+        if(user != null && user.getObjectId().equals(article.getAuthor())){
+            requestContext.put("isAuthor","true");
+        }
         return "success";
     }
 
@@ -111,6 +151,7 @@ public class ArticleAction extends ActionSupport implements RequestAware, ModelD
                 start = (int) (position - Math.floor(pagesPerList / 2));
                 if(start == 0) start = 1;
                 end = (start + pagesPerList) > totalPage ? totalPage : start + pagesPerList;
+                if(position > (totalPage - (pagesPerList - before))) start = totalPage - pagesPerList;
             }
             if(start != 1) list.add("<<");
             for(int i = start; i <= end; i++){
@@ -121,6 +162,62 @@ public class ArticleAction extends ActionSupport implements RequestAware, ModelD
         return list;
     }
 
+    public String load(){
+        User user = (User) sessionContext.get("passport");
+        if(user == null) return "login";
+        if(id != null){
+            try {
+                Article article = Article.getDao().read(new ObjectId(id));
+                if(!user.getObjectId().equals(article.getAuthor())) {
+                    requestContext.put("message","Permission denied.");
+                    return "no-permission";
+                }
+                requestContext.put("articleID",article.getObjectId().toHexString());
+                requestContext.put("article",article);
+            }catch (Throwable e){
+                return "error";
+            }
+        }
+        return "success";
+    }
+
+    public String save(){
+        User user = (User) sessionContext.get("passport");
+        if(user == null) return "login";
+        boolean writer = false;
+        for (String s : user.getRights()){
+            if(s.equals("article")) {
+                writer = true;
+                break;
+            }
+        }
+        if(!writer){
+            requestContext.put("message","permission denied");
+            return "error";
+        }
+
+        if(title == null || context == null){
+            return "new";
+        }
+
+        Article uploaded = new Article();
+        uploaded.setStatus("show");
+        uploaded.setDate(new Date());
+        uploaded.setPreviewSentences(previewSentences);
+        uploaded.setAuthor(user.getObjectId());
+        uploaded.setContext(context);
+        uploaded.setTitle(title);
+        uploaded.setTags(StringTools.splitTags(tags));
+
+        if(id == null || !id.matches("\\w+")){
+            Article.getDao().create(uploaded);
+        }else{
+            uploaded.setObjectId(new ObjectId(id));
+            Article.getDao().update(uploaded);
+        }
+        return "success";
+    }
+
     Map<String, Object> requestContext;
     @Override
     public void setRequest(Map<String, Object> map) {
@@ -128,8 +225,17 @@ public class ArticleAction extends ActionSupport implements RequestAware, ModelD
         requestContext.put("bulletin", Bulletin.getDao().getBulletinBoard("article"));
     }
 
+    private Map<String, Object> sessionContext;
     @Override
-    public Article getModel() {
-        return article;
+    public void setSession(Map<String, Object> map) {
+        sessionContext = map;
+    }
+
+    public String getPreviewSentences() {
+        return previewSentences;
+    }
+
+    public void setPreviewSentences(String previewSentences) {
+        this.previewSentences = previewSentences;
     }
 }

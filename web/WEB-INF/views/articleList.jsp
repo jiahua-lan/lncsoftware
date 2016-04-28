@@ -29,12 +29,12 @@
                                 暂时没有文章……
                             </div>
                         </s:if>
-                        <jsp:include page="widgets/pageNavWidget.jsp"/>
                     </div>
+                    <jsp:include page="widgets/pageNavWidget.jsp"/>
                 </div>
                 <div class="col-sm-4">
                     <jsp:include page="widgets/userWidget.jsp"/>
-                    <form class="form-inline" action="articles.action" method="post">
+                    <form action="articles.action" method="post">
                         <div class="input-group">
                             <span class="input-group-addon">共 ${pageCount} 页</span>
                             <input type="number" name="page" class="form-control" value="${currentPage}">

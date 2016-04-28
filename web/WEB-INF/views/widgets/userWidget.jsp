@@ -25,7 +25,7 @@
             </a>
             <s:iterator value="#session.passport.rights" var="item">
                 <s:if test="#item=='article'">
-                    <a class="list-group-item" href="javascript:">
+                    <a class="list-group-item" href="writing">
                         <span class="glyphicon glyphicon-edit"> </span>
                         写文章
                     </a>

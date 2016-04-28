@@ -20,8 +20,22 @@
         <action name="articles" class="cn.lncsa.actions.ArticleAction" method="list">
             <result name="success">/WEB-INF/views/articleList.jsp</result>
         </action>
+
         <action name="article" class="cn.lncsa.actions.ArticleAction" method="rend">
             <result name="success">/WEB-INF/views/articleDetails.jsp</result>
+        </action>
+
+        <action name="writing" class="cn.lncsa.actions.ArticleAction" method="load">
+            <result name="success">/WEB-INF/views/writeArticle.jsp</result>
+            <result name="error">/WEB-INF/views/errorTemplate.jsp</result>
+            <result name="login" type="redirectAction">login</result>
+        </action>
+
+        <action name="article-save" class="cn.lncsa.actions.ArticleAction" method="save">
+            <result name="success" type="redirectAction">articles</result>
+            <result name="new" type="redirectAction">writing</result>
+            <result name="login" type="redirectAction">login</result>
+            <result name="error">/WEB-INF/views/errorTemplate.jsp</result>
         </action>
     </package>
 

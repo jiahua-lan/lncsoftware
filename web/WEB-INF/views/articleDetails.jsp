@@ -18,14 +18,21 @@
     <div class="page-header">
         <jsp:include page="temps/homepageHead.jsp"/>
         <script>document.getElementById("page-head-article" +
-                "").setAttribute("class","active")</script>
+                "").setAttribute("class", "active")</script>
     </div>
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="page-header">
-                        <h2>${article.title} <small style="display: inline-block">By ${article.authorName} at ${article.createDate}</small></h2>
+                        <h2>${article.title}
+                            <small style="display: inline-block">By ${article.authorName}
+                                at ${article.createDate}</small>
+                            <s:if test="#request.isAuthor=='true'">
+                                <a href="writing.action?id=${id}" class="btn btn-info"><span
+                                        class="glyphicon glyphicon-pencil"></span> Edit</a>
+                            </s:if>
+                        </h2>
                         <div>标签 :
                             <s:iterator value="#request.article.tags" id="tagName">
                                 <span class="label label-info">${tagName}</span>

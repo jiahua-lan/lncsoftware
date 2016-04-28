@@ -29,7 +29,7 @@
                         <div class="list-group-item disabled">没有文章……</div>
                     </s:if>
                     <s:elseif test="articleList.size>=10">
-                        <a class="list-group-item" href="javascript:">查看更多……</a>
+                        <a class="list-group-item" href="articles">查看更多……</a>
                     </s:elseif>
                 </div>
             </div>
