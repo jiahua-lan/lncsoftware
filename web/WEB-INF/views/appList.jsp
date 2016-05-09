@@ -12,6 +12,7 @@
     <title>应用｜岭南软件园协会</title>
     <jsp:include page="temps/includeCSS.jsp"/>
     <jsp:include page="temps/includeScript.jsp"/>
+    <script src="js/jquery-1.11.3.min.js"></script>
 </head>
 <body>
 <div class="container">
@@ -61,7 +62,8 @@
             <div class="col-sm-4">
                 <jsp:include page="widgets/userWidget.jsp"/>
                 <s:if test="#request.bulletinBoard!=null">
-                    <div class="panel panel-primary">
+                    <script>$(document).ready(function(){ $("#bulletinBoard").addClass("animated"); });</script>
+                    <div class="panel panel-primary bounceIn" id="bulletinBoard">
                         <div class="panel-heading">
                             小喇叭
                         </div>

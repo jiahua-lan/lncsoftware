@@ -9,3 +9,4 @@
 <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <link rel="stylesheet" href="css/main.css">
 <link rel="stylesheet" href="css/bootstrap-markdown.min.css"/>
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.1/animate.css"/>

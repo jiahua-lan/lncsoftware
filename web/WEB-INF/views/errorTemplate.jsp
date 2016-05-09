@@ -13,13 +13,20 @@
 </head>
 <body>
     <div class="container">
-        <div class="col-md-6 col-md-offset-3">
-            <div class="panel panel-danger">
-                <div class="panel-body">
-                    <div class="page-header">
-                        Error
+        <div class="page-header">
+            <jsp:include page="temps/homepageHead.jsp"/>
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <div class="panel panel-danger">
+                        <div class="panel-body">
+                            <div class="page-header">
+                                <h1 class="text-center">Error</h1>
+                            </div>
+                            ${message}
+                        </div>
                     </div>
-                    ${message}
                 </div>
             </div>
         </div>

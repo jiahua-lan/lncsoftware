@@ -12,6 +12,7 @@
     <title>岭南软件园协会</title>
     <jsp:include page="temps/includeCSS.jsp"/>
     <jsp:include page="temps/includeScript.jsp"/>
+    <script src="js/jquery-1.11.3.min.js"></script>
 </head>
 <body>
 <div class="container">
@@ -22,7 +23,12 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-8 col-sm-8">
-                <jsp:include page="widgets/topBoardWiget.jsp"/>
+                <s:if test="#request.bulletin!=null">
+                    <script>$(document).ready(function(){ $("#topBulletinBoard").addClass("animated"); });</script>
+                    <div class="bounceIn" id="topBulletinBoard">
+                        <jsp:include page="widgets/topBoardWiget.jsp"/>
+                    </div>
+                </s:if>
                 <div class="list-group">
                     <jsp:include page="widgets/articleWidget.jsp"/>
                     <s:if test="#request.articleList==null">

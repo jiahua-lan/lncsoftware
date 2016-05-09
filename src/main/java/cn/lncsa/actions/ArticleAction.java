@@ -170,7 +170,7 @@ public class ArticleAction extends ActionSupport implements RequestAware, Sessio
                 Article article = Article.getDao().read(new ObjectId(id));
                 if(!user.getObjectId().equals(article.getAuthor())) {
                     requestContext.put("message","Permission denied.");
-                    return "no-permission";
+                    return "error";
                 }
                 requestContext.put("articleID",article.getObjectId().toHexString());
                 requestContext.put("article",article);
