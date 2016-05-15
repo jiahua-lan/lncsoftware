@@ -29,14 +29,19 @@
                         <jsp:include page="widgets/topBoardWiget.jsp"/>
                     </div>
                 </s:if>
-                <div class="list-group">
-                    <jsp:include page="widgets/articleWidget.jsp"/>
-                    <s:if test="#request.articleList==null">
-                        <div class="list-group-item disabled">没有文章……</div>
-                    </s:if>
-                    <s:elseif test="articleList.size>=10">
-                        <a class="list-group-item" href="articles">查看更多……</a>
-                    </s:elseif>
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        Recent Articles
+                    </div>
+                    <div class="list-group">
+                        <jsp:include page="widgets/articleWidget.jsp"/>
+                        <s:if test="#request.articleList==null">
+                            <div class="list-group-item disabled">没有文章……</div>
+                        </s:if>
+                        <s:elseif test="articleList.size>=10">
+                            <a class="list-group-item" href="articles">查看更多……</a>
+                        </s:elseif>
+                    </div>
                 </div>
             </div>
             <div class="col-sm-4 col-sm-4">

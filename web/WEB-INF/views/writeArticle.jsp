@@ -35,7 +35,7 @@
             <div class="form-group">
                 <label class="control-label">Preview Sentences</label>
                 <input class="form-control" type="text" name="previewSentences"
-                       placeholder="An introduction in 100 words" value="${article.previewSentences}">
+                       placeholder="An introduction in 100 words." value="${article.previewSentences}">
             </div>
             <div class="form-group">
                 <label class="control-label">内容 </label>

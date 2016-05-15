@@ -1,3 +1,4 @@
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <%--
   Created by IntelliJ IDEA.
   User: catten
@@ -25,6 +26,9 @@
                                 <h1 class="text-center">Error</h1>
                             </div>
                             ${message}
+                        </div>
+                        <div class="panel-footer">
+                            <a class="btn btn-default" href="<s:url namespace="/" action="index"/>">Back to Homepage</a>
                         </div>
                     </div>
                 </div>

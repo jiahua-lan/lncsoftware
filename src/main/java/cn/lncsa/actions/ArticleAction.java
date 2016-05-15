@@ -36,6 +36,8 @@ public class ArticleAction extends ActionSupport implements RequestAware, Sessio
 
     private String page;
 
+    private String preId;
+
     public String getTitle() {
         return title;
     }
@@ -77,6 +79,20 @@ public class ArticleAction extends ActionSupport implements RequestAware, Sessio
     }
 
     public String execute(){
+        return "success";
+    }
+
+    public String getPreview(){
+        if(preId != null){
+            try {
+                Article article = Article.getDao().read(new ObjectId(preId));
+                if(article != null){
+                    requestContext.put("article",new ArticleInfo(article));
+                }
+            }catch (Throwable e){
+                //Do nothing
+            }
+        }
         return "success";
     }
 
@@ -237,5 +253,13 @@ public class ArticleAction extends ActionSupport implements RequestAware, Sessio
 
     public void setPreviewSentences(String previewSentences) {
         this.previewSentences = previewSentences;
+    }
+
+    public String getPreId() {
+        return preId;
+    }
+
+    public void setPreId(String preId) {
+        this.preId = preId;
     }
 }

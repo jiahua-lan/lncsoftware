@@ -7,7 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<div class="panel panel-default">
+<div class="panel <s:if test="#session.passport==null">panel-default</s:if><s:else>panel-success</s:else>">
     <div class="panel-heading">
         用户
     </div>

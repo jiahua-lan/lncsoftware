@@ -9,20 +9,24 @@
     <constant name="struts.devMode" value="false"/>
     <constant name="struts.serve.static.browserCache" value="false"/>
     -->
-    <package name="homepage" extends="struts-default">
+    <package name="homepage" extends="struts-default" namespace="/">
         <default-action-ref name="index"/>
         <action name="index" class="cn.lncsa.actions.IndexAction" method="execute">
             <result name="success">/WEB-INF/views/index.jsp</result>
         </action>
     </package>
 
-    <package name="article" extends="struts-default">
+    <package name="article" extends="struts-default" namespace="/">
         <action name="articles" class="cn.lncsa.actions.ArticleAction" method="list">
             <result name="success">/WEB-INF/views/articleList.jsp</result>
         </action>
 
         <action name="article" class="cn.lncsa.actions.ArticleAction" method="rend">
             <result name="success">/WEB-INF/views/articleDetails.jsp</result>
+        </action>
+
+        <action name="articlePreview" class="cn.lncsa.actions.ArticleAction" method="getPreview">
+            <result name="success">/WEB-INF/views/sub_admin/ajaxPage/articlePreview.jsp</result>
         </action>
 
         <action name="writing" class="cn.lncsa.actions.ArticleAction" method="load">
@@ -39,9 +43,9 @@
         </action>
     </package>
 
-    <package name="users" extends="struts-default">
+    <package name="users" extends="struts-default" namespace="/">
         <action name="login" class="cn.lncsa.actions.UserAction" method="login">
-            <result name="success" type="redirectAction">index</result>
+            <result name="success" type="redirect">/index</result>
             <result name="login">/WEB-INF/views/sub_user/loginForm.jsp</result>
             <result name="failed">/WEB-INF/views/sub_user/loginForm.jsp</result>
         </action>
@@ -71,15 +75,29 @@
         </action>
     </package>
 
-    <package name="apps" extends="struts-default">
+    <package name="apps" extends="struts-default" namespace="/">
         <action name="apps" class="cn.lncsa.actions.AppAction" method="list">
             <result name="success">/WEB-INF/views/appList.jsp</result>
         </action>
     </package>
 
-    <package name="contact" extends="struts-default">
+    <package name="contact" extends="struts-default" namespace="/">
         <action name="contact" class="cn.lncsa.actions.ContactAction" method="list">
             <result name="success">/WEB-INF/views/contact.jsp</result>
+        </action>
+    </package>
+
+    <package name="adminArticle" extends="struts-default" namespace="/admin">
+        <action name="article" class="cn.lncsa.actions.ArticleAdmin" method="show">
+            <result name="success">/WEB-INF/views/sub_admin/article.admin.jsp</result>
+            <result name="error">/WEB-INF/views/errorTemplate.jsp</result>
+            <result name="login" type="redirect">/login</result>
+        </action>
+
+        <action name="article-admin-search" class="cn.lncsa.actions.ArticleAdmin" method="search">
+            <result name="success">/WEB-INF/views/sub_admin/article.admin.jsp</result>
+            <result name="error">/WEB-INF/views/errorTemplate.jsp</result>
+            <result name="login" type="redirect">/login</result>
         </action>
     </package>
 </struts>

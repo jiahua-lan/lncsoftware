@@ -6,6 +6,7 @@ import cn.lncsa.data.model.User;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -13,7 +14,7 @@ import java.util.List;
  */
 public class ArticleInfo{
     private String authorName;
-    private String createDate;
+    private Date createDate;
 
     private String id;
     private String title;
@@ -21,12 +22,12 @@ public class ArticleInfo{
     private String status;
     private List<String> tags;
 
-    private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-DD hh:mm");
+    //private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-DD hh:mm");
 
     public ArticleInfo(Article article){
         UserDAO userDAO = User.getDao();
         authorName = userDAO.read(article.getAuthor()).getName();
-        createDate = simpleDateFormat.format(article.getDate());
+        createDate = article.getDate();
         title = article.getTitle();
         previewSentences = article.getPreviewSentences();
         tags = article.getTags();
@@ -42,7 +43,7 @@ public class ArticleInfo{
         return authorName;
     }
 
-    public String getCreateDate() {
+    public Date getCreateDate() {
         return createDate;
     }
 
