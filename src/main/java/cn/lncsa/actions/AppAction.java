@@ -1,13 +1,11 @@
 package cn.lncsa.actions;
 
-import cn.lncsa.data.PureAppInfo;
 import cn.lncsa.data.dao.IAppInfoDAO;
 import cn.lncsa.data.dao.IBulletinDAO;
 import cn.lncsa.data.model.AppInfo;
 import cn.lncsa.data.model.Bulletin;
 import com.opensymphony.xwork2.ActionSupport;
 import org.apache.struts2.interceptor.RequestAware;
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Collections;
@@ -28,16 +26,15 @@ public class AppAction extends ActionSupport implements RequestAware {
     @Override
     public void setRequest(Map<String, Object> map) {
         requestContext = map;
-        Bulletin appGuide;
-        Bulletin appInfo;
+        Bulletin appGuide = bulletinDAO.getAppGuideBulletin();
+        Bulletin appInfo = bulletinDAO.getAppUsageBulletin();
         //requestContext.put("bulletin",appGuide);
         //requestContext.put("bulletinBoard",appInfo);
     }
 
     public String list(){
         List<AppInfo> appInfos = Collections.list((Enumeration<AppInfo>) appInfoDAO.findAll());
-        if(appInfos != null) requestContext.put("appList", PureAppInfo.convertList(appInfos));
-        else requestContext.put("appList",null);
+        requestContext.put("appList", appInfos);
         return "success";
     }
 

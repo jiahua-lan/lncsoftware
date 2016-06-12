@@ -2,6 +2,9 @@ package cn.lncsa.actions;
 
 import cn.lncsa.common.RegexTools;
 import cn.lncsa.common.StringTools;
+import cn.lncsa.data.dao.IAppInfoDAO;
+import cn.lncsa.data.dao.IArticleDAO;
+import cn.lncsa.data.dao.IBulletinDAO;
 import cn.lncsa.data.model.Article;
 import cn.lncsa.data.model.Bulletin;
 import cn.lncsa.data.model.User;
@@ -11,6 +14,10 @@ import com.opensymphony.xwork2.ModelDriven;
 import org.apache.struts2.interceptor.RequestAware;
 import org.apache.struts2.interceptor.SessionAware;
 import org.pegdown.PegDownProcessor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -20,10 +27,21 @@ import java.util.Map;
 /**
  * Created by catten on 16/4/25.
  */
-public class ArticleAction extends ActionSupport implements RequestAware, SessionAware{
+public class ArticleAction extends ActionSupport implements RequestAware, SessionAware {
     private static PegDownProcessor pegDownProcessor = new PegDownProcessor();
 
-    private Article article = new Article();
+    private IArticleDAO articleDAO;
+    private IBulletinDAO bulletinDAO;
+
+    @Autowired
+    public void setArticleDAO(IArticleDAO articleDAO) {
+        this.articleDAO = articleDAO;
+    }
+
+    @Autowired
+    public void setBulletinDAO(IBulletinDAO bulletinDAO) {
+        this.bulletinDAO = bulletinDAO;
+    }
 
     private String id;
     private String title;
@@ -75,18 +93,18 @@ public class ArticleAction extends ActionSupport implements RequestAware, Sessio
         this.page = page;
     }
 
-    public String execute(){
+    public String execute() {
         return "success";
     }
 
-    public String getPreview(){
-        if(preId != null){
+    public String getPreview() {
+        if (preId != null) {
             try {
-                Article article = Article.getDao().read(new ObjectId(preId));
-                if(article != null){
-                    requestContext.put("article",new ArticleInfo(article));
+                Article article = articleDAO.findOne(Integer.parseInt(preId));
+                if (article != null) {
+                    requestContext.put("article", article);
                 }
-            }catch (Throwable e){
+            } catch (Throwable e) {
                 //Do nothing
             }
         }
@@ -94,52 +112,54 @@ public class ArticleAction extends ActionSupport implements RequestAware, Sessio
     }
 
     //List articles
-    public String list(){
+    public String list() {
         List<Article> articles;
-        int pagePerList = 10;
+        int itemPerPage = 10;
         int pageNum;
         int totalPage;
-        if(page == null){
+        if (page == null) {
             pageNum = 1;
-        }else {
+        } else {
             if (!page.matches("\\d+")) {
-                if("<<".equals(page))
+                if ("<<".equals(page))
                     pageNum = 1;
-                else pageNum = Article.getDao().getPageCount();
+                else pageNum = (int) (articleDAO.count() / itemPerPage);
             } else {
                 pageNum = Integer.parseInt(page);
             }
         }
-        articles = Article.getDao().getPage(pageNum);
-        totalPage = Article.getDao().getPageCount();
-        requestContext.put("articleList",ArticleInfo.convertArticleList(articles));
-        requestContext.put("pageList",rendPageList(pageNum,totalPage,pagePerList));
-        requestContext.put("currentPage",pageNum);
-        requestContext.put("pageCount",totalPage);
+        Page<Article> thePage = articleDAO.findAll(new PageRequest(pageNum - 1,itemPerPage));
+        articles = thePage.getContent();
+        totalPage = thePage.getTotalPages();
+        requestContext.put("articleList", articles);
+        requestContext.put("pageList", rendPageList(pageNum, totalPage, itemPerPage));
+        requestContext.put("currentPage", pageNum);
+        requestContext.put("pageCount", totalPage);
         return "success";
     }
 
     //Rending article for shown
-    public String rend(){
+    public String rend() {
+        Article article;
         try {
-            article = Article.getDao().read(new ObjectId(id));
-        }catch (Throwable e){
+            article = articleDAO.findOne(Integer.parseInt(preId));
+        } catch (Throwable e) {
             return "error";
         }
-        if(article == null) return "not-found";
-        requestContext.put("renderedArticle",pegDownProcessor.markdownToHtml(article.getContext()));
-        requestContext.put("article",new ArticleInfo(article));
+        if (article == null) return "not-found";
+        requestContext.put("renderedArticle", pegDownProcessor.markdownToHtml(article.getContext()));
+        requestContext.put("article", article);
         User user = (User) ActionContext.getContext().getSession().get("passport");
-        if(user != null && user.getObjectId().equals(article.getAuthor())){
-            requestContext.put("isAuthor","true");
+        if (user.getId().intValue() == article.getAuthor().getId().intValue()) {
+            requestContext.put("isAuthor", "true");
         }
         return "success";
     }
 
-    private List<String> rendPageList(int position, int totalPage, int pagesPerList){
+    private List<String> rendPageList(int position, int totalPage, int pagesPerList) {
         List<String> list;
         //Only 1 page.
-        if(position <= 1 && totalPage <= 1) {
+        if (position <= 1 && totalPage <= 1) {
             list = new ArrayList<>(1);
             list.add("1");
             return list;
@@ -148,68 +168,68 @@ public class ArticleAction extends ActionSupport implements RequestAware, Sessio
         //More than one page
 
         //Lesser than pages per list
-        if(totalPage <= pagesPerList){
+        if (totalPage <= pagesPerList) {
             list = new ArrayList<>(totalPage);
-            for(int i = 0; i < totalPage; i++){
-                list.add(String.valueOf(i+1));
+            for (int i = 0; i < totalPage; i++) {
+                list.add(String.valueOf(i + 1));
             }
-        }else{
+        } else {
             list = new ArrayList<>(pagesPerList);
             int start, end;
             int before = (int) Math.floor(pagesPerList / 2);
-            if(position < before){
+            if (position < before) {
                 start = 1;
                 end = pagesPerList;
-            }else {
+            } else {
                 start = (int) (position - Math.floor(pagesPerList / 2));
-                if(start == 0) start = 1;
+                if (start == 0) start = 1;
                 end = (start + pagesPerList) > totalPage ? totalPage : start + pagesPerList;
-                if(position > (totalPage - (pagesPerList - before))) start = totalPage - pagesPerList;
+                if (position > (totalPage - (pagesPerList - before))) start = totalPage - pagesPerList;
             }
-            if(start != 1) list.add("<<");
-            for(int i = start; i <= end; i++){
+            if (start != 1) list.add("<<");
+            for (int i = start; i <= end; i++) {
                 list.add(String.valueOf(i));
             }
-            if(end != totalPage) list.add(">>");
+            if (end != totalPage) list.add(">>");
         }
         return list;
     }
 
-    public String load(){
+    public String load() {
         User user = (User) sessionContext.get("passport");
-        if(user == null) return "login";
-        if(id != null){
+        if (user == null) return "login";
+        if (id != null) {
             try {
-                Article article = Article.getDao().read(new ObjectId(id));
-                if(!user.getObjectId().equals(article.getAuthor())) {
-                    requestContext.put("message","Permission denied.");
+                Article article = articleDAO.findOne(Integer.parseInt(preId));
+                if (user.getId().intValue() != article.getAuthor().getId().intValue()) {
+                    requestContext.put("message", "Permission denied.");
                     return "error";
                 }
-                requestContext.put("articleID",article.getObjectId().toHexString());
-                requestContext.put("article",article);
-            }catch (Throwable e){
+                requestContext.put("articleID", article.getId().toString());
+                requestContext.put("article", article);
+            } catch (Throwable e) {
                 return "error";
             }
         }
         return "success";
     }
 
-    public String save(){
+    public String save() {
         User user = (User) sessionContext.get("passport");
-        if(user == null) return "login";
+        if (user == null) return "login";
         boolean writer = false;
-        for (String s : user.getRights()){
-            if(s.equals("article")) {
+        for (String s : user.getRights()) {
+            if (s.equals("article")) {
                 writer = true;
                 break;
             }
         }
-        if(!writer){
-            requestContext.put("message","permission denied");
+        if (!writer) {
+            requestContext.put("message", "permission denied");
             return "error";
         }
 
-        if(title == null || context == null){
+        if (title == null || context == null) {
             return "new";
         }
 
@@ -222,9 +242,9 @@ public class ArticleAction extends ActionSupport implements RequestAware, Sessio
         uploaded.setTitle(title);
         uploaded.setTags(StringTools.splitTags(tags));
 
-        if(id == null || !id.matches("\\w+")){
+        if (id == null || !id.matches("\\w+")) {
             Article.getDao().create(uploaded);
-        }else{
+        } else {
             uploaded.setObjectId(new ObjectId(id));
             Article.getDao().update(uploaded);
         }
@@ -232,6 +252,7 @@ public class ArticleAction extends ActionSupport implements RequestAware, Sessio
     }
 
     Map<String, Object> requestContext;
+
     @Override
     public void setRequest(Map<String, Object> map) {
         requestContext = map;
@@ -239,6 +260,7 @@ public class ArticleAction extends ActionSupport implements RequestAware, Sessio
     }
 
     private Map<String, Object> sessionContext;
+
     @Override
     public void setSession(Map<String, Object> map) {
         sessionContext = map;
