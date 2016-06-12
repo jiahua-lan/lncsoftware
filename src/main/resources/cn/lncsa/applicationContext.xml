@@ -11,6 +11,8 @@
 
     <context:component-scan base-package="cn.lncsa.*"/>
 
+    <jpa:repositories base-package="cn.lncsa.*" entity-manager-factory-ref="sessionFactory" transaction-manager-ref="transactionManager"/>
+
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
         <property name="driverClass" value="com.mysql.jdbc.Driver"/>
         <property name="jdbcUrl" value="jdbc:mysql://10.15.231.233:3306/LNCSA"/>
@@ -39,7 +41,4 @@
     </bean>
 
     <tx:annotation-driven transaction-manager="transactionManager"/>
-
-    <jpa:repositories base-package="cn.lncsa.*" entity-manager-factory-ref="sessionFactory" transaction-manager-ref="transactionManager"/>
-
 </beans>

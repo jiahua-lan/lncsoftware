@@ -1,7 +1,6 @@
 package cn.lncsa.actions;
 
 import cn.lncsa.common.RegexTools;
-import cn.lncsa.data.factory.UserDAO;
 import cn.lncsa.data.model.User;
 import com.opensymphony.xwork2.ActionSupport;
 import org.apache.struts2.interceptor.RequestAware;

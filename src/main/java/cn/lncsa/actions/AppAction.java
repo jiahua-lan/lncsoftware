@@ -30,8 +30,8 @@ public class AppAction extends ActionSupport implements RequestAware {
         requestContext = map;
         Bulletin appGuide;
         Bulletin appInfo;
-        requestContext.put("bulletin",appGuide);
-        requestContext.put("bulletinBoard",appInfo);
+        //requestContext.put("bulletin",appGuide);
+        //requestContext.put("bulletinBoard",appInfo);
     }
 
     public String list(){

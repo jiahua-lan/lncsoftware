@@ -1,6 +1,5 @@
 package cn.lncsa.data.model;
 
-import cn.lncsa.data.factory.BulletinDAO;
 import org.bson.Document;
 import org.hibernate.annotations.Tables;
 

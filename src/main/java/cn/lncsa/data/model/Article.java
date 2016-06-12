@@ -1,13 +1,10 @@
 package cn.lncsa.data.model;
 
-import cn.lncsa.data.factory.ArticleDAO;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.hibernate.type.IntegerType;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -81,6 +78,8 @@ public class Article {
         this.previewSentences = previewSentences;
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {
         return id;
     }
