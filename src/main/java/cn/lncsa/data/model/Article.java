@@ -3,7 +3,11 @@ package cn.lncsa.data.model;
 import cn.lncsa.data.factory.ArticleDAO;
 import org.bson.Document;
 import org.bson.types.ObjectId;
+import org.hibernate.type.IntegerType;
 
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -12,29 +16,19 @@ import java.util.List;
 /**
  * Created by catten on 16/1/15.
  */
+@Entity
+@Table(name = "article")
+public class Article {
 
-public class Article extends DataObject implements Serializable{
+    //private static ArticleDAO dao = new ArticleDAO();
 
-    private static ArticleDAO dao = new ArticleDAO();
+    private Integer id;
 
     private String title;
     private String context;
     private Date date;
-    private ObjectId author;
+    private User author;
     private String previewSentences;
-    private List<String> tags;
-
-    public Article(Document doDoc) {
-        apply(doDoc);
-    }
-
-    public Article(){
-
-    }
-
-    public synchronized static ArticleDAO getDao() {
-        return dao;
-    }
 
     public String getStatus() {
         return status;
@@ -45,30 +39,6 @@ public class Article extends DataObject implements Serializable{
     }
 
     private String status;
-
-    @Override
-    public Document toDocument() {
-        return new Document()
-                .append("title",title)
-                .append("context",context)
-                .append("date",date)
-                .append("author",author)
-                .append("previewSentences",previewSentences)
-                .append("status",status)
-                .append("tags", tags);
-    }
-
-    @Override
-    public void apply(Document doDoc) {
-        objectId = doDoc.getObjectId("_id");
-        title = doDoc.getString("title");
-        context = doDoc.getString("context");
-        date = doDoc.getDate("date");
-        author = doDoc.getObjectId("author");
-        previewSentences = doDoc.getString("previewSentences");
-        status = doDoc.getString("status");
-        tags = doDoc.get("tags",ArrayList.class);
-    }
 
     public String getTitle() {
         return title;
@@ -87,8 +57,6 @@ public class Article extends DataObject implements Serializable{
     }
 
     public Date getDate() {
-        if(date == null)
-            if(objectId != null) date = objectId.getDate();
         return date;
     }
 
@@ -96,22 +64,16 @@ public class Article extends DataObject implements Serializable{
         this.date = date;
     }
 
-    public ObjectId getAuthor() {
+    @ManyToOne
+    public User getAuthor() {
         return author;
     }
 
-    public void setAuthor(ObjectId author) {
+    public void setAuthor(User author) {
         this.author = author;
     }
 
     public String getPreviewSentences() {
-        if(previewSentences == null || "".equals(previewSentences)){
-            if(context.length() < 100){
-                previewSentences = context;
-            }else{
-                previewSentences = context.substring(0,100);
-            }
-        }
         return previewSentences;
     }
 
@@ -119,11 +81,11 @@ public class Article extends DataObject implements Serializable{
         this.previewSentences = previewSentences;
     }
 
-    public List<String> getTags() {
-        return tags;
+    public Integer getId() {
+        return id;
     }
 
-    public void setTags(List<String> tags) {
-        this.tags = tags;
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

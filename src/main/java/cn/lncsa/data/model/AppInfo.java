@@ -1,17 +1,16 @@
 package cn.lncsa.data.model;
 
-import cn.lncsa.data.factory.AppInfoDAO;
-import org.bson.Document;
-
-import java.io.Serializable;
+import javax.persistence.*;
 import java.util.Date;
 
 /**
  * Created by catten on 16/1/15.
  */
-public class AppInfo extends DataObject implements Serializable{
+@Entity
+@Table(name = "app_info")
+public class AppInfo {
 
-    private static AppInfoDAO dao = new AppInfoDAO();
+    private Integer id;
 
     private String title;
     private String description;
@@ -19,18 +18,6 @@ public class AppInfo extends DataObject implements Serializable{
     private String link;
     private String status;
     private Date date;
-
-    public AppInfo(Document doDoc) {
-        apply(doDoc);
-    }
-
-    public AppInfo(){
-
-    }
-
-    public static AppInfoDAO getDao() {
-        return dao;
-    }
 
     public String getTitle() {
         return title;
@@ -50,6 +37,7 @@ public class AppInfo extends DataObject implements Serializable{
 
     /**
      * Get path of the app-icon
+     *
      * @return path to the image
      */
     public String getImageCode() {
@@ -77,9 +65,6 @@ public class AppInfo extends DataObject implements Serializable{
     }
 
     public Date getDate() {
-        if(date == null){
-            if(objectId != null) date = objectId.getDate();
-        }
         return date;
     }
 
@@ -87,25 +72,13 @@ public class AppInfo extends DataObject implements Serializable{
         this.date = date;
     }
 
-    @Override
-    public Document toDocument() {
-        return new Document()
-                .append("title",title)
-                .append("description",description)
-                .append("imageCode",imageCode)
-                .append("link",link)
-                .append("status",status)
-                .append("date",date);
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public Integer getId() {
+        return id;
     }
 
-    @Override
-    public void apply(Document doDoc) {
-        objectId = doDoc.getObjectId("_id");
-        title = doDoc.getString("title");
-        description = doDoc.getString("description");
-        imageCode = doDoc.getString("imageCode");
-        link = doDoc.getString("link");
-        status = doDoc.getString("status");
-        date = doDoc.getDate("date");
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

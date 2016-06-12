@@ -2,16 +2,21 @@ package cn.lncsa.data.model;
 
 import cn.lncsa.data.factory.BulletinDAO;
 import org.bson.Document;
+import org.hibernate.annotations.Tables;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by catten on 16/1/15.
  */
-public class Bulletin extends DataObject implements Serializable {
+@Entity
+@Table(name = "bulletin")
+public class Bulletin {
 
-    private static BulletinDAO dao = new BulletinDAO();
+    //private static BulletinDAO dao = new BulletinDAO();
+    private Integer id;
 
     private String type;
     private String context;
@@ -27,18 +32,6 @@ public class Bulletin extends DataObject implements Serializable {
     }
 
     private String link;
-
-    public Bulletin(Document doDoc) {
-        apply(doDoc);
-    }
-
-    public Bulletin(){
-
-    }
-
-    public static BulletinDAO getDao() {
-        return dao;
-    }
 
     public String getType() {
         return type;
@@ -57,34 +50,11 @@ public class Bulletin extends DataObject implements Serializable {
     }
 
     public Date getDate() {
-        if(date == null)
-            if(objectId != null) date = objectId.getDate();
         return date;
     }
 
     public void setDate(Date date) {
         this.date = date;
-    }
-
-    @Override
-    public Document toDocument() {
-        Document document = new Document()
-                .append("type",type)
-                .append("context",context)
-                .append("date",date);
-        if(link != null) document.append("link",link);
-        if(imageLink != null) document.append("imageLink",imageLink);
-        return document;
-    }
-
-    @Override
-    public void apply(Document doDoc) {
-        objectId = doDoc.getObjectId("_id");
-        type = doDoc.getString("type");
-        context = doDoc.getString("context");
-        date = doDoc.getDate("date");
-        link = doDoc.getString("link");
-        imageLink = doDoc.getString("imageLink");
     }
 
     public String getImageLink() {
@@ -93,5 +63,15 @@ public class Bulletin extends DataObject implements Serializable {
 
     public void setImageLink(String imageLink) {
         this.imageLink = imageLink;
+    }
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

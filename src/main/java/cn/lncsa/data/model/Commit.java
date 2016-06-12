@@ -3,32 +3,49 @@ package cn.lncsa.data.model;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
+import javax.persistence.*;
 import java.util.Date;
 
 /**
  * Created by catten on 16/3/4.
  */
-public class Commit extends DataObject {
+@Entity
+@Table(name = "commit")
+public class Commit{
 
-    private ObjectId userId;
-    private ObjectId articleId;
+    private Integer id;
+
+    private User user;
+    private Article article;
     private String contents;
     private Date date;
 
-    public ObjectId getUserId() {
-        return userId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public Integer getId() {
+        return id;
     }
 
-    public void setUserId(ObjectId userId) {
-        this.userId = userId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public ObjectId getArticleId() {
-        return articleId;
+    @ManyToOne
+    public User getUser() {
+        return user;
     }
 
-    public void setArticleId(ObjectId articleId) {
-        this.articleId = articleId;
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    @ManyToOne
+    public Article getArticle() {
+        return article;
+    }
+
+    public void setArticle(Article article) {
+        this.article = article;
     }
 
     public String getContents() {
@@ -45,35 +62,5 @@ public class Commit extends DataObject {
 
     public void setDate(Date date) {
         this.date = date;
-    }
-
-    public Commit(Document comDoc) {
-        apply(comDoc);
-    }
-
-    public Commit() {
-
-    }
-
-    @Override
-    public Document toDocument() {
-        return new Document()
-                .append("userId", userId)
-                .append("articleId", articleId)
-                .append("contents", contents)
-                .append("date", date);
-    }
-
-    @Override
-    public void apply(Document doDoc) {
-        objectId = doDoc.getObjectId("_id");
-        userId = doDoc.getObjectId("userId");
-        articleId = doDoc.getObjectId("objectId");
-        contents = doDoc.getString("contents");
-        if (objectId != null && date == null) {
-            date = objectId.getDate();
-        } else {
-            date = doDoc.getDate("date");
-        }
     }
 }

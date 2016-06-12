@@ -8,6 +8,22 @@
     <artifactId>lncsoftware</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
+
+
+    <repositories>
+        <repository>
+            <id>jiyan</id>
+            <name>Jiyan Nexus Repository</name>
+            <url>http://10.15.231.2:8081/content/repositories/central/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
     <build>
         <plugins>
             <plugin>
@@ -73,6 +89,99 @@
             <groupId>org.mongodb</groupId>
             <artifactId>mongodb-driver</artifactId>
             <version>3.2.2</version>
+        </dependency>
+
+        <!-- Hibernate -->
+        <!--
+        有坑注意
+        要把Spring的hibernate4相关参数改成Hibernate5的
+        http://stackoverflow.com/questions/32898333/hibernate-spring-exception-when-trying-to-create-a-transaction
+        -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>5.1.0.Final</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>5.1.0.Final</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.javassist</groupId>
+            <artifactId>javassist</artifactId>
+            <version>3.20.0-GA</version>
+        </dependency>
+        <!-- Spring -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>4.2.5.RELEASE</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+            <version>4.2.5.RELEASE</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>4.2.5.RELEASE</version>
+        </dependency>
+
+        <!-- Database Connection Pool -->
+        <!-- http://mvnrepository.com/artifact/com.mchange/c3p0 -->
+        <dependency>
+            <groupId>com.mchange</groupId>
+            <artifactId>c3p0</artifactId>
+            <version>0.9.5</version>
+        </dependency>
+
+        <!-- Spring Data-->
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-jpa</artifactId>
+            <version>1.9.4.RELEASE</version>
+        </dependency>
+
+        <!-- Logging Face -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.18</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.1.5</version>
+        </dependency>
+
+        <!-- Test Support -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.10</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>4.2.5.RELEASE</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Java Database Driver -->
+        <!-- http://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.3</version>
         </dependency>
 
     </dependencies>
