@@ -2,8 +2,6 @@ package cn.lncsa.actions;
 
 import cn.lncsa.common.RegexTools;
 import cn.lncsa.common.StringTools;
-import cn.lncsa.data.ArticleInfo;
-import cn.lncsa.data.PureAppInfo;
 import cn.lncsa.data.model.Article;
 import cn.lncsa.data.model.Bulletin;
 import cn.lncsa.data.model.User;
@@ -12,7 +10,6 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import org.apache.struts2.interceptor.RequestAware;
 import org.apache.struts2.interceptor.SessionAware;
-import org.bson.types.ObjectId;
 import org.pegdown.PegDownProcessor;
 
 import java.util.ArrayList;

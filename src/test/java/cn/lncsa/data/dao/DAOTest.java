@@ -24,9 +24,14 @@ import static org.junit.Assert.*;
 public class DAOTest {
     private IAppInfoDAO appInfoDAO;
     private IArticleDAO articleDAO;
+    private IArticleCommitDAO articleCommitDAO;
+    private IArticleTagDAO articleTagDAO;
     private IBulletinDAO bulletinDAO;
     private ICommitDAO commitDAO;
+    private IRightDAO rightDAO;
+    private ITagDAO tagDAO;
     private IUserDAO userDAO;
+    private IUserRightDAO userRightDAO;
 
     @Autowired
     public void setAppInfoDAO(IAppInfoDAO appInfoDAO) {
@@ -53,6 +58,31 @@ public class DAOTest {
         this.userDAO = userDAO;
     }
 
+    @Autowired
+    public void setArticleCommitDAO(IArticleCommitDAO articleCommitDAO) {
+        this.articleCommitDAO = articleCommitDAO;
+    }
+
+    @Autowired
+    public void setArticleTagDAO(IArticleTagDAO articleTagDAO) {
+        this.articleTagDAO = articleTagDAO;
+    }
+
+    @Autowired
+    public void setRightDAO(IRightDAO rightDAO) {
+        this.rightDAO = rightDAO;
+    }
+
+    @Autowired
+    public void setTagDAO(ITagDAO tagDAO) {
+        this.tagDAO = tagDAO;
+    }
+
+    @Autowired
+    public void setUserRightDAO(IUserRightDAO userRightDAO) {
+        this.userRightDAO = userRightDAO;
+    }
+
     @Test
     public void testAppInfoDAO(){
         AppInfo appInfo = new AppInfo();
@@ -68,6 +98,20 @@ public class DAOTest {
     }
 
     @Test
+    public void testArticleCommitDAO(){
+        ArticleCommit articleCommit = new ArticleCommit();
+        articleCommitDAO.save(articleCommit);
+        assertNotNull(articleCommit.getId());
+    }
+
+    @Test
+    public void testArticleTagDAO(){
+        ArticleTag articleTag = new ArticleTag();
+        articleTagDAO.save(articleTag);
+        assertNotNull(articleTag.getId());
+    }
+
+    @Test
     public void testBulletinDAO(){
         Bulletin bulletin = new Bulletin();
         bulletinDAO.save(bulletin);
@@ -79,6 +123,27 @@ public class DAOTest {
         Commit commit = new Commit();
         commitDAO.save(commit);
         assertNotNull(commit.getId());
+    }
+
+    @Test
+    public void testRightDAO(){
+        Right right = new Right();
+        rightDAO.save(right);
+        assertNotNull(right.getId());
+    }
+
+    @Test
+    public void testTagDAO(){
+        Tag tag = new Tag();
+        tagDAO.save(tag);
+        assertNotNull(tag.getId());
+    }
+
+    @Test
+    public void testUserRightDAO(){
+        UserRight userRight = new UserRight();
+        userRightDAO.save(userRight);
+        assertNotNull(userRight.getId());
     }
 
     @Test

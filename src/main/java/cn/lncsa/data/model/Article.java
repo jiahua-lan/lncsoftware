@@ -1,14 +1,7 @@
 package cn.lncsa.data.model;
 
-import org.bson.Document;
-import org.bson.types.ObjectId;
-import org.hibernate.type.IntegerType;
-
 import javax.persistence.*;
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by catten on 16/1/15.

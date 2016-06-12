@@ -1,8 +1,5 @@
 package cn.lncsa.data.model;
 
-import org.bson.Document;
-import org.bson.types.ObjectId;
-
 import javax.persistence.*;
 import java.util.Date;
 

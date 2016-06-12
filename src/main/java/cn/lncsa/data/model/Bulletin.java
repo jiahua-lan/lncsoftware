@@ -1,10 +1,6 @@
 package cn.lncsa.data.model;
 
-import org.bson.Document;
-import org.hibernate.annotations.Tables;
-
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Date;
 
 /**

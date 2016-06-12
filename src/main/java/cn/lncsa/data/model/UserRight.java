@@ -7,7 +7,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "user_rights")
-public class UserRights {
+public class UserRight {
 
     private Integer id;
     private User user;
