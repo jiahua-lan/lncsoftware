@@ -16,7 +16,6 @@ public class Commit{
     private Integer id;
 
     private User user;
-    private Article article;
     private String contents;
     private Date date;
 
@@ -37,15 +36,6 @@ public class Commit{
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    @ManyToOne
-    public Article getArticle() {
-        return article;
-    }
-
-    public void setArticle(Article article) {
-        this.article = article;
     }
 
     public String getContents() {
