@@ -12,6 +12,14 @@ public class ArticleTag {
     private Tag tag;
     private Article article;
 
+    public ArticleTag() {
+    }
+
+    public ArticleTag(Tag tag, Article article) {
+        this.tag = tag;
+        this.article = article;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {

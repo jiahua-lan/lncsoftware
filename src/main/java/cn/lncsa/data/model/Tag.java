@@ -12,6 +12,18 @@ public class Tag {
     private String title;
     private String color;
 
+    public Tag() {
+    }
+
+    public Tag(String title) {
+        this.title = title;
+    }
+
+    public Tag(String title, String color) {
+        this.title = title;
+        this.color = color;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {

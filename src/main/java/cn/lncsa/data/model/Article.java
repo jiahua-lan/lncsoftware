@@ -20,6 +20,18 @@ public class Article {
     private User author;
     private String previewSentences;
 
+    public Article() {
+    }
+
+    public Article(String title, String context, Date date, User author, String previewSentences, String status) {
+        this.title = title;
+        this.context = context;
+        this.date = date;
+        this.author = author;
+        this.previewSentences = previewSentences;
+        this.status = status;
+    }
+
     public String getStatus() {
         return status;
     }

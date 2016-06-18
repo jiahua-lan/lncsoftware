@@ -1,11 +1,13 @@
 package cn.lncsa.actions;
 
-import cn.lncsa.data.ArticleInfo;
+import cn.lncsa.data.Passport;
+import cn.lncsa.data.dao.IArticleDAO;
 import cn.lncsa.data.model.Article;
-import cn.lncsa.data.model.User;
+import cn.lncsa.data.model.Right;
 import com.opensymphony.xwork2.ActionSupport;
 import org.apache.struts2.interceptor.RequestAware;
 import org.apache.struts2.interceptor.SessionAware;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Map;
@@ -16,6 +18,13 @@ import java.util.Map;
 public class ArticleAdmin extends ActionSupport implements RequestAware, SessionAware {
 
     private String keyword;
+
+    private IArticleDAO articleDAO;
+
+    @Autowired
+    public void setArticleDAO(IArticleDAO articleDAO) {
+        this.articleDAO = articleDAO;
+    }
 
     public String show(){
         String chkPer = checkPermission();
@@ -28,22 +37,22 @@ public class ArticleAdmin extends ActionSupport implements RequestAware, Session
         if (chkPer != null) return chkPer;
 
         if(keyword != null || !keyword.trim().equals("")){
-            List<Article> articles = Article.getDao().query(keyword);
+            List<Article> articles = articleDAO.findByTitleLike(keyword);
             if(articles != null){
-                requestContext.put("articleList", ArticleInfo.convertArticleList(articles));
+                requestContext.put("articleList", articles);
             }
         }
         return "success";
     }
 
     private String checkPermission(){
-        User user = (User) sessionContext.get("passport");
-        if(user == null){
+        Passport passport = (Passport) sessionContext.get("passport");
+        if(passport == null){
             return "login";
         }
         boolean flag = false;
-        for (String s : user.getRights()){
-            if(s.equals("admin")){
+        for (Right right : passport.getRights()){
+            if(right.getName().equals("admin")){
                 flag = true;
                 break;
             }

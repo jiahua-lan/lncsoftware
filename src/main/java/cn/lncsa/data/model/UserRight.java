@@ -13,6 +13,14 @@ public class UserRight {
     private User user;
     private Right right;
 
+    public UserRight() {
+    }
+
+    public UserRight(User user, Right right) {
+        this.user = user;
+        this.right = right;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {

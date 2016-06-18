@@ -2,11 +2,13 @@ package cn.lncsa.actions;
 
 import cn.lncsa.common.RegexTools;
 import cn.lncsa.common.StringTools;
+import cn.lncsa.data.Passport;
 import cn.lncsa.data.dao.IAppInfoDAO;
 import cn.lncsa.data.dao.IArticleDAO;
 import cn.lncsa.data.dao.IBulletinDAO;
 import cn.lncsa.data.model.Article;
 import cn.lncsa.data.model.Bulletin;
+import cn.lncsa.data.model.Right;
 import cn.lncsa.data.model.User;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -215,11 +217,11 @@ public class ArticleAction extends ActionSupport implements RequestAware, Sessio
     }
 
     public String save() {
-        User user = (User) sessionContext.get("passport");
-        if (user == null) return "login";
+        Passport passport = (Passport) sessionContext.get("passport");
+        if (passport == null) return "login";
         boolean writer = false;
-        for (String s : user.getRights()) {
-            if (s.equals("article")) {
+        for (Right r : passport.getRights()) {
+            if (r.getName().equals("article")) {
                 writer = true;
                 break;
             }
@@ -237,16 +239,16 @@ public class ArticleAction extends ActionSupport implements RequestAware, Sessio
         uploaded.setStatus("show");
         uploaded.setDate(new Date());
         uploaded.setPreviewSentences(previewSentences);
-        uploaded.setAuthor(user.getObjectId());
+        uploaded.setAuthor(passport.getUser());
         uploaded.setContext(context);
         uploaded.setTitle(title);
-        uploaded.setTags(StringTools.splitTags(tags));
+        //uploaded.setTags(StringTools.splitTags(tags));
 
         if (id == null || !id.matches("\\w+")) {
-            Article.getDao().create(uploaded);
+            articleDAO.save(uploaded);
         } else {
-            uploaded.setObjectId(new ObjectId(id));
-            Article.getDao().update(uploaded);
+            uploaded = articleDAO.findOne(Integer.parseInt(id));
+            articleDAO.save(uploaded);
         }
         return "success";
     }
@@ -256,7 +258,7 @@ public class ArticleAction extends ActionSupport implements RequestAware, Sessio
     @Override
     public void setRequest(Map<String, Object> map) {
         requestContext = map;
-        requestContext.put("bulletin", Bulletin.getDao().getBulletinBoard("article"));
+        requestContext.put("bulletin", bulletinDAO.getArticleBulletin());
     }
 
     private Map<String, Object> sessionContext;

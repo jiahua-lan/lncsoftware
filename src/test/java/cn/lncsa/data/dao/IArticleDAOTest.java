@@ -1,6 +1,7 @@
 package cn.lncsa.data.dao;
 
 import cn.lncsa.data.model.Article;
+import cn.lncsa.data.model.Tag;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -66,4 +67,6 @@ public class IArticleDAOTest {
             assertNotNull(article);
         }
     }
+
+
 }

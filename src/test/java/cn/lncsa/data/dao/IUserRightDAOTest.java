@@ -7,6 +7,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.ContextHierarchy;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -52,50 +54,61 @@ public class IUserRightDAOTest {
     @Before
     public void setUp() throws Exception {
         String[] rights = new String[]{"update", "delete", "insert", "query"};
-        user = new User();
-        user.setName("test user");
-        userDAO.save(user);
 
+        //Initial rights
+        List<Right> rightList = new LinkedList<>();
+        for (String s : rights) rightList.add(new Right(s));
+        rightDAO.save(rightList);
+
+        //Initial user-right rules
         List<UserRight> userRights = new LinkedList<>();
-        for (String s : rights){
-            Right right = new Right();
-            right.setName(s);
-            rightDAO.save(right);
-
-            UserRight userRight = new UserRight();
-            userRight.setUser(user);
-            userRight.setRight(right);
-            userRights.add(userRight);
+        for(int i = 0; i < 20; i++){
+            User user = new User("testUser_ur" + i,"");
+            userDAO.save(user);
+            if(i < 10){
+                userRights.add(new UserRight(user,rightList.get(0)));
+                userRights.add(new UserRight(user,rightList.get(1)));
+            }else{
+                userRights.add(new UserRight(user,rightList.get(2)));
+                userRights.add(new UserRight(user,rightList.get(3)));
+            }
         }
         userRightDAO.save(userRights);
     }
 
     @Test
-    public void getUserRightsByUser(){
-        assertTrue(userRightDAO.getByUser(user).size() == 4);
-    }
-
-    @Test
-    public void getUserRightsById(){
-        assertTrue(userRightDAO.getByUserId(user.getId()).size() == 4);
-    }
-
-    @Test
-    public void getRightUsersByRight(){
+    public void getUserByRight() throws Exception {
         List<Right> rights = rightDAO.findAll();
         for(Right right : rights){
-            User user1 = userRightDAO.getByRight(right).get(0).getUser();
-            assertTrue(user1.getId().intValue() == user.getId().intValue());
+            Page<User> page = userRightDAO.getUserByRight(right,new PageRequest(0,5));
+            assertTrue(page.getTotalElements() == 10);
         }
     }
 
     @Test
-    public void getRightUserByRightId(){
+    public void getUserByRightId() throws Exception {
         List<Right> rights = rightDAO.findAll();
         for(Right right : rights){
-            User user1 = userRightDAO.getByRightId(right.getId()).get(0).getUser();
-            assertTrue(user1.getId().intValue() == user.getId().intValue());
+            Page<User> page = userRightDAO.getUserByRightId(right.getId(),new PageRequest(0,5));
+            assertTrue(page.getTotalElements() == 10);
         }
     }
 
+    @Test
+    public void getRightByUser() throws Exception {
+        Iterable<User> users = userDAO.findAll();
+        for (User user : users){
+            List<Right> rights = userRightDAO.getRightByUser(user);
+            assertTrue(rights.size() == 2);
+        }
+    }
+
+    @Test
+    public void getRightByUserId() throws Exception {
+        Iterable<User> users = userDAO.findAll();
+        for (User user : users){
+            List<Right> rights = userRightDAO.getRightByUserId(user.getId());
+            assertTrue(rights.size() == 2);
+        }
+    }
 }

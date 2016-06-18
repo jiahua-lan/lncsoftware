@@ -12,6 +12,15 @@ public class ArticleCommit {
     private Article article;
     private Commit commit;
 
+    public ArticleCommit(){
+
+    }
+
+    public ArticleCommit(Article article, Commit commit) {
+        this.article = article;
+        this.commit = commit;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {

@@ -15,6 +15,21 @@ public class User{
     private String password;
     private String contactInfo;
 
+    public User(){
+
+    }
+
+    public User(String name, String password) {
+        this.name = name;
+        this.password = password;
+    }
+
+    public User(String name, String password, String contactInfo) {
+        this.name = name;
+        this.password = password;
+        this.contactInfo = contactInfo;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {

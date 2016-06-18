@@ -12,6 +12,19 @@ public class Right {
     private String name;
     private String color;
 
+    public Right(){
+
+    }
+
+    public Right(String name) {
+        this.name = name;
+    }
+
+    public Right(String name, String color) {
+        this.name = name;
+        this.color = color;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {

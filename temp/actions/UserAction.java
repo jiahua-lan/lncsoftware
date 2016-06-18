@@ -1,15 +1,19 @@
 package cn.lncsa.actions;
 
 import cn.lncsa.common.RegexTools;
+import cn.lncsa.data.Passport;
+import cn.lncsa.data.dao.IRightDAO;
+import cn.lncsa.data.dao.IUserDAO;
+import cn.lncsa.data.dao.IUserRightDAO;
+import cn.lncsa.data.model.Right;
 import cn.lncsa.data.model.User;
+import cn.lncsa.data.model.UserRight;
 import com.opensymphony.xwork2.ActionSupport;
 import org.apache.struts2.interceptor.RequestAware;
 import org.apache.struts2.interceptor.SessionAware;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by catten on 16/4/25.
@@ -22,6 +26,25 @@ public class UserAction extends ActionSupport implements SessionAware,RequestAwa
     private String password;
     private String confirmedPassword;
     private String contactInfo;
+
+    private IUserDAO userDAO;
+    private IUserRightDAO userRightDAO;
+    private IRightDAO rightDAO;
+
+    @Autowired
+    public void setUserDAO(IUserDAO userDAO) {
+        this.userDAO = userDAO;
+    }
+
+    @Autowired
+    public void setUserRightDAO(IUserRightDAO userRightDAO) {
+        this.userRightDAO = userRightDAO;
+    }
+
+    @Autowired
+    public void setRightDAO(IRightDAO rightDAO) {
+        this.rightDAO = rightDAO;
+    }
 
     public String getUsername() {
         return username;
@@ -54,13 +77,16 @@ public class UserAction extends ActionSupport implements SessionAware,RequestAwa
         if(username == null && password == null) return "login";
         User user;
         if(username != null && RegexTools.legalUsername(username)){
-            user = User.getDao().getUserByName(username);
+            user = userDAO.getByName(username);
             if(user != null){
                 if(user.getPassword().equals(password)){
-                    for (String s : user.getRights()){
-                        switch (s){
+                    List<UserRight> userRights = userRightDAO.getByUser(user);
+                    List<Right> rights = new LinkedList<>();
+                    for (UserRight userRight : userRights) rights.add(userRight.getRight());
+                    for (UserRight userRight : userRights){
+                        switch (userRight.getRight().getName()){
                             case "login":
-                                sessionContext.put("passport",user);
+                                sessionContext.put("passport",new Passport(user,rights));
                                 return "success";
 
                             case "banned":
@@ -96,7 +122,7 @@ public class UserAction extends ActionSupport implements SessionAware,RequestAwa
             requestContext.put("error","field");
             return "form";
         }
-        User user = User.getDao().getUserByName(username);
+        User user = userDAO.getByName(username);
         if(user != null){
             requestContext.put("error","duplicate");
             return "form";
@@ -104,20 +130,26 @@ public class UserAction extends ActionSupport implements SessionAware,RequestAwa
         user.setName(username);
         user.setPassword(password);
         user.setContactInfo(contactInfo);
-        ArrayList<String> rights = new ArrayList<>(1);
-        rights.add("login");
-        user.setRights(rights);
-        User.getDao().create(user);
+        Right right = rightDAO.getByName("login");
+        if(right == null){
+            requestContext.put("error","system error : no right called \"login\"");
+            return "failed";
+        }
+        UserRight userRight = new UserRight();
+        userRight.setRight(right);
+        userRight.setUser(user);
+        userDAO.save(user);
+        userRightDAO.save(userRight);
         return "success";
     }
 
     public String updateContact(){
         if(sessionContext.get("passport")==null) return "login";
         if(contactInfo != null && RegexTools.legalContactInfo(contactInfo)){
-            User user = (User) sessionContext.get("passport");
+            Passport passport = (Passport) sessionContext.get("passport");
+            User user = passport.getUser();
             user.setContactInfo(contactInfo);
-            User.getDao().update(user);
-            sessionContext.put("passport",User.getDao().read(user.getObjectId()));
+            userDAO.save(user);
         }
         return "success";
     }
@@ -128,8 +160,7 @@ public class UserAction extends ActionSupport implements SessionAware,RequestAwa
         if(password != null){
             if(RegexTools.legalPassword(password) && password.equals(confirmedPassword)){
                 user.setPassword(password);
-                User.getDao().update(user);
-                sessionContext.put("passport",User.getDao().read(user.getObjectId()));
+                userDAO.save(user);
             }
         }
         return "success";
