@@ -30,6 +30,7 @@ import java.util.Random;
 })
 //测试里事务默认回滚，但是建议加上
 @Transactional
+//TODO 这个测试用例太水，需要重写
 public class IArticleTagDAOTest {
     private IArticleDAO articleDAO;
     private ITagDAO tagDAO;

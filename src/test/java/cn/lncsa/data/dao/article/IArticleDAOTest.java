@@ -36,13 +36,16 @@ public class IArticleDAOTest {
     private IArticleDAO articleDAO;
     private IUserDAO userDAO;
 
+    private User baseUser;
+    private int articleCount = 50;
+
     @Before
     public void before(){
-        User user = new User("userTest_a","");
-        userDAO.save(user);
+        baseUser = new User("userTest_a","");
+        userDAO.save(baseUser);
 
         List<Article> articleList = new LinkedList<>();
-        for(int i = 0; i < 50; i++){
+        for(int i = 0; i < articleCount; i++){
             Article article = new Article();
 
             article.setTitle("Test article " + i);
@@ -51,10 +54,14 @@ public class IArticleDAOTest {
             article.setPreviewSentences("just for test");
             article.setContext("#Hello!\n\n##Hello hello\n\n###" + i);
             article.setStatus("shown");
-            article.setAuthor(user);
+            article.setAuthor(baseUser);
 
             articleList.add(article);
         }
+        //Create an empty user and an empty article
+        Article tempA = new Article("","",new Date(65535),userDAO.save(new User()),"","");
+        tempA.setLastModifiedDate(new Date(65589));
+        articleList.add(tempA);
         articleDAO.save(articleList);
     }
 
@@ -84,27 +91,36 @@ public class IArticleDAOTest {
 
     @Test
     public void findByTitleLike() throws Exception {
-        //TODO
+        Page<Article> articles = articleDAO.findByTitleLike("Test",new PageRequest(0,10));
+        assertTrue(articles.getTotalElements() == articleCount);
+        assertTrue(articles.getTotalPages() == articleCount / 10);
     }
 
     @Test
     public void findByAuthor() throws Exception {
-        //TODO
+        Page<Article> articles = articleDAO.findByAuthor(baseUser,new PageRequest(0,10));
+        assertTrue(articles.getTotalElements() == articleCount);
+        assertTrue(articles.getTotalPages() == articleCount / 10);
     }
 
     @Test
     public void findByAuthorId() throws Exception {
-        //TODO
-
+        Page<Article> articles = articleDAO.findByAuthorId(baseUser.getId(),new PageRequest(0,10));
+        assertTrue(articles.getTotalElements() == articleCount);
+        assertTrue(articles.getTotalPages() == articleCount / 10);
     }
 
     @Test
     public void getArticleBetweenCreateDate() throws Exception {
-
+        Page<Article> articles = articleDAO.getArticleBetweenCreateDate(new Date(65534),new Date(65590),new PageRequest(0,10));
+        assertTrue(articles.getTotalPages() == 1);
+        assertTrue(articles.getTotalElements() == 1);
     }
 
     @Test
     public void getArticleBetweenModifiedDate() throws Exception {
-
+        Page<Article> articles = articleDAO.getArticleBetweenModifiedDate(new Date(65534),new Date(65590),new PageRequest(0,10));
+        assertTrue(articles.getTotalPages() == 1);
+        assertTrue(articles.getTotalElements() == 1);
     }
 }
