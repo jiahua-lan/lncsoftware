@@ -1,8 +1,8 @@
-package cn.lncsa.data.dao;
+package cn.lncsa.data.dao.article;
 
-import cn.lncsa.data.model.Article;
-import cn.lncsa.data.model.ArticleTag;
-import cn.lncsa.data.model.Tag;
+import cn.lncsa.data.model.article.Article;
+import cn.lncsa.data.model.article.ArticleTag;
+import cn.lncsa.data.model.article.Tag;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,8 +1,11 @@
-package cn.lncsa.data.dao;
+package cn.lncsa.data.dao.user;
 
-import cn.lncsa.data.model.Right;
-import cn.lncsa.data.model.User;
-import cn.lncsa.data.model.UserRight;
+import cn.lncsa.data.dao.user.IRightDAO;
+import cn.lncsa.data.dao.user.IUserDAO;
+import cn.lncsa.data.dao.user.IUserRightDAO;
+import cn.lncsa.data.model.user.Right;
+import cn.lncsa.data.model.user.User;
+import cn.lncsa.data.model.user.UserRight;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -49,8 +52,6 @@ public class IUserRightDAOTest {
         this.userRightDAO = userRightDAO;
     }
 
-
-    User user;
     @Before
     public void setUp() throws Exception {
         String[] rights = new String[]{"update", "delete", "insert", "query"};
@@ -110,5 +111,15 @@ public class IUserRightDAOTest {
             List<Right> rights = userRightDAO.getRightByUserId(user.getId());
             assertTrue(rights.size() == 2);
         }
+    }
+
+    @Test
+    public void queryRightRelationByUser() throws Exception {
+        //TODO
+    }
+
+    @Test
+    public void queryRightRelationByUserId() throws Exception {
+        //TODO
     }
 }

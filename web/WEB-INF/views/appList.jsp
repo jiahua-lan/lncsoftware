@@ -71,7 +71,7 @@
                             ${bulletinBoard.context}
                         </div>
                         <div class="panel-footer">
-                            发布于 <s:date name="#request.bulletinBoard.date" format="yyyy年MM月DD日 hh时mm分"/>
+                            发布于 <s:createDate name="#request.bulletinBoard.createDate" format="yyyy年MM月DD日 hh时mm分"/>
                         </div>
                     </div>
                 </s:if>

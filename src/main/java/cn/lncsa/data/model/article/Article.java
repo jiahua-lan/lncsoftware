@@ -1,4 +1,6 @@
-package cn.lncsa.data.model;
+package cn.lncsa.data.model.article;
+
+import cn.lncsa.data.model.user.User;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -16,17 +18,18 @@ public class Article {
 
     private String title;
     private String context;
-    private Date date;
+    private Date createDate;
+    private Date lastModifiedDate;
     private User author;
     private String previewSentences;
 
     public Article() {
     }
 
-    public Article(String title, String context, Date date, User author, String previewSentences, String status) {
+    public Article(String title, String context, Date createDate, User author, String previewSentences, String status) {
         this.title = title;
         this.context = context;
-        this.date = date;
+        this.createDate = createDate;
         this.author = author;
         this.previewSentences = previewSentences;
         this.status = status;
@@ -58,12 +61,12 @@ public class Article {
         this.context = context;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getCreateDate() {
+        return createDate;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
     }
 
     @ManyToOne
@@ -91,5 +94,13 @@ public class Article {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Date getLastModifiedDate() {
+        return lastModifiedDate;
+    }
+
+    public void setLastModifiedDate(Date lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
     }
 }

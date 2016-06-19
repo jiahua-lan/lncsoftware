@@ -1,8 +1,11 @@
-package cn.lncsa.data.dao;
+package cn.lncsa.data.dao.article;
 
-import cn.lncsa.data.model.Article;
-import cn.lncsa.data.model.ArticleTag;
-import cn.lncsa.data.model.Tag;
+import cn.lncsa.data.dao.article.IArticleDAO;
+import cn.lncsa.data.dao.article.IArticleTagDAO;
+import cn.lncsa.data.dao.article.ITagDAO;
+import cn.lncsa.data.model.article.Article;
+import cn.lncsa.data.model.article.ArticleTag;
+import cn.lncsa.data.model.article.Tag;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

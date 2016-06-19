@@ -1,12 +1,12 @@
-package cn.lncsa.data.dao;
+package cn.lncsa.data.dao.article;
 
-import cn.lncsa.data.model.Article;
-import cn.lncsa.data.model.Tag;
+import cn.lncsa.data.dao.user.IUserDAO;
+import cn.lncsa.data.model.article.Article;
+import cn.lncsa.data.model.user.User;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -15,7 +15,6 @@ import org.springframework.test.context.ContextHierarchy;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -35,17 +34,25 @@ import static org.junit.Assert.*;
 public class IArticleDAOTest {
 
     private IArticleDAO articleDAO;
+    private IUserDAO userDAO;
 
     @Before
     public void before(){
+        User user = new User("userTest_a","");
+        userDAO.save(user);
+
         List<Article> articleList = new LinkedList<>();
         for(int i = 0; i < 50; i++){
             Article article = new Article();
+
             article.setTitle("Test article " + i);
-            article.setDate(new Date());
+            article.setCreateDate(new Date());
+            article.setLastModifiedDate(article.getCreateDate());
             article.setPreviewSentences("just for test");
             article.setContext("#Hello!\n\n##Hello hello\n\n###" + i);
             article.setStatus("shown");
+            article.setAuthor(user);
+
             articleList.add(article);
         }
         articleDAO.save(articleList);
@@ -56,10 +63,17 @@ public class IArticleDAOTest {
         this.articleDAO = articleDAO;
     }
 
+    @Autowired
+    public void setUserDAO(IUserDAO userDAO) {
+        this.userDAO = userDAO;
+    }
+
     @Test
     public void pagingArticles(){
+
         Pageable pageable = new PageRequest(0,5);
         Page<Article> page = articleDAO.findAll(pageable);
+
         assertFalse(page.getTotalPages() != 10);
         assertFalse(page.getTotalElements() != 50);
         assertFalse(page.getNumberOfElements() != 5);
@@ -68,5 +82,29 @@ public class IArticleDAOTest {
         }
     }
 
+    @Test
+    public void findByTitleLike() throws Exception {
+        //TODO
+    }
 
+    @Test
+    public void findByAuthor() throws Exception {
+        //TODO
+    }
+
+    @Test
+    public void findByAuthorId() throws Exception {
+        //TODO
+
+    }
+
+    @Test
+    public void getArticleBetweenCreateDate() throws Exception {
+
+    }
+
+    @Test
+    public void getArticleBetweenModifiedDate() throws Exception {
+
+    }
 }

@@ -1,4 +1,4 @@
-package cn.lncsa.data.model;
+package cn.lncsa.data.model.user;
 
 import javax.persistence.*;
 

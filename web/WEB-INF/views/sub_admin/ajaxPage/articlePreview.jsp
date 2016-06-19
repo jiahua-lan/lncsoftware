@@ -12,7 +12,7 @@
         <div class="page-header">
             <h2>${article.title}
                 <small style="display: inline-block">By ${article.authorName}
-                    at <s:date name="#request.article.createDate" format="yyyy-MM-dd hh:mm"/> </small>
+                    at <s:createDate name="#request.article.createDate" format="yyyy-MM-dd hh:mm"/> </small>
             </h2>
             <div>标签 :
                 <s:iterator value="#request.article.tags" id="tagName">

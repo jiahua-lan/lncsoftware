@@ -1,14 +1,12 @@
-package cn.lncsa.data.dao;
+package cn.lncsa.data.dao.user;
 
-import cn.lncsa.data.model.Right;
-import cn.lncsa.data.model.User;
-import cn.lncsa.data.model.UserRight;
+import cn.lncsa.data.model.user.Right;
+import cn.lncsa.data.model.user.User;
+import cn.lncsa.data.model.user.UserRight;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
-import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -53,4 +51,22 @@ public interface IUserRightDAO extends PagingAndSortingRepository<UserRight,Inte
      */
     @Query("select ur.right from UserRight ur where ur.user.id = ?1")
     List<Right> getRightByUserId(Integer userId);
+
+    /**
+     * Get all permission relations for the user
+     *
+     * @param user
+     * @return
+     */
+    @Query("select ur from UserRight ur where ur.user = ?1")
+    List<UserRight> queryRightRelationByUser(User user);
+
+    /**
+     * Get all permission relations for the user by id
+     *
+     * @param userId
+     * @return
+     */
+    @Query("select ur from UserRight ur where ur.user.id = ?1")
+    List<UserRight> queryRightRelationByUserId(Integer userId);
 }

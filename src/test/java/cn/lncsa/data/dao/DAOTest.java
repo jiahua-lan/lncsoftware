@@ -1,6 +1,14 @@
 package cn.lncsa.data.dao;
 
+import cn.lncsa.data.dao.article.*;
+import cn.lncsa.data.dao.user.IRightDAO;
+import cn.lncsa.data.dao.user.IUserDAO;
+import cn.lncsa.data.dao.user.IUserRightDAO;
 import cn.lncsa.data.model.*;
+import cn.lncsa.data.model.article.*;
+import cn.lncsa.data.model.user.Right;
+import cn.lncsa.data.model.user.User;
+import cn.lncsa.data.model.user.UserRight;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

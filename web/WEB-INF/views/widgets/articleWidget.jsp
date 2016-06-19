@@ -11,6 +11,6 @@
     <a class="list-group-item" href="article?id=${id}">
         <h4>${title}</h4>
         <p>${previewSentences}....</p>
-        <small>By ${authorName} at <s:date name="createDate" format="yyyy-MM-dd hh:mm"/> </small>
+        <small>By ${authorName} at <s:createDate name="createDate" format="yyyy-MM-dd hh:mm"/> </small>
     </a>
 </s:iterator>

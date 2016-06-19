@@ -1,7 +1,7 @@
 package cn.lncsa.data;
 
-import cn.lncsa.data.model.Right;
-import cn.lncsa.data.model.User;
+import cn.lncsa.data.model.user.Right;
+import cn.lncsa.data.model.user.User;
 
 import java.util.List;
 

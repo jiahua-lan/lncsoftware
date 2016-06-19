@@ -1,4 +1,4 @@
-package cn.lncsa.data.model;
+package cn.lncsa.data.model.user;
 
 
 import javax.persistence.*;
@@ -12,6 +12,7 @@ public class User{
 
     private Integer id;
     private String name;
+    private String nickName;
     private String password;
     private String contactInfo;
 
@@ -62,5 +63,13 @@ public class User{
 
     public void setContactInfo(String contactInfo) {
         this.contactInfo = contactInfo;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
 }

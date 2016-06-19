@@ -1,4 +1,6 @@
-package cn.lncsa.data.model;
+package cn.lncsa.data.model.article;
+
+import cn.lncsa.data.model.user.User;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -14,6 +16,8 @@ public class Commit{
 
     private User user;
     private String contents;
+    private Article targetArticle;
+    private Commit replyTo;
     private Date date;
 
     @Id
@@ -49,5 +53,23 @@ public class Commit{
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    @ManyToOne
+    public Article getTargetArticle() {
+        return targetArticle;
+    }
+
+    public void setTargetArticle(Article targetArticle) {
+        this.targetArticle = targetArticle;
+    }
+
+    @OneToOne
+    public Commit getReplyTo() {
+        return replyTo;
+    }
+
+    public void setReplyTo(Commit replyTo) {
+        this.replyTo = replyTo;
     }
 }
