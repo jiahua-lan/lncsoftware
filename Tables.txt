@@ -1,0 +1,84 @@
+Table : article
+Fields: 
+	Integer id;
+    String title;
+    String context;
+    Date createDate;
+    Date lastModifiedDate;
+    User author;
+    String previewSentences;
+XML Column:
+<article id="" title="" context="" createDate="" lastModifiedDate="" author="" previewSentences=""/>
+
+Table : article_tag
+Fields:
+	Integer id;
+    Tag tag;
+    Article article;
+XML Column:
+<article_tag id="" tag="" article=""/>
+
+Table : commit
+Fields:
+    Integer id;
+    User user;
+    String contents;
+    Article targetArticle;
+    Commit replyTo;
+    Date date;
+XML Column:
+<commit id="" user="" contents="" targetArticle="" replyTo="" date=""/>
+
+Table : tags
+Fields:
+    Integer id;
+    String title;
+    String color;
+XML Column:
+<tags id="" title="" color=""/>
+
+Table : right
+Fields:
+    Integer id;
+    String name;
+    String color;
+    String url;
+XML Column:
+<right id="" name="" color="" url=""/>
+
+Table : user
+Fields:
+    Integer id;
+    String name;
+    String nickName;
+    String password;
+    String contactInfo;
+<user id="" name="" nickName="" password="" contactInfo=""/>
+
+Table : user_right
+Fields:
+    Integer id;
+    User user;
+    Right right;
+<user_right id="" user="" right=""/>
+
+Table : app_info
+Fields:
+    Integer id;
+    String title;
+    String description;
+    String imageCode;
+    String link;
+    String status;
+    Date date;
+<app_info id="" title="" description="" imageCode="" link="" status="" date=""/>
+
+
+Table : bulletin
+Fields: 
+    Integer id;
+    String type;
+    String context;
+    Date date;
+    String imageLink;
+<bulletin id="" type="" context="" date="" imageLink=""/>

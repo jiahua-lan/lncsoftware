@@ -10,7 +10,6 @@ import java.util.Date;
 @Table(name = "bulletin")
 public class Bulletin {
 
-    //private static BulletinDAO dao = new BulletinDAO();
     private Integer id;
 
     private String type;

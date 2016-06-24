@@ -11,6 +11,7 @@ public class Right {
     private Integer id;
     private String name;
     private String color;
+    private String url;
 
     public Right(){
 
@@ -20,9 +21,9 @@ public class Right {
         this.name = name;
     }
 
-    public Right(String name, String color) {
+    public Right(String name, String url) {
         this.name = name;
-        this.color = color;
+        this.url = url;
     }
 
     @Id
@@ -49,5 +50,13 @@ public class Right {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }
