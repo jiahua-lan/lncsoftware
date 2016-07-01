@@ -1,6 +1,7 @@
 package cn.lncsa.data.model.article;
 
 import cn.lncsa.data.model.user.User;
+import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -53,6 +54,7 @@ public class Article {
         this.title = title;
     }
 
+    @Column(length = 4096, columnDefinition = "TEXT")
     public String getContext() {
         return context;
     }

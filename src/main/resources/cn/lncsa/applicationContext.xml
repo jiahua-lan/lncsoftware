@@ -18,7 +18,7 @@
 
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
         <property name="driverClass" value="com.mysql.jdbc.Driver"/>
-        <property name="jdbcUrl" value="jdbc:mysql://10.15.231.233:3306/LNCSA"/>
+        <property name="jdbcUrl" value="jdbc:mysql://10.15.219.233:3306/LNCSA"/>
         <property name="user" value="devel_lncsa"/>
         <property name="password" value="0xFFFFFF"/>
         <property name="loginTimeout" value="300"/>

@@ -38,6 +38,7 @@ public class Tag {
         return title;
     }
 
+    @Column(unique = true)
     public void setTitle(String title) {
         this.title = title;
     }

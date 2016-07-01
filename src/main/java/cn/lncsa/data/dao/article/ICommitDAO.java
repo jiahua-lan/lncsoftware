@@ -6,6 +6,7 @@ import cn.lncsa.data.model.user.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
@@ -48,7 +49,6 @@ public interface ICommitDAO extends PagingAndSortingRepository<Commit,Integer> {
     @Query("select c from Commit c where c.targetArticle.id = ?1")
     Page<Commit> getByTargetArticleId(Integer targetArticleId, Pageable pageable);
 
-
     /**
      * Get what this commit reply to
      *
@@ -65,4 +65,22 @@ public interface ICommitDAO extends PagingAndSortingRepository<Commit,Integer> {
      */
     @Query("select c from Commit c where c.replyTo.id = ?1")
     Commit getByReplyToById(Integer commitId);
+
+    /**
+     * Delete commits by target article id.
+     *
+     * @param articleId
+     */
+    @Modifying
+    @Query("delete from Commit c where c.targetArticle.id = ?1")
+    void deleteByArticleId(Integer articleId);
+
+    /**
+     * Delete commits by user's id
+     *
+     * @param userId
+     */
+    @Modifying
+    @Query("delete from Commit c where c.user.id = ?1")
+    void deleteByUserId(Integer userId);
 }

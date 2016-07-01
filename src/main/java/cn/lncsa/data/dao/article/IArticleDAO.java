@@ -1,61 +1,107 @@
 package cn.lncsa.data.dao.article;
 
 import cn.lncsa.data.model.article.Article;
+import cn.lncsa.data.model.article.Tag;
 import cn.lncsa.data.model.user.User;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by catten on 2016/6/12.
  */
-public interface IArticleDAO extends PagingAndSortingRepository<Article,Integer> {
+public interface IArticleDAO extends PagingAndSortingRepository<Article, Integer> {
     /**
      * Find articles that match keyword in title
      *
-     * @param keyword keyword
+     * @param keyword  keyword
+     * @param status   what status allow
+     * @param pageable
      * @return a list of articles that match keyword
      */
-    Page<Article> findByTitleLike(String keyword, Pageable pageable);
+    @Query("select a from Article a where a.title like ?1 and a.status in ?2")
+    Page<Article> findByTitleLike(String keyword, String[] status, Pageable pageable);
 
     /**
      * Find articles by author
      *
      * @param author
+     * @param status   what status allow
+     * @param pageable
      * @return
      */
-    Page<Article> findByAuthor(User author, Pageable pageable);
+    @Query("select a from Article a where a.author = ?1 and a.status in ?2")
+    Page<Article> findByAuthor(User author, String[] status, Pageable pageable);
 
     /**
      * Find articles by author id
      *
      * @param authorId
+     * @param status   what status allow
+     * @param pageable
      * @return
      */
-    @Query("select a from Article a where a.author.id = ?1")
-    Page<Article> findByAuthorId(Integer authorId, Pageable pageable);
+    @Query("select a from Article a where a.author.id = ?1 and a.status in ?2")
+    Page<Article> findByAuthorId(Integer authorId, String[] status, Pageable pageable);
 
     /**
      * Get articles that create date between two specified date.
      *
-     * @param start start date
-     * @param end end date
+     * @param start    start date
+     * @param end      end date
+     * @param status   what status allow
+     * @param pageable
      * @return
      */
-    @Query("select a from Article a where a.date > ?1 and a.date < ?2")
-    Page<Article> getArticleBetweenCreateDate(Date start, Date end, Pageable pageable);
+    @Query("select a from Article a where a.createDate > ?1 and a.createDate < ?2 and a.status in ?2")
+    Page<Article> getArticleBetweenCreateDate(Date start, Date end, String[] status, Pageable pageable);
 
     /**
      * Get article that modified date between two specified date.
      *
-     * @param start start date
-     * @param end end date
+     * @param start    start date
+     * @param end      end date
+     * @param status   what status allow
+     * @param pageable
      * @return
      */
     @Query("select a from Article a where a.lastModifiedDate > ?1 and a.lastModifiedDate < ?2")
-    Page<Article> getArticleBetweenModifiedDate(Date start, Date end, Pageable pageable);
+    Page<Article> getArticleBetweenModifiedDate(Date start, Date end, String[] status, Pageable pageable);
+
+    /**
+     * Find article by tags
+     *
+     * @param tags        a list of tags
+     * @param status      what status allow
+     * @param pageRequest
+     * @return
+     */
+    @Query("select a from ArticleTag.article a where ArticleTag.tag in ?1 and a.status in ?2")
+    Page<Article> findArticleByTags(List<Tag> tags, String[] status, PageRequest pageRequest);
+
+    /**
+     * Find all article
+     *
+     * @param status      what status allow
+     * @param pageRequest
+     * @return
+     */
+    @Query("select a from Article a where a.status in ?1")
+    Page<Article> findAll(String[] status, PageRequest pageRequest);
+
+    /**
+     * Delete articles by author id
+     *
+     * @param authorId
+     */
+    @Modifying
+    @Query("delete from Article a where a.author.id = ?1")
+    void deleteArticleByAuthorId(Integer authorId);
 
 }

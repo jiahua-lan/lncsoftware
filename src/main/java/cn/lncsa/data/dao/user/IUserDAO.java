@@ -26,7 +26,7 @@ public interface IUserDAO extends JpaRepository<User,Integer> {
      * @param keyword
      * @return
      */
-    Page<User> getByNameLike(String keyword);
+    Page<User> getByNameLike(String keyword, Pageable pageable);
 
     /**
      * Search users that nickname include keyword
@@ -34,7 +34,7 @@ public interface IUserDAO extends JpaRepository<User,Integer> {
      * @param keyword
      * @return
      */
-    Page<User> getByNickNameLike(String keyword);
+    Page<User> getByNickNameLike(String keyword,Pageable pageable);
 
     /**
      * Search users that contact info include keyword

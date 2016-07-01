@@ -4,6 +4,7 @@ import cn.lncsa.common.exceptions.UserOperateException;
 import cn.lncsa.data.model.user.Right;
 import cn.lncsa.data.model.user.User;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
 
@@ -44,7 +45,15 @@ public interface IUserServices {
      */
     User getUserByName(String username) throws UserOperateException;
 
-    Page<User> findUser(String keyword);
+
+    /**
+     * Find user by keyword
+     *
+     * @param keyword keyword
+     * @param pageRequest paging request
+     * @return
+     */
+    Page<User> findUser(String keyword, PageRequest pageRequest);
 
     /**
      * Change user's password

@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -78,7 +79,7 @@ public class UserServices implements IUserServices {
     }
 
     @Override
-    public Page<User> findUser(String keyword){
+    public Page<User> findUser(String keyword, PageRequest pageRequest){
         return null;//TODO Full field query needed.
     }
 
@@ -115,13 +116,15 @@ public class UserServices implements IUserServices {
         return user;
     }
 
+    @Transactional
     @Override
     public User deleteUser(Integer userId) throws UserOperateException {
         User user = banUser(userId);
-        Page<Article> articles = articleDAO.findByAuthor(user,new PageRequest(0,20));
-        while (articles.hasNext()) articleDAO.delete(articles.getContent());
-        Page<Commit> commits = commitDAO.getByUser(user,new PageRequest(0,20));
-        while (commits.hasNext()) commitDAO.delete(commits.getContent());
+        //Delete user's article
+        articleDAO.deleteArticleByAuthorId(userId);
+        //Delete user's commit
+        commitDAO.deleteByUserId(userId);
+        //Delete the user.
         userDAO.delete(user);
         return user;
     }
