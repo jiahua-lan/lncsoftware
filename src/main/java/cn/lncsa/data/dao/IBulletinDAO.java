@@ -34,10 +34,4 @@ public interface IBulletinDAO extends CrudRepository<Bulletin,Integer> {
 
     @Query("select b from Bulletin b where b.type ='article'")
     Bulletin getArticleBulletin();
-
-    @Query("select b from Bulletin b where b.type ='contact_info'")
-    List<Bulletin> getContactInfoList();
-
-    @Query("select b from Bulletin b where b.type ='friend_link'")
-    List<Bulletin> getFriendLinkList();
 }

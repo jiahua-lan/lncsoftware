@@ -43,5 +43,7 @@
         <property name="entityManagerFactory" ref="entityManagerFactory"/>
     </bean>
 
+    <bean id="markDownRender" class="org.pegdown.PegDownProcessor"/>
+
     <tx:annotation-driven transaction-manager="transactionManager"/>
 </beans>

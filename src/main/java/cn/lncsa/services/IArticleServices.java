@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Created by catten on 16/7/1.
  */
-public interface IArticleService {
+public interface IArticleServices {
     /**
      * Get latest article list.
      *

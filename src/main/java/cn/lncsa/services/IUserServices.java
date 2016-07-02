@@ -15,8 +15,8 @@ public interface IUserServices {
     /**
      * Create user normally, without permissions.
      *
-     * @param name username
-     * @param password password for this user
+     * @param name        username
+     * @param password    password for this user
      * @param contactInfo contactInfo for this user
      * @return a saved user
      * @throws UserOperateException user existed.
@@ -26,10 +26,10 @@ public interface IUserServices {
     /**
      * Create user with specified permissions
      *
-     * @param name user name
-     * @param password password for this user
+     * @param name        user name
+     * @param password    password for this user
      * @param contactInfo contactInfo for this user
-     * @param rights specified permissions for this user
+     * @param rights      specified permissions for this user
      * @return a saved user
      * @throws UserOperateException user existed.
      */
@@ -37,7 +37,7 @@ public interface IUserServices {
 
     /**
      * Get user by username
-     *
+     * <p>
      * This method is for upper level API
      *
      * @param username username
@@ -49,7 +49,7 @@ public interface IUserServices {
     /**
      * Find user by keyword
      *
-     * @param keyword keyword
+     * @param keyword     keyword
      * @param pageRequest paging request
      * @return
      */
@@ -58,7 +58,7 @@ public interface IUserServices {
     /**
      * Change user's password
      *
-     * @param userId user id
+     * @param userId      user id
      * @param newPassword new password for the user
      * @return user with it's new password
      * @throws UserOperateException user not exist.
@@ -68,7 +68,7 @@ public interface IUserServices {
     /**
      * Change user's contact info
      *
-     * @param userId user id
+     * @param userId         user id
      * @param newContactInfo new contact information for the user
      * @return a saved user
      * @throws UserOperateException user not exist
@@ -78,7 +78,7 @@ public interface IUserServices {
     /**
      * Change user's nick name
      *
-     * @param userId user id
+     * @param userId      user id
      * @param newNickName new nick name for the user
      * @return a saved user
      * @throws UserOperateException user not exist
@@ -87,7 +87,7 @@ public interface IUserServices {
 
     /**
      * Ban a user
-     *
+     * <p>
      * It means remove all rights for this user
      *
      * @param userId user id
@@ -98,9 +98,9 @@ public interface IUserServices {
 
     /**
      * Delete a user and other data, such as article, commit and other.
-     *
+     * <p>
      * Usage: A user decided to leave the site forever.
-     *
+     * <p>
      * <b>It will make a heavy database transaction, don't use this to delete a user</b>
      *
      * @param userId a user id
@@ -117,4 +117,24 @@ public interface IUserServices {
      * @throws UserOperateException if user not existed
      */
     List<Right> listUserRights(Integer userId) throws UserOperateException;
+
+    /**
+     * Update user permission
+     *
+     * @param userId target id
+     * @param rights new permission list
+     * @return
+     */
+    List<Right> updateUserRights(Integer userId, List<Right> rights) throws UserOperateException;
+
+
+    /**
+     * Get user and assert user existed or not;
+     *
+     * @param userId user id
+     * @return an existed user
+     * @throws UserOperateException user not existed
+     */
+    User getUser(Integer userId) throws UserOperateException;
+
 }

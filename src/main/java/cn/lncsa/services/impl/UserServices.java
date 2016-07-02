@@ -134,14 +134,29 @@ public class UserServices implements IUserServices {
         return userRightDAO.getRightByUser(getUser(userId));
     }
 
+    @Override
+    public List<Right> updateUserRights(Integer userId, List<Right> rights) throws UserOperateException {
+        User user = getUser(userId);
+        List<UserRight> userRightList = userRightDAO.queryRightRelationByUser(user);
+        if(userRightList != null && userRightList.size() > 0) userRightDAO.delete(userRightList);
+        return saveUserRightList(user,rights);
+    }
+
     /**
-     * Get user and assert user existed or not;
+     * Save user permission list.
      *
-     * @param userId user id
-     * @return an existed user
-     * @throws UserOperateException user not existed
+     * @param user
+     * @param rightList
+     * @return
      */
-    private User getUser(Integer userId) throws UserOperateException {
+    private List<Right> saveUserRightList(User user, List<Right> rightList){
+        for (Right right : rightList){
+            userRightDAO.save(new UserRight(user,right));
+        }
+        return rightList;
+    }
+
+    public User getUser(Integer userId) throws UserOperateException {
         User user = userDAO.findOne(userId);
         if(user == null) throw new UserOperateException("User not exist");
         return user;

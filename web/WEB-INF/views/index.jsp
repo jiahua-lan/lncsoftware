@@ -23,7 +23,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-8 col-sm-8">
-                <s:if test="#request.bulletin!=null">
+                <s:if test="#request.topBoardBulletin!=null">
                     <script>$(document).ready(function(){ $("#topBulletinBoard").addClass("animated"); });</script>
                     <div class="bounceIn" id="topBulletinBoard">
                         <jsp:include page="widgets/topBoardWiget.jsp"/>

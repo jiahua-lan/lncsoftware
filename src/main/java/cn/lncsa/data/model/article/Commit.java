@@ -20,6 +20,21 @@ public class Commit{
     private Commit replyTo;
     private Date date;
 
+    public Commit() {
+    }
+
+    public Commit(User user, String contents, Commit replyTo) {
+        this.user = user;
+        this.contents = contents;
+        this.replyTo = replyTo;
+    }
+
+    public Commit(User user, String contents, Article targetArticle) {
+        this.user = user;
+        this.contents = contents;
+        this.targetArticle = targetArticle;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {

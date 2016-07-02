@@ -5,10 +5,11 @@ import cn.lncsa.data.dao.article.IArticleDAO;
 import cn.lncsa.data.dao.article.IArticleTagDAO;
 import cn.lncsa.data.dao.article.ICommitDAO;
 import cn.lncsa.data.dao.article.ITagDAO;
-import cn.lncsa.data.dao.user.IUserDAO;
 import cn.lncsa.data.model.article.Article;
 import cn.lncsa.data.model.article.ArticleTag;
 import cn.lncsa.data.model.article.Tag;
+import cn.lncsa.services.IArticleServices;
+import org.pegdown.PegDownProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,7 +25,7 @@ import java.util.List;
  * Created by catten on 16/7/1.
  */
 @Service
-public class ArticleService implements cn.lncsa.services.IArticleService {
+public class ArticleServices implements IArticleServices {
     private IArticleDAO articleDAO;
     private IArticleTagDAO articleTagDAO;
     private ICommitDAO commitDAO;
@@ -51,6 +52,12 @@ public class ArticleService implements cn.lncsa.services.IArticleService {
     }
 
     private static PageRequest latestArticlePageRequest = new PageRequest(0, 5, new Sort(Sort.Direction.DESC, "createDate"));
+
+    public Article getArticle(Integer articleId) throws ArticleOperateException {
+        Article article = articleDAO.findOne(articleId);
+        if(article == null) throw new ArticleOperateException("Target article not exist.");
+        return article;
+    }
 
     @Override
     public List<Article> getLatestArticle() {
@@ -117,9 +124,7 @@ public class ArticleService implements cn.lncsa.services.IArticleService {
     @Override
     @Transactional
     public Article deleteArticle(Integer articleId) throws ArticleOperateException {
-        Article article = articleDAO.findOne(articleId);
-        if (article == null) throw new ArticleOperateException("Article not exist.");
-
+        Article article = getArticle(articleId);
         //Delete commits
         commitDAO.deleteByArticleId(articleId);
         //Delete article-tag relationship
@@ -131,8 +136,7 @@ public class ArticleService implements cn.lncsa.services.IArticleService {
 
     @Override
     public Article setArticleStatus(Integer articleId, String status) throws ArticleOperateException {
-        Article article = articleDAO.findOne(articleId);
-        if (article == null) throw new ArticleOperateException("Article not exist");
+        Article article = getArticle(articleId);
         article.setStatus(status);
         return articleDAO.save(article);
     }
