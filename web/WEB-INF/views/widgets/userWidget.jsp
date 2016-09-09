@@ -31,7 +31,7 @@
                     </a>
                 </s:if>
                 <s:if test="#item=='admin'">
-                    <a class="list-group-item" href="javascript:">
+                    <a class="list-group-item" href="admin/article">
                         <span class="glyphicon glyphicon-wrench"> </span>
                         后台管理
                     </a>

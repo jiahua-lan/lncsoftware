@@ -8,7 +8,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <h1>Administration | LNCSA</h1>
-<p>我们相信您已经从管理员里理解到基本注意事项，大概总结为三项：
+<p>我们相信您已经从管理员处了解到一些基本注意事项，它们大概可以总结为以下三项：
     <ol>
         <li>尊重别人的隐私。</li>
         <li>输入前要先考虑（后果和风险）。</li>
