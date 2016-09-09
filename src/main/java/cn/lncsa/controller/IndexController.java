@@ -32,6 +32,6 @@ public class IndexController {
         model.addAttribute("recentArticle",articleServices.getLatestArticle());
         model.addAttribute("titleBulletin",bulletinServices.getIndexTitleBulletin());
         model.addAttribute("topBoardBulletin",bulletinServices.getIndexBoardBulletin());
-        return "WEB-INF/views/index";
+        return "index";
     }
 }

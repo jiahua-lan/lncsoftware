@@ -4,6 +4,7 @@ import cn.lncsa.data.model.user.User;
 import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -11,7 +12,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "article")
-public class Article {
+public class Article implements Serializable{
 
     //private static ArticleDAO dao = new ArticleDAO();
 

@@ -79,21 +79,21 @@ public interface IArticleDAO extends PagingAndSortingRepository<Article, Integer
      *
      * @param tags        a list of tags
      * @param status      what status allow
-     * @param pageRequest
+     * @param pageable
      * @return
      */
-    @Query("select a from ArticleTag.article a where ArticleTag.tag in ?1 and a.status in ?2")
-    Page<Article> findArticleByTags(List<Tag> tags, String[] status, PageRequest pageRequest);
+    @Query("select a from ArticleTag a where a.tag in ?1 and a.article.status in ?2")
+    Page<Article> findArticleByTags(List<Tag> tags, String[] status, Pageable pageable);
 
     /**
      * Find all article
      *
      * @param status      what status allow
-     * @param pageRequest
+     * @param pageable
      * @return
      */
     @Query("select a from Article a where a.status in ?1")
-    Page<Article> findAll(String[] status, PageRequest pageRequest);
+    Page<Article> findAll(String[] status, Pageable pageable);
 
     /**
      * Delete articles by author id

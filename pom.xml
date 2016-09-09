@@ -19,21 +19,24 @@
             <id>jiyan</id>
             <name>Jiyan Nexus Repository</name>
             <url>http://10.15.219.23:8081/content/repositories/central/</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
         </repository>
     </repositories>
 
     <dependencies>
-        <!-- Common -->
+
+
+        <!-- JSTL -->
         <dependency>
-            <groupId>org.apache.struts</groupId>
-            <artifactId>struts2-core</artifactId>
-            <version>2.3.20</version>
+            <groupId>jstl</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.7.0</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/javax.servlet.jsp/jsp-api -->
@@ -41,6 +44,7 @@
             <groupId>javax.servlet.jsp</groupId>
             <artifactId>jsp-api</artifactId>
             <version>2.2</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
@@ -89,13 +93,11 @@
             <artifactId>spring-core</artifactId>
             <version>${spring.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
             <version>${spring.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
@@ -103,20 +105,17 @@
         </dependency>
 
         <!-- SpringMVC -->
-
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-webmvc -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
             <version>${spring.version}</version>
         </dependency>
-
         <!-- Database Connection Pool -->
-        <!-- http://mvnrepository.com/artifact/com.mchange/c3p0 -->
         <dependency>
-            <groupId>com.mchange</groupId>
-            <artifactId>c3p0</artifactId>
-            <version>0.9.5</version>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>1.0.15</version>
         </dependency>
 
         <!-- Spring Data-->
@@ -127,24 +126,24 @@
         </dependency>
 
         <!-- Logging Face -->
+
         <dependency>
             <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>1.7.18</version>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.10</version>
         </dependency>
 
         <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>1.1.5</version>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>1.7.10</version>
         </dependency>
-
         <!-- Java Database Driver -->
         <!-- http://mvnrepository.com/artifact/mysql/mysql-connector-java -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.3</version>
+            <version>5.1.35</version>
         </dependency>
 
         <!-- Test Support -->
@@ -216,8 +215,11 @@
                 <artifactId>jetty-maven-plugin</artifactId>
                 <version>9.2.10.v20150310</version>
                 <configuration>
-                    <scanIntervalSeconds>3</scanIntervalSeconds>
+                    <scanIntervalSeconds>5</scanIntervalSeconds>
                     <webAppSourceDirectory>web</webAppSourceDirectory>
+                    <webApp>
+                        <compactPath>/</compactPath>
+                    </webApp>
                     <stopKey/>
                     <stopPort/>
                 </configuration>
