@@ -9,10 +9,10 @@ import cn.lncsa.data.model.article.Article;
 import cn.lncsa.data.model.article.ArticleTag;
 import cn.lncsa.data.model.article.Tag;
 import cn.lncsa.services.IArticleServices;
-import org.pegdown.PegDownProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -51,17 +51,17 @@ public class ArticleServices implements IArticleServices {
         this.tagDAO = tagDAO;
     }
 
-    private static PageRequest latestArticlePageRequest = new PageRequest(0, 5, new Sort(Sort.Direction.DESC, "createDate"));
-
     public Article getArticle(Integer articleId) throws ArticleOperateException {
         Article article = articleDAO.findOne(articleId);
         if(article == null) throw new ArticleOperateException("Target article not exist.");
         return article;
     }
 
+    private static Pageable latestArticlePageable = new PageRequest(0, 5, new Sort(Sort.Direction.DESC, "createDate"));
+
     @Override
     public List<Article> getLatestArticle() {
-        return articleDAO.findAll(latestArticlePageRequest).getContent();
+        return articleDAO.findAll(latestArticlePageable).getContent();
     }
 
     @Override
@@ -142,28 +142,28 @@ public class ArticleServices implements IArticleServices {
     }
 
     @Override
-    public Page<Article> getAllArticle(PageRequest pageRequest, String... status) {
-        return articleDAO.findAll(status, pageRequest);
+    public Page<Article> getAllArticle(Pageable pageable, String... status) {
+        return articleDAO.findAll(status, pageable);
     }
 
     @Override
-    public Page<Article> getArticleByTags(List<Tag> tags, PageRequest pageRequest, String... status) {
-        return articleDAO.findArticleByTags(tags, status, pageRequest);
+    public Page<Article> getArticleByTags(List<Tag> tags, Pageable pageable, String... status) {
+        return articleDAO.findArticleByTags(tags, status, pageable);
     }
 
     @Override
-    public Page<Article> getArticleByUserId(Integer userId, PageRequest pageRequest, String... status){
-        return articleDAO.findByAuthorId(userId,status,pageRequest);
+    public Page<Article> getArticleByUserId(Integer userId, Pageable pageable, String... status){
+        return articleDAO.findByAuthorId(userId,status,pageable);
     }
 
     @Override
-    public Page<Article> findArticleBetweenDate(Date startDate, Date endDate, PageRequest pageRequest, String... status){
-        return articleDAO.getArticleBetweenCreateDate(startDate,endDate,status,pageRequest);
+    public Page<Article> findArticleBetweenDate(Date startDate, Date endDate, Pageable pageable, String... status){
+        return articleDAO.getArticleBetweenCreateDate(startDate,endDate,status,pageable);
     }
 
     @Override
-    public Page<Article> findArticleBetweenModifiedDate(Date startDate, Date endDate, PageRequest pageRequest, String... status){
-        return articleDAO.getArticleBetweenModifiedDate(startDate,endDate,status,pageRequest);
+    public Page<Article> findArticleBetweenModifiedDate(Date startDate, Date endDate, Pageable pageable, String... status){
+        return articleDAO.getArticleBetweenModifiedDate(startDate,endDate,status,pageable);
     }
 
     @Override
@@ -172,7 +172,7 @@ public class ArticleServices implements IArticleServices {
     }
 
     @Override
-    public Page<Article> findArticleByKeyword(String keyword, PageRequest pageRequest, String... status){
+    public Page<Article> findArticleByKeyword(String keyword, Pageable pageable, String... status){
         //TODO
         return null;
     }

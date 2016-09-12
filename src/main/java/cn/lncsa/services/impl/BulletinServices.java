@@ -2,6 +2,7 @@ package cn.lncsa.services.impl;
 
 import cn.lncsa.data.dao.IBulletinDAO;
 import cn.lncsa.data.model.Bulletin;
+import cn.lncsa.services.IBulletinServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +12,7 @@ import java.util.List;
  * Created by catten on 16/7/2.
  */
 @Service
-public class BulletinServices implements cn.lncsa.services.IBulletinServices {
+public class BulletinServices implements IBulletinServices {
     public IBulletinDAO bulletinDAO;
 
     @Autowired
@@ -20,37 +21,15 @@ public class BulletinServices implements cn.lncsa.services.IBulletinServices {
     }
 
     @Override
-    public Bulletin getIndexTitleBulletin(){
-        return bulletinDAO.getMainPageBulletin();
+    public Bulletin getBulletin(String type) {
+        List<Bulletin> bulletins = bulletinDAO.getByType(type);
+        return bulletins.get(0);
     }
 
     @Override
-    public Bulletin getAppPageTitleBulletin(){
-        return bulletinDAO.getAppGuideBulletin();
-    }
-
-    @Override
-    public Bulletin getAppGuideBulletin(){
-        return bulletinDAO.getAppGuideBulletin();
-    }
-
-    @Override
-    public Bulletin getIndexBoardBulletin(){
-        return bulletinDAO.getMainPageTopBulletin();
-    }
-
-    @Override
-    public Bulletin getArticleTitleBulletin(){
-        return bulletinDAO.getArticleBulletin();
-    }
-
-    @Override
-    public List<Bulletin> getContactInfoList(){
-        return bulletinDAO.getByType("contact_info");
-    }
-
-    @Override
-    public List<Bulletin> getFriendLinkList(){
-        return bulletinDAO.getByType("friend_link");
+    public List<Bulletin> getBulletinItems(String type, int count) {
+        List<Bulletin> bulletins = bulletinDAO.getByType(type);
+        if(count > bulletins.size()) return bulletins;
+        return bulletins.subList(0,count - 1);
     }
 }

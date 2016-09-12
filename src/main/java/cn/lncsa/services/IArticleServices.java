@@ -4,7 +4,7 @@ import cn.lncsa.common.exceptions.ArticleOperateException;
 import cn.lncsa.data.model.article.Article;
 import cn.lncsa.data.model.article.Tag;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
@@ -58,52 +58,52 @@ public interface IArticleServices {
     /**
      * Get all article
      *
-     * @param pageRequest paging request
+     * @param pageable paging request
      * @return
      */
-    Page<Article> getAllArticle(PageRequest pageRequest, String... status);
+    Page<Article> getAllArticle(Pageable pageable, String... status);
 
     /**
      * Get article by a list tags
      *
      * @param tags
-     * @param pageRequest
+     * @param pageable
      * @param status      what status allow
      * @return
      */
-    Page<Article> getArticleByTags(List<Tag> tags, PageRequest pageRequest, String... status);
+    Page<Article> getArticleByTags(List<Tag> tags, Pageable pageable, String... status);
 
     /**
      * Get article by userId
      *
      * @param userId
-     * @param pageRequest
+     * @param pageable
      * @param status what status allow
      * @return
      */
-    Page<Article> getArticleByUserId(Integer userId, PageRequest pageRequest, String... status);
+    Page<Article> getArticleByUserId(Integer userId, Pageable pageable, String... status);
 
     /**
      * Find article between date
      *
      * @param startDate
      * @param endDate
-     * @param pageRequest
+     * @param pageable
      * @param status what status allow
      * @return
      */
-    Page<Article> findArticleBetweenDate(Date startDate, Date endDate, PageRequest pageRequest, String... status);
+    Page<Article> findArticleBetweenDate(Date startDate, Date endDate, Pageable pageable, String... status);
 
     /**
      * Find articles between date
      *
      * @param startDate
      * @param endDate
-     * @param pageRequest
+     * @param pageable
      * @param status what status allow
      * @return
      */
-    Page<Article> findArticleBetweenModifiedDate(Date startDate, Date endDate, PageRequest pageRequest, String... status);
+    Page<Article> findArticleBetweenModifiedDate(Date startDate, Date endDate, Pageable pageable, String... status);
 
     /**
      * Get all tags tagged to an article
@@ -117,9 +117,9 @@ public interface IArticleServices {
      * Full article context searching
      *
      * @param keyword some keywords
-     * @param pageRequest
+     * @param pageable
      * @param status
      * @return
      */
-    Page<Article> findArticleByKeyword(String keyword, PageRequest pageRequest, String... status);
+    Page<Article> findArticleByKeyword(String keyword, Pageable pageable, String... status);
 }

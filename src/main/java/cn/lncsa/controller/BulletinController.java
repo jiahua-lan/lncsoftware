@@ -2,6 +2,7 @@ package cn.lncsa.controller;
 
 import cn.lncsa.data.dao.IBulletinDAO;
 import cn.lncsa.data.model.Bulletin;
+import cn.lncsa.services.IBulletinServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,11 +20,11 @@ import java.util.List;
 @RequestMapping("/bulletin")
 public class BulletinController {
 
-    private IBulletinDAO bulletinDAO;
+    private IBulletinServices bulletinServices;
 
     @Autowired
-    public void setBulletinDAO(IBulletinDAO bulletinDAO) {
-        this.bulletinDAO = bulletinDAO;
+    public void setBulletinServices(IBulletinServices bulletinServices) {
+        this.bulletinServices = bulletinServices;
     }
 
     /**
@@ -36,9 +37,7 @@ public class BulletinController {
      */
     @RequestMapping(value = "/single", method = RequestMethod.GET)
     public @ResponseBody Bulletin getBulletin(@RequestParam("type") String type){
-        List<Bulletin> bulletins = bulletinDAO.getByType(type);
-        if(bulletins == null) return null;
-        return bulletins.get(0);
+        return bulletinServices.getBulletin(type);
     }
 
     /**
@@ -50,8 +49,6 @@ public class BulletinController {
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public @ResponseBody List<Bulletin> getBulletinList(@RequestParam("type") String type, @RequestParam("count") int count){
-        List<Bulletin> bulletins = bulletinDAO.getByType(type);
-        if(count > bulletins.size()) return bulletins;
-        else return bulletins.subList(0,count - 1);
+        return bulletinServices.getBulletinItems(type,count);
     }
 }
