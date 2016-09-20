@@ -1,8 +1,5 @@
 package cn.lncsa.data.model.article;
 
-import cn.lncsa.data.model.user.User;
-import org.hibernate.annotations.TypeDef;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -22,17 +19,17 @@ public class Article implements Serializable{
     private String context;
     private Date createDate;
     private Date lastModifiedDate;
-    private User author;
+    private Integer authorId;
     private String previewSentences;
 
     public Article() {
     }
 
-    public Article(String title, String context, Date createDate, User author, String previewSentences, String status) {
+    public Article(String title, String context, Date createDate, Integer authorId, String previewSentences, String status) {
         this.title = title;
         this.context = context;
         this.createDate = createDate;
-        this.author = author;
+        this.authorId = authorId;
         this.previewSentences = previewSentences;
         this.status = status;
     }
@@ -72,13 +69,13 @@ public class Article implements Serializable{
         this.createDate = createDate;
     }
 
-    @ManyToOne
-    public User getAuthor() {
-        return author;
+    @Column(name = "author_id")
+    public Integer getAuthorId() {
+        return authorId;
     }
 
-    public void setAuthor(User author) {
-        this.author = author;
+    public void setAuthorId(Integer authorId) {
+        this.authorId = authorId;
     }
 
     public String getPreviewSentences() {

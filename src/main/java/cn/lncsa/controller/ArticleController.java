@@ -1,11 +1,12 @@
 package cn.lncsa.controller;
 
+import cn.lncsa.common.exceptions.UserOperateException;
 import cn.lncsa.data.dto.Previewable;
 import cn.lncsa.data.dto.impl.ArticlePreview;
 import cn.lncsa.data.model.article.Article;
 import cn.lncsa.data.model.article.Tag;
 import cn.lncsa.services.IArticleServices;
-import org.hibernate.criterion.Order;
+import cn.lncsa.services.IUserServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,10 +24,16 @@ import java.util.*;
 @RequestMapping("/articles")
 public class ArticleController {
     private IArticleServices articleServices;
+    private IUserServices userServices;
 
     @Autowired
     public void setArticleServices(IArticleServices articleServices) {
         this.articleServices = articleServices;
+    }
+
+    @Autowired
+    public void setUserServices(IUserServices userServices) {
+        this.userServices = userServices;
     }
 
     /**
@@ -166,7 +173,11 @@ public class ArticleController {
 
         for (Article article : articles) {
             ArticlePreview articlePreview = new ArticlePreview();
-            articlePreview.setAuthor(article.getAuthor().getName());
+            try {
+                articlePreview.setAuthor(userServices.getUser(article.getAuthorId()).getNickName());
+            } catch (UserOperateException e) {
+                articlePreview.setAuthor(null);
+            }
             articlePreview.setDate(article.getLastModifiedDate());
             articlePreview.setContent(article.getPreviewSentences());
             previewables.add(articlePreview);
