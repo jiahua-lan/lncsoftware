@@ -5,10 +5,7 @@ import cn.lncsa.data.model.Bulletin;
 import cn.lncsa.services.IBulletinServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -35,8 +32,8 @@ public class BulletinController {
      * @param type type of bulletin
      * @return
      */
-    @RequestMapping(value = "/single", method = RequestMethod.GET)
-    public @ResponseBody Bulletin getBulletin(@RequestParam("type") String type){
+    @RequestMapping(value = "/single/{type}", method = RequestMethod.GET)
+    public @ResponseBody Bulletin getBulletin(@PathVariable("type") String type){
         return bulletinServices.getBulletin(type);
     }
 
@@ -47,8 +44,8 @@ public class BulletinController {
      * @param count how much, if count > type.count, will return all items.
      * @return
      */
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public @ResponseBody List<Bulletin> getBulletinList(@RequestParam("type") String type, @RequestParam("count") int count){
+    @RequestMapping(value = "/list/{type}", method = RequestMethod.GET)
+    public @ResponseBody List<Bulletin> getBulletinList(@PathVariable("type") String type, @RequestParam("count") int count){
         return bulletinServices.getBulletinItems(type,count);
     }
 }

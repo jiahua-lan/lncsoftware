@@ -176,4 +176,9 @@ public class ArticleServices implements IArticleServices {
         //TODO
         return null;
     }
+
+    @Override
+    public Tag getTagByTitle(String tag) {
+        return tagDAO.getByTitle(tag);
+    }
 }

@@ -122,4 +122,12 @@ public interface IArticleServices {
      * @return
      */
     Page<Article> findArticleByKeyword(String keyword, Pageable pageable, String... status);
+
+    /**
+     * Get a tag object by tag's name
+     *
+     * @param tag tag's name
+     * @return tag object
+     */
+    Tag getTagByTitle(String tag);
 }

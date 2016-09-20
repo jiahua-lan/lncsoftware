@@ -38,7 +38,8 @@ public class ArticleTag {
     public void setTag(Tag tag) {
         this.tag = tag;
     }
-    @ManyToOne(targetEntity = Article.class)
+
+    @ManyToOne
     public Article getArticle() {
         return article;
     }
