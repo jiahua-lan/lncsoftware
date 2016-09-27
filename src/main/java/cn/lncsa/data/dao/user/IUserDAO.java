@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by catte on 2016/6/12.
  */
-public interface IUserDAO extends JpaRepository<User,Integer> {
+public interface IUserDAO extends JpaRepository<User, Integer> {
 
     /**
      * Get user by name
@@ -34,14 +34,6 @@ public interface IUserDAO extends JpaRepository<User,Integer> {
      * @param keyword
      * @return
      */
-    Page<User> getByNickNameLike(String keyword,Pageable pageable);
+    Page<User> getByNickNameLike(String keyword, Pageable pageable);
 
-    /**
-     * Search users that contact info include keyword
-     *
-     * @param keyword
-     * @param pageable
-     * @return
-     */
-    Page<User> getByContactInfoLike(String keyword, Pageable pageable);
 }

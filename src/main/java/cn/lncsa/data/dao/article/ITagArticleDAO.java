@@ -16,7 +16,7 @@ import java.util.List;
  *
  * Created by catten on 16/6/12.
  */
-public interface IArticleTagDAO extends JpaRepository<ArticleTag,Integer> {
+public interface ITagArticleDAO extends JpaRepository<ArticleTag,Integer> {
 
     /**
      * Delete tag-article relationship by article id
@@ -33,4 +33,22 @@ public interface IArticleTagDAO extends JpaRepository<ArticleTag,Integer> {
      */
     @Modifying
     void deleteByTagId(Integer tagId);
+
+    /**
+     * Get article's tag
+     *
+     * @param article
+     * @return
+     */
+    @Query("select at.tag from ArticleTag at where at.article = ?1")
+    List<Tag> getByArticle(Article article);
+
+    /**
+     * Get article's tag by article id
+     *
+     * @param articleId
+     * @return
+     */
+    @Query("select at.tag from ArticleTag at where at.article.id = ?1")
+    List<Tag> getByArticleId(Integer articleId);
 }

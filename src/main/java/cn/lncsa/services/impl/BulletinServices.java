@@ -1,7 +1,7 @@
 package cn.lncsa.services.impl;
 
 import cn.lncsa.data.dao.IBulletinDAO;
-import cn.lncsa.data.model.Bulletin;
+import cn.lncsa.data.model.bulletin.Bulletin;
 import cn.lncsa.services.IBulletinServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

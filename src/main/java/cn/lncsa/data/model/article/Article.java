@@ -21,6 +21,7 @@ public class Article implements Serializable{
     private Date lastModifiedDate;
     private Integer authorId;
     private String previewSentences;
+    private String status;
 
     public Article() {
     }
@@ -41,8 +42,6 @@ public class Article implements Serializable{
     public void setStatus(String status) {
         this.status = status;
     }
-
-    private String status;
 
     public String getTitle() {
         return title;

@@ -10,11 +10,11 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "commits")
-public class Commit{
+public class Commit {
 
     private Integer id;
 
-    private User user;
+    private Integer userId;
     private String contents;
     private Article targetArticle;
     private Commit replyTo;
@@ -23,14 +23,14 @@ public class Commit{
     public Commit() {
     }
 
-    public Commit(User user, String contents, Commit replyTo) {
-        this.user = user;
+    public Commit(Integer userId, String contents, Commit replyTo) {
+        this.userId = userId;
         this.contents = contents;
         this.replyTo = replyTo;
     }
 
-    public Commit(User user, String contents, Article targetArticle) {
-        this.user = user;
+    public Commit(Integer userId, String contents, Article targetArticle) {
+        this.userId = userId;
         this.contents = contents;
         this.targetArticle = targetArticle;
     }
@@ -45,13 +45,12 @@ public class Commit{
         this.id = id;
     }
 
-    @ManyToOne
-    public User getUser() {
-        return user;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public String getContents() {

@@ -1,4 +1,4 @@
-package cn.lncsa.data.model;
+package cn.lncsa.data.model.bulletin;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -16,6 +16,7 @@ public class Bulletin {
     private String context;
     private Date date;
     private String imageLink;
+    private Integer authorid;
 
     public String getLink() {
         return link;
@@ -67,5 +68,14 @@ public class Bulletin {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    @Column(name = "author_id")
+    public Integer getAuthor_id() {
+        return authorid;
+    }
+
+    public void setAuthor_id(Integer author_id) {
+        this.authorid = author_id;
     }
 }

@@ -2,7 +2,7 @@ package cn.lncsa.services.impl;
 
 import cn.lncsa.common.exceptions.ArticleOperateException;
 import cn.lncsa.data.dao.article.IArticleDAO;
-import cn.lncsa.data.dao.article.IArticleTagDAO;
+import cn.lncsa.data.dao.article.ITagArticleDAO;
 import cn.lncsa.data.dao.article.ICommitDAO;
 import cn.lncsa.data.dao.article.ITagDAO;
 import cn.lncsa.data.model.article.Article;
@@ -27,7 +27,7 @@ import java.util.List;
 @Service
 public class ArticleServices implements IArticleServices {
     private IArticleDAO articleDAO;
-    private IArticleTagDAO articleTagDAO;
+    private ITagArticleDAO articleTagDAO;
     private ICommitDAO commitDAO;
     private ITagDAO tagDAO;
 
@@ -37,7 +37,7 @@ public class ArticleServices implements IArticleServices {
     }
 
     @Autowired
-    public void setArticleTagDAO(IArticleTagDAO articleTagDAO) {
+    public void setArticleTagDAO(ITagArticleDAO articleTagDAO) {
         this.articleTagDAO = articleTagDAO;
     }
 

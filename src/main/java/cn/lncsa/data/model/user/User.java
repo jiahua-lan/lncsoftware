@@ -9,7 +9,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "users")
-public class User{
+public class User {
 
     private Integer id;
     private String name;
@@ -18,7 +18,7 @@ public class User{
     private Date registerDate;
     private String contactInfo;
 
-    public User(){
+    public User() {
 
     }
 

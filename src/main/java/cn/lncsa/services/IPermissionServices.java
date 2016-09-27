@@ -5,6 +5,7 @@ import cn.lncsa.common.exceptions.UserOperateException;
 import cn.lncsa.data.model.permissions.Permission;
 import cn.lncsa.data.model.permissions.PermissionRole;
 import cn.lncsa.data.model.permissions.Role;
+import cn.lncsa.data.model.permissions.UserRole;
 
 import java.util.List;
 
@@ -13,23 +14,55 @@ import java.util.List;
  */
 public interface IPermissionServices {
 
-    List<Permission> queryUserPermissions(Integer userId) throws UserOperateException;
+    /*
+    *
+    * Permission modifying
+    *
+    * */
 
-    void assertUserHasPermission(Integer userId, Integer permissionId) throws PermissionException, UserOperateException;
+    Permission addPermission(Permission permission);
 
-    PermissionRole setPermissionRoleRule(Integer permissionId, Integer roleId) throws PermissionException;
+    Permission removePermission(Integer permissionId) throws PermissionException;
 
-    PermissionRole removePermissionRoleRule(Integer ruleId) throws PermissionException;
-
-    List<Permission> queryRolePermissions(Integer roleId) throws PermissionException;
+    /*
+    *
+    * Role modifying
+    *
+    * */
 
     Role addRole(Role role);
 
     Role removeRole(Integer roleId) throws PermissionException;
 
-    Permission addPermission(Permission permission);
+    /*
+    *
+    * Role-Permission Relationship modifying
+    *
+    * */
 
-    Permission removePermission(Integer permissionId) throws PermissionException;
+    PermissionRole setPermissionRoleRule(Integer permissionId, Integer roleId);
+
+    void removePermissionRoleRule(Integer permissionId, Integer ruleId);
+
+    /*
+    *
+    * User-Role Relationship modifying
+    *
+    * */
+
+    UserRole setUserRoleRule(Integer userId, Integer roleId);
+
+    void removeUserRoleRule(Integer userId, Integer roleId);
+
+    /*
+    *
+    * Query methods
+    *
+    * */
+
+    List<Permission> queryUserPermissions(Integer userId) throws UserOperateException;
+
+    List<Permission> queryRolePermissions(Integer roleId) throws PermissionException;
 
     List<Role> listAllRoles();
 

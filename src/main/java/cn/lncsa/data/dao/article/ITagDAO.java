@@ -14,24 +14,6 @@ import java.util.List;
  */
 public interface ITagDAO extends JpaRepository<Tag,Integer> {
     /**
-     * Get article's tag
-     *
-     * @param article
-     * @return
-     */
-    @Query("select at.tag from ArticleTag at where at.article = ?1")
-    List<Tag> getByArticle(Article article);
-
-    /**
-     * Get article's tag by article id
-     *
-     * @param articleId
-     * @return
-     */
-    @Query("select at.tag from ArticleTag at where at.article.id = ?1")
-    List<Tag> getByArticleId(Integer articleId);
-
-    /**
      * Get a tag by title
      *
      * @param name tag name

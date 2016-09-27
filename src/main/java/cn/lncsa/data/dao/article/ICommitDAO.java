@@ -16,20 +16,12 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 public interface ICommitDAO extends PagingAndSortingRepository<Commit,Integer> {
 
     /**
-     * Get commit by user
-     *
-     * @param user
-     * @return
-     */
-    Page<Commit> getByUser(User user, Pageable pageable);
-
-    /**
      * Get commit by user id
      *
      * @param userId
      * @return
      */
-    @Query("select c from Commit c where c.user.id = ?1")
+    @Query("select c from Commit c where c.userId = ?1")
     Page<Commit> getByUserId(Integer userId, Pageable pageable);
 
     /**
@@ -81,6 +73,6 @@ public interface ICommitDAO extends PagingAndSortingRepository<Commit,Integer> {
      * @param userId
      */
     @Modifying
-    @Query("delete from Commit c where c.user.id = ?1")
+    @Query("delete from Commit c where c.userId = ?1")
     void deleteByUserId(Integer userId);
 }

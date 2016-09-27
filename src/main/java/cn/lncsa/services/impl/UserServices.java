@@ -4,7 +4,7 @@ import cn.lncsa.common.exceptions.UserOperateException;
 import cn.lncsa.data.dao.article.IArticleDAO;
 import cn.lncsa.data.dao.article.ICommitDAO;
 import cn.lncsa.data.dao.user.IUserDAO;
-import cn.lncsa.data.dao.user.IUserRoleDAO;
+import cn.lncsa.data.dao.permissions.IRoleUserDAO;
 import cn.lncsa.data.model.permissions.Role;
 import cn.lncsa.data.model.user.User;
 import cn.lncsa.data.model.permissions.UserRole;
@@ -24,7 +24,7 @@ import java.util.List;
 @Service
 public class UserServices implements IUserServices {
     private IUserDAO userDAO;
-    private IUserRoleDAO userRightDAO;
+    private IRoleUserDAO userRightDAO;
     private IArticleDAO articleDAO;
     private ICommitDAO commitDAO;
 
@@ -34,7 +34,7 @@ public class UserServices implements IUserServices {
     }
 
     @Autowired
-    public void setUserRightDAO(IUserRoleDAO userRightDAO) {
+    public void setUserRightDAO(IRoleUserDAO userRightDAO) {
         this.userRightDAO = userRightDAO;
     }
 
@@ -129,7 +129,7 @@ public class UserServices implements IUserServices {
 
     @Override
     public List<Role> listUserRoles(Integer userId) throws UserOperateException {
-        return userRightDAO.getUserRoles(getUser(userId));
+        return userRightDAO.getRolesByUser(getUser(userId));
     }
 
     @Override

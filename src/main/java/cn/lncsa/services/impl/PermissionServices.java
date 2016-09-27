@@ -2,6 +2,9 @@ package cn.lncsa.services.impl;
 
 import cn.lncsa.common.exceptions.PermissionException;
 import cn.lncsa.common.exceptions.UserOperateException;
+import cn.lncsa.data.dao.permissions.IPermissionDAO;
+import cn.lncsa.data.dao.permissions.IRolePermissionDAO;
+import cn.lncsa.data.dao.permissions.IRoleDAO;
 import cn.lncsa.data.dao.user.*;
 import cn.lncsa.data.model.permissions.Permission;
 import cn.lncsa.data.model.permissions.PermissionRole;
@@ -22,7 +25,7 @@ public class PermissionServices implements IPermissionServices {
 
     private IPermissionDAO permissionDAO;
     private IUserDAO userDAO;
-    private IPermissionRoleDAO permissionRoleDAO;
+    private IRolePermissionDAO permissionRoleDAO;
     private IRoleDAO roleDAO;
 
     @Autowired
@@ -36,7 +39,7 @@ public class PermissionServices implements IPermissionServices {
     }
 
     @Autowired
-    public void setPermissionRoleDAO(IPermissionRoleDAO permissionRoleDAO) {
+    public void setPermissionRoleDAO(IRolePermissionDAO permissionRoleDAO) {
         this.permissionRoleDAO = permissionRoleDAO;
     }
 
@@ -80,7 +83,7 @@ public class PermissionServices implements IPermissionServices {
 
     @Override
     public List<Permission> queryRolePermissions(Integer roleId) throws PermissionException {
-        return permissionRoleDAO.queryPermissionsByRole(getRole(roleId).getId());
+        return permissionRoleDAO.getPermissionsByRole(getRole(roleId).getId());
     }
 
     @Override

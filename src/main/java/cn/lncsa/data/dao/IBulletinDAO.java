@@ -1,19 +1,17 @@
 package cn.lncsa.data.dao;
 
-import cn.lncsa.data.model.Bulletin;
+import cn.lncsa.data.model.bulletin.Bulletin;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
 /**
  * Created by catten on 2016/6/12.
  */
-public interface IBulletinDAO extends JpaRepository<Bulletin,Integer> {
+public interface IBulletinDAO extends JpaRepository<Bulletin, Integer> {
     /**
      * Get bulletins directly by type name
-     * Use this if have some bulletins that not using standard bulletin type.
      *
      * @param type type name
      * @return a list of bulletin match the type

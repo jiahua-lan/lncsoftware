@@ -29,17 +29,6 @@ public interface IArticleDAO extends PagingAndSortingRepository<Article, Integer
     Page<Article> findByTitleLike(String keyword, String[] status, Pageable pageable);
 
     /**
-     * Find articles by author
-     *
-     * @param author
-     * @param status   what status allow
-     * @param pageable
-     * @return
-     */
-    @Query("select a from Article a where a.authorId = ?1 and a.status in ?2")
-    Page<Article> findByAuthor(User author, String[] status, Pageable pageable);
-
-    /**
      * Find articles by author id
      *
      * @param authorId
@@ -101,7 +90,7 @@ public interface IArticleDAO extends PagingAndSortingRepository<Article, Integer
      * @param authorId
      */
     @Modifying
-    @Query("delete from Article a where a.authorId.id = ?1")
+    @Query("delete from Article a where a.authorId = ?1")
     void deleteArticleByAuthorId(Integer authorId);
 
 }

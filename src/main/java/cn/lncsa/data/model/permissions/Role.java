@@ -13,7 +13,7 @@ public class Role {
     private Boolean enable;
     private String color;
 
-    public Role(){
+    public Role() {
 
     }
 

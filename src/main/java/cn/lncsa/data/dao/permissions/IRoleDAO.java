@@ -1,4 +1,4 @@
-package cn.lncsa.data.dao.user;
+package cn.lncsa.data.dao.permissions;
 
 import cn.lncsa.data.model.permissions.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -8,8 +8,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface IRoleDAO extends JpaRepository<Role, Integer> {
 
+    /**
+     *
+     * Get role by role's name
+     *
+     * @param name
+     * @return
+     */
     Role getByName(String name);
-
-    Role getById(Integer id);
 
 }
