@@ -9,7 +9,7 @@ import java.util.Date;
  * Created by catten on 16/3/4.
  */
 @Entity
-@Table(name = "commit")
+@Table(name = "commits")
 public class Commit{
 
     private Integer id;

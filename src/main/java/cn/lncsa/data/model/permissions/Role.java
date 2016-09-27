@@ -1,4 +1,4 @@
-package cn.lncsa.data.model.user;
+package cn.lncsa.data.model.permissions;
 
 import javax.persistence.*;
 
@@ -6,24 +6,19 @@ import javax.persistence.*;
  * Created by catte on 2016/6/12.
  */
 @Entity
-@Table(name = "rights")
-public class Right {
+@Table(name = "roles")
+public class Role {
     private Integer id;
     private String name;
+    private Boolean enable;
     private String color;
-    private String url;
 
-    public Right(){
+    public Role(){
 
     }
 
-    public Right(String name) {
+    public Role(String name) {
         this.name = name;
-    }
-
-    public Right(String name, String url) {
-        this.name = name;
-        this.url = url;
     }
 
     @Id
@@ -44,19 +39,19 @@ public class Right {
         this.name = name;
     }
 
+    public Boolean getEnable() {
+        return enable;
+    }
+
+    public void setEnable(Boolean enable) {
+        this.enable = enable;
+    }
+
     public String getColor() {
         return color;
     }
 
     public void setColor(String color) {
         this.color = color;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 }

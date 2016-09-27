@@ -2,18 +2,20 @@ package cn.lncsa.data.model.user;
 
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * Created by catten on 16/1/15.
  */
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class User{
 
     private Integer id;
     private String name;
     private String nickName;
     private String password;
+    private Date registerDate;
     private String contactInfo;
 
     public User(){
@@ -55,6 +57,14 @@ public class User{
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Date getRegisterDate() {
+        return registerDate;
+    }
+
+    public void setRegisterDate(Date registerDate) {
+        this.registerDate = registerDate;
     }
 
     public String getContactInfo() {

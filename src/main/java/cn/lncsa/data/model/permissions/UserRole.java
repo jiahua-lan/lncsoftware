@@ -1,4 +1,6 @@
-package cn.lncsa.data.model.user;
+package cn.lncsa.data.model.permissions;
+
+import cn.lncsa.data.model.user.User;
 
 import javax.persistence.*;
 
@@ -6,19 +8,19 @@ import javax.persistence.*;
  * Created by catte on 2016/6/12.
  */
 @Entity
-@Table(name = "user_rights")
-public class UserRight {
+@Table(name = "user_roles")
+public class UserRole {
 
     private Integer id;
     private User user;
-    private Right right;
+    private Role role;
 
-    public UserRight() {
+    public UserRole() {
     }
 
-    public UserRight(User user, Right right) {
+    public UserRole(User user, Role role) {
         this.user = user;
-        this.right = right;
+        this.role = role;
     }
 
     @Id
@@ -41,11 +43,11 @@ public class UserRight {
     }
 
     @ManyToOne
-    public Right getRight() {
-        return right;
+    public Role getRole() {
+        return role;
     }
 
-    public void setRight(Right right) {
-        this.right = right;
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

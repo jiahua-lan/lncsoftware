@@ -1,14 +1,13 @@
 package cn.lncsa.data.dto.impl;
 
-import cn.lncsa.data.dto.Previewable;
-import cn.lncsa.data.model.article.Article;
+import cn.lncsa.data.dto.IArticlePreview;
 
 import java.util.Date;
 
 /**
  * Created by cattenlinger on 16/9/12.
  */
-public class ArticlePreview implements Previewable {
+public class ArticlePreview implements IArticlePreview {
 
     private String author;
     private Date date;

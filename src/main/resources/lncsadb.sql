@@ -166,13 +166,13 @@ LOCK TABLES `commit` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `rights`
+-- Table structure for table `roles`
 --
 
-DROP TABLE IF EXISTS `rights`;
+DROP TABLE IF EXISTS `roles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `rights` (
+CREATE TABLE `roles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `color` varchar(255) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
@@ -182,13 +182,13 @@ CREATE TABLE `rights` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `rights`
+-- Dumping data for table `roles`
 --
 
-LOCK TABLES `rights` WRITE;
-/*!40000 ALTER TABLE `rights` DISABLE KEYS */;
-INSERT INTO `rights` VALUES (25,'green','login','/user/*'),(26,'red','administrator','/admin/*'),(27,'blue','author','/article/*');
-/*!40000 ALTER TABLE `rights` ENABLE KEYS */;
+LOCK TABLES `roles` WRITE;
+/*!40000 ALTER TABLE `roles` DISABLE KEYS */;
+INSERT INTO `roles` VALUES (25,'green','login','/user/*'),(26,'red','administrator','/admin/*'),(27,'blue','author','/article/*');
+/*!40000 ALTER TABLE `roles` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -257,7 +257,7 @@ CREATE TABLE `user_rights` (
   PRIMARY KEY (`id`),
   KEY `FK33bady8c7jrw9flq6dg082bkc` (`right_id`),
   KEY `FKah7mr21d6p3csieikiy7nj0m2` (`user_id`),
-  CONSTRAINT `FK33bady8c7jrw9flq6dg082bkc` FOREIGN KEY (`right_id`) REFERENCES `rights` (`id`),
+  CONSTRAINT `FK33bady8c7jrw9flq6dg082bkc` FOREIGN KEY (`right_id`) REFERENCES `roles` (`id`),
   CONSTRAINT `FKah7mr21d6p3csieikiy7nj0m2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=253 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;

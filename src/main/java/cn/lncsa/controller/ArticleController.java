@@ -1,7 +1,7 @@
 package cn.lncsa.controller;
 
 import cn.lncsa.common.exceptions.UserOperateException;
-import cn.lncsa.data.dto.Previewable;
+import cn.lncsa.data.dto.IArticlePreview;
 import cn.lncsa.data.dto.impl.ArticlePreview;
 import cn.lncsa.data.model.article.Article;
 import cn.lncsa.data.model.article.Tag;
@@ -40,7 +40,7 @@ public class ArticleController {
      * Get latest new articles
      *
      * @param preview not required. Set true will return preview list
-     * @return preview = true : return List<Previewable> ; preview = false : return List<Article>
+     * @return preview = true : return List<IArticlePreview> ; preview = false : return List<Article>
      */
     @RequestMapping(value = "/list/latest", method = RequestMethod.GET)
     public
@@ -168,8 +168,8 @@ public class ArticleController {
     }
 
     //Use for convert articles to a preview list.
-    private List<Previewable> convertToPreviewList(List<Article> articles) {
-        List<Previewable> previewables = new LinkedList<>();
+    private List<IArticlePreview> convertToPreviewList(List<Article> articles) {
+        List<IArticlePreview> previewables = new LinkedList<>();
 
         for (Article article : articles) {
             ArticlePreview articlePreview = new ArticlePreview();

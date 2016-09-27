@@ -8,7 +8,7 @@ import java.util.Date;
  * Created by catten on 16/1/15.
  */
 @Entity
-@Table(name = "article")
+@Table(name = "articles")
 public class Article implements Serializable{
 
     //private static ArticleDAO dao = new ArticleDAO();

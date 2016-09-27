@@ -11,11 +11,11 @@
 <head>
     <title>岭南软件园协会</title>
     <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <link rel="stylesheet" href="resources/css/main.css">
-    <link rel="stylesheet" href="resources/css/bootstrap-markdown.min.css"/>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/bootstrap-markdown.min.css"/>
     <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.1/animate.css"/>
     <script src="//cdn.bootcss.com/jquery/3.0.0-beta1/jquery.min.js"></script>
-    <script src="/resources/js/main.js"></script>
+    <script src="/js/main.js"></script>
     <script>
         $(document).ready(function () {
             var headNodes = document.getElementById("top-navBar").getElementsByTagName("li");
@@ -63,16 +63,19 @@
                 </div>
             </div>
             <div class="col-sm-4 col-sm-4">
-
+                <form action="/users/login" method="post">
+                    <input name="username" type="text"><input name="password" type="password"><input type="submit" value="OK">
+                    <br>${nickName}
+                </form>
             </div>
         </div>
     </div>
 </div>
 
-<script src="/resources/js/holder.min.js"></script>
-<script src="/resources/js/tools.js"></script>
-<script src="/resources/js/bootstrap.min.js"></script>
-<script src="/resources/js/bootstrap-markdown.js"></script>
-<script src="/resources/js/markdown.min.js"></script>
+<script src="/js/holder.min.js"></script>
+<script src="/js/tools.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/bootstrap-markdown.js"></script>
+<script src="/js/markdown.min.js"></script>
 </body>
 </html>

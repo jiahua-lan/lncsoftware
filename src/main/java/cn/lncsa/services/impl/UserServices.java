@@ -4,12 +4,10 @@ import cn.lncsa.common.exceptions.UserOperateException;
 import cn.lncsa.data.dao.article.IArticleDAO;
 import cn.lncsa.data.dao.article.ICommitDAO;
 import cn.lncsa.data.dao.user.IUserDAO;
-import cn.lncsa.data.dao.user.IUserRightDAO;
-import cn.lncsa.data.model.article.Article;
-import cn.lncsa.data.model.article.Commit;
-import cn.lncsa.data.model.user.Right;
+import cn.lncsa.data.dao.user.IUserRoleDAO;
+import cn.lncsa.data.model.permissions.Role;
 import cn.lncsa.data.model.user.User;
-import cn.lncsa.data.model.user.UserRight;
+import cn.lncsa.data.model.permissions.UserRole;
 import cn.lncsa.services.IUserServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -26,7 +24,7 @@ import java.util.List;
 @Service
 public class UserServices implements IUserServices {
     private IUserDAO userDAO;
-    private IUserRightDAO userRightDAO;
+    private IUserRoleDAO userRightDAO;
     private IArticleDAO articleDAO;
     private ICommitDAO commitDAO;
 
@@ -36,7 +34,7 @@ public class UserServices implements IUserServices {
     }
 
     @Autowired
-    public void setUserRightDAO(IUserRightDAO userRightDAO) {
+    public void setUserRightDAO(IUserRoleDAO userRightDAO) {
         this.userRightDAO = userRightDAO;
     }
 
@@ -61,13 +59,13 @@ public class UserServices implements IUserServices {
     }
 
     @Override
-    public User createUser(String name, String password, String contactInfo, List<Right> rights) throws UserOperateException {
+    public User createUser(String name, String password, String contactInfo, List<Role> roles) throws UserOperateException {
         User user = createUser(name,password,contactInfo);
-        List<UserRight> userRightList = new LinkedList<>();
-        for (Right right : rights){
-            userRightList.add(new UserRight(user,right));
+        List<UserRole> userRoleList = new LinkedList<>();
+        for (Role role : roles){
+            userRoleList.add(new UserRole(user, role));
         }
-        userRightDAO.save(userRightList);
+        userRightDAO.save(userRoleList);
         return user;
     }
 
@@ -111,7 +109,7 @@ public class UserServices implements IUserServices {
     @Override
     public User banUser(Integer userId) throws UserOperateException {
         User user = getUser(userId);
-        List<UserRight> rightList = userRightDAO.queryRightRelationByUser(user);
+        List<UserRole> rightList = userRightDAO.queryRightRelationByUser(user);
         if(rightList != null) userRightDAO.delete(rightList);
         return user;
     }
@@ -130,30 +128,30 @@ public class UserServices implements IUserServices {
     }
 
     @Override
-    public List<Right> listUserRights(Integer userId) throws UserOperateException {
-        return userRightDAO.getRightByUser(getUser(userId));
+    public List<Role> listUserRoles(Integer userId) throws UserOperateException {
+        return userRightDAO.getUserRoles(getUser(userId));
     }
 
     @Override
-    public List<Right> updateUserRights(Integer userId, List<Right> rights) throws UserOperateException {
+    public List<Role> updateUserRoles(Integer userId, List<Role> roles) throws UserOperateException {
         User user = getUser(userId);
-        List<UserRight> userRightList = userRightDAO.queryRightRelationByUser(user);
-        if(userRightList != null && userRightList.size() > 0) userRightDAO.delete(userRightList);
-        return saveUserRightList(user,rights);
+        List<UserRole> userRoleList = userRightDAO.queryRightRelationByUser(user);
+        if(userRoleList != null && userRoleList.size() > 0) userRightDAO.delete(userRoleList);
+        return saveUserRightList(user, roles);
     }
 
     /**
      * Save user permission list.
      *
      * @param user
-     * @param rightList
+     * @param roleList
      * @return
      */
-    private List<Right> saveUserRightList(User user, List<Right> rightList){
-        for (Right right : rightList){
-            userRightDAO.save(new UserRight(user,right));
+    private List<Role> saveUserRightList(User user, List<Role> roleList){
+        for (Role role : roleList){
+            userRightDAO.save(new UserRole(user, role));
         }
-        return rightList;
+        return roleList;
     }
 
     public User getUser(Integer userId) throws UserOperateException {

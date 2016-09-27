@@ -7,7 +7,7 @@ import java.util.Date;
  * Created by catten on 16/1/15.
  */
 @Entity
-@Table(name = "bulletin")
+@Table(name = "bulletins")
 public class Bulletin {
 
     private Integer id;

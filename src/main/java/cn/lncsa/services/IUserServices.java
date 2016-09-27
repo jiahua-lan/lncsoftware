@@ -1,7 +1,7 @@
 package cn.lncsa.services;
 
 import cn.lncsa.common.exceptions.UserOperateException;
-import cn.lncsa.data.model.user.Right;
+import cn.lncsa.data.model.permissions.Role;
 import cn.lncsa.data.model.user.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -29,11 +29,11 @@ public interface IUserServices {
      * @param name        user name
      * @param password    password for this user
      * @param contactInfo contactInfo for this user
-     * @param rights      specified permissions for this user
+     * @param roles      specified permissions for this user
      * @return a saved user
      * @throws UserOperateException user existed.
      */
-    User createUser(String name, String password, String contactInfo, List<Right> rights) throws UserOperateException;
+    User createUser(String name, String password, String contactInfo, List<Role> roles) throws UserOperateException;
 
     /**
      * Get user by username
@@ -88,7 +88,7 @@ public interface IUserServices {
     /**
      * Ban a user
      * <p>
-     * It means remove all rights for this user
+     * It means remove all roles for this user
      *
      * @param userId user id
      * @return user
@@ -116,16 +116,16 @@ public interface IUserServices {
      * @return a list of permissions
      * @throws UserOperateException if user not existed
      */
-    List<Right> listUserRights(Integer userId) throws UserOperateException;
+    List<Role> listUserRoles(Integer userId) throws UserOperateException;
 
     /**
      * Update user permission
      *
      * @param userId target id
-     * @param rights new permission list
+     * @param roles new permission list
      * @return
      */
-    List<Right> updateUserRights(Integer userId, List<Right> rights) throws UserOperateException;
+    List<Role> updateUserRoles(Integer userId, List<Role> roles) throws UserOperateException;
 
 
     /**
