@@ -36,14 +36,21 @@ public interface IArticleServices {
      * @return article data which was deleted
      * @throws ArticleOperateException article not exist
      */
-    @Transactional
-    void deleteArticle(Integer articleId) throws ArticleOperateException;
+    void deleteArticle(Integer articleId);
 
     /*
     *
     * Query Methods
     *
     * */
+
+    /**
+     * Get one article by id;
+     *
+     * @param articleId
+     * @return
+     */
+    Article get(Integer articleId);
 
     /**
      * Get all article

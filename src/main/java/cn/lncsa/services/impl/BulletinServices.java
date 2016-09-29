@@ -31,6 +31,11 @@ public class BulletinServices implements IBulletinServices {
     }
 
     @Override
+    public Bulletin get(Integer bulletinId) {
+        return bulletinDAO.findOne(bulletinId);
+    }
+
+    @Override
     public Bulletin getBulletin(String type) {
         List<Bulletin> bulletins = bulletinDAO.getByType(type);
         return bulletins.size() > 0 ? bulletins.get(0) : null;

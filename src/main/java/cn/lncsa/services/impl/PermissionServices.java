@@ -74,7 +74,7 @@ public class PermissionServices implements IPermissionServices {
     }
 
     @Override
-    public void removePermission(Integer permissionId) throws PermissionException {
+    public void removePermission(Integer permissionId) {
         permissionDAO.delete(permissionId);
     }
 
@@ -84,21 +84,17 @@ public class PermissionServices implements IPermissionServices {
     }
 
     @Override
-    public void removeRole(Integer roleId) throws PermissionException {
+    public void removeRole(Integer roleId) {
         roleDAO.delete(roleId);
     }
 
     @Override
-    public void grantPermissionToRole(Integer roleId, List<Permission> permissions) throws PermissionException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
-        try {
-            rolePermissionRelationshipHelper.updateRelationship(
-                    getRole(roleId),
-                    ListTools.listDiff(permissionRoleDAO.getPermissionsByRole(roleId), permissions),
-                    permissionRoleDAO
-            );
-        } catch (RoleNotFoundException e) {
-            throw new PermissionException("target role not found", e);
-        }
+    public void grantPermissionToRole(Integer roleId, List<Permission> permissions) throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+        rolePermissionRelationshipHelper.updateRelationship(
+                getRole(roleId),
+                ListTools.listDiff(permissionRoleDAO.getPermissionsByRole(roleId), permissions),
+                permissionRoleDAO
+        );
     }
 
     @Override
@@ -107,15 +103,11 @@ public class PermissionServices implements IPermissionServices {
     }
 
     @Override
-    public void giveRoleToUser(Integer userId, List<Role> roles) throws PermissionException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
-        try {
-            userRoleRelationshipHelper.updateRelationship(
-                    getUser(userId),
-                    ListTools.listDiff(roleUserDAO.getRolesByUserId(userId), roles),
-                    roleUserDAO);
-        } catch (UserOperateException e) {
-            throw new PermissionException("target user not found", e);
-        }
+    public void giveRoleToUser(Integer userId, List<Role> roles) throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+        userRoleRelationshipHelper.updateRelationship(
+                userDAO.findOne(userId),
+                ListTools.listDiff(roleUserDAO.getRolesByUserId(userId), roles),
+                roleUserDAO);
     }
 
     @Override
@@ -124,7 +116,7 @@ public class PermissionServices implements IPermissionServices {
     }
 
     @Override
-    public List<Permission> queryUserPermissions(Integer userId) throws UserOperateException {
+    public List<Permission> queryUserPermissions(Integer userId){
         List<Role> roles = roleUserDAO.getRolesByUserId(userId);
         if (roles.size() == 0) return new LinkedList<>();
         List<Permission> permissions = new LinkedList<>();
@@ -135,12 +127,17 @@ public class PermissionServices implements IPermissionServices {
     }
 
     @Override
+    public Role getRole(Integer roleId){
+        return roleDAO.findOne(roleId);
+    }
+
+    @Override
     public List<Role> queryUserRoles(Integer userId) {
         return roleUserDAO.getRolesByUserId(userId);
     }
 
     @Override
-    public List<Permission> queryRolePermissions(Integer roleId) throws PermissionException {
+    public List<Permission> queryRolePermissions(Integer roleId){
         return permissionRoleDAO.getPermissionsByRole(roleId);
     }
 
@@ -158,16 +155,9 @@ public class PermissionServices implements IPermissionServices {
     *   Private procedure
     * */
 
-    private Role getRole(Integer roleId) throws RoleNotFoundException {
-        Role role = roleDAO.getOne(roleId);
-        if (role == null) throw new RoleNotFoundException("role not found");
-        return role;
-    }
-
-    private User getUser(Integer userId) throws UserOperateException {
-        User user = userDAO.getOne(userId);
-        if (user == null) throw new UserOperateException("user not found");
-        return user;
+    @Override
+    public Permission getPermission(Integer permissionId) {
+        return permissionDAO.getOne(permissionId);
     }
 
 }

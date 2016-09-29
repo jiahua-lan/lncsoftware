@@ -32,6 +32,14 @@ public interface IBulletinServices {
     * */
 
     /**
+     * Get a bulletin by id
+     *
+     * @param bulletinId
+     * @return
+     */
+    Bulletin get(Integer bulletinId);
+
+    /**
      * Get single bulletin
      * <p>
      * If not only one bulletin of the specific type, it will only return one

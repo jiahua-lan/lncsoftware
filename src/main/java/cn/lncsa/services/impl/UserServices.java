@@ -31,17 +31,17 @@ public class UserServices implements IUserServices {
     }
 
     @Override
-    public void deleteUser(Integer userId) throws UserOperateException {
+    public void deleteUser(Integer userId){
         userDAO.delete(userId);
     }
 
     @Override
-    public User getUser(Integer userId) throws UserOperateException {
-        return userDAO.getOne(userId);
+    public User get(Integer userId){
+        return userDAO.findOne(userId);
     }
 
     @Override
-    public User getUserByName(String username) throws UserOperateException {
+    public User getUserByName(String username){
         return userDAO.getByName(username);
     }
 

@@ -7,6 +7,7 @@ import cn.lncsa.data.dao.article.IArticleDAO;
 import cn.lncsa.data.model.article.Article;
 import cn.lncsa.data.model.article.Tag;
 import cn.lncsa.services.IArticleServices;
+import cn.lncsa.services.exceptions.ArticleOperateException;
 import cn.lncsa.services.helper.RelationshipHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -58,8 +59,12 @@ public class ArticleServices implements IArticleServices {
 
     @Override
     public void deleteArticle(Integer articleId) {
-
         articleDAO.delete(articleId);
+    }
+
+    @Override
+    public Article get(Integer articleId) {
+        return articleDAO.findOne(articleId);
     }
 
     @Override

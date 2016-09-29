@@ -55,27 +55,26 @@ public class TaggingServices implements ITaggingServices {
     }
 
     @Override
-    public void deleteTag(Integer tagId) throws TaggingOperateException {
-        tagArticleDAO.delete(tagArticleDAO.getRelationships(getTag(tagId)));
+    public void deleteTag(Integer tagId){
+        tagArticleDAO.delete(tagArticleDAO.getRelationships(tagDAO.findOne(tagId)));
         tagDAO.delete(tagId);
     }
 
     @Override
-    public void taggingArticle(Integer articleId, List<Tag> tagList) throws TaggingOperateException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
-        Article article = getArticle(articleId);
+    public void taggingArticle(Integer articleId, List<Tag> tagList) throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
         relationshipHelper.updateRelationship(
-                article,
+                articleDAO.findOne(articleId),
                 ListTools.listDiff(tagArticleDAO.getByArticleId(articleId),tagList),
                 tagArticleDAO);
     }
 
     @Override
-    public void removeTagFromArticle(Integer articleId, List<Tag> tagList) throws TaggingOperateException {
+    public void removeTagFromArticle(Integer articleId, List<Tag> tagList){
         tagArticleDAO.delete(tagArticleDAO.getRelationships(articleId,tagList));
     }
 
     @Override
-    public Tag getTagById(Integer tagId) {
+    public Tag get(Integer tagId) {
         return tagDAO.findOne(tagId);
     }
 
@@ -90,13 +89,13 @@ public class TaggingServices implements ITaggingServices {
     }
 
     @Override
-    public List<Tag> queryByArticleId(Integer articleId) throws TaggingOperateException {
-        return tagArticleDAO.getByArticle(getArticle(articleId));
+    public List<Tag> queryByArticleId(Integer articleId){
+        return tagArticleDAO.getByArticle(articleDAO.findOne(articleId));
     }
 
     @Override
-    public Page<Article> queryArticlesUnderTag(Integer tagId, List<String> status, Pageable pageable) throws TaggingOperateException {
-        return tagArticleDAO.findArticleByTag(getTag(tagId),status,pageable);
+    public Page<Article> queryArticlesUnderTag(Integer tagId, List<String> status, Pageable pageable){
+        return tagArticleDAO.findArticleByTag(tagDAO.findOne(tagId),status,pageable);
     }
 
     @Override
@@ -109,15 +108,4 @@ public class TaggingServices implements ITaggingServices {
     *
     * */
 
-    private Article getArticle(Integer articleId) throws TaggingOperateException {
-        Article article = articleDAO.findOne(articleId);
-        if(article == null) throw new TaggingOperateException("target article not found");
-        return article;
-    }
-
-    private Tag getTag(Integer tagId) throws TaggingOperateException{
-        Tag tag = tagDAO.findOne(tagId);
-        if (tag == null) throw new TaggingOperateException("no such tag");
-        return tag;
-    }
 }

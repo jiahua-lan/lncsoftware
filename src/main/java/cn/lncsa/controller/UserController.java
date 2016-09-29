@@ -38,7 +38,7 @@ public class UserController {
     @ResponseBody
     Map<String, Object> queryUserById(@PathVariable("userId") Integer userId) {
         try {
-            return filterUserInfo(userServices.getUser(userId));
+            return filterUserInfo(userServices.get(userId));
         } catch (UserOperateException e) {
             return null;
         }

@@ -160,7 +160,7 @@ public class ArticleController {
         for (Article article : articles) {
             ArticlePreview articlePreview = new ArticlePreview();
             try {
-                articlePreview.setAuthor(userServices.getUser(article.getAuthorId()).getNickName());
+                articlePreview.setAuthor(userServices.get(article.getAuthorId()).getNickName());
             } catch (UserOperateException e) {
                 articlePreview.setAuthor(null);
             }

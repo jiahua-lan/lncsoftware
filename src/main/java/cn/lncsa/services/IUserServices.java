@@ -30,7 +30,7 @@ public interface IUserServices {
      * @return user
      * @throws UserOperateException user not exist
      */
-    void deleteUser(Integer userId) throws UserOperateException;
+    void deleteUser(Integer userId);
 
     /*
     * User query methods
@@ -44,7 +44,7 @@ public interface IUserServices {
      * @return an existed user
      * @throws UserOperateException user not existed
      */
-    User getUser(Integer userId) throws UserOperateException;
+    User get(Integer userId);
 
     /**
      * Get user by username
@@ -54,7 +54,7 @@ public interface IUserServices {
      * @param username username
      * @return
      */
-    User getUserByName(String username) throws UserOperateException;
+    User getUserByName(String username);
 
 
     /**

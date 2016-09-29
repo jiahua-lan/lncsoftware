@@ -31,7 +31,7 @@ public interface ITaggingServices {
      * @param tagId
      * @return
      */
-    void deleteTag(Integer tagId) throws TaggingOperateException;
+    void deleteTag(Integer tagId);
 
     /*
     *
@@ -46,7 +46,7 @@ public interface ITaggingServices {
      * @param articleId
      * @return
      */
-    void taggingArticle(Integer articleId, List<Tag> tagList) throws TaggingOperateException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException;
+    void taggingArticle(Integer articleId, List<Tag> tagList) throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException;
 
     /**
      * Un-tagging an article with a list of tags
@@ -54,7 +54,7 @@ public interface ITaggingServices {
      * @param tagList
      * @param articleId
      */
-    void removeTagFromArticle(Integer articleId, List<Tag> tagList) throws TaggingOperateException;
+    void removeTagFromArticle(Integer articleId, List<Tag> tagList);
 
     /*
     *
@@ -68,7 +68,7 @@ public interface ITaggingServices {
      * @param tagId
      * @return
      */
-    Tag getTagById(Integer tagId);
+    Tag get(Integer tagId);
 
     /**
      * Query a list of tags using a list of tag-id
@@ -93,7 +93,7 @@ public interface ITaggingServices {
      * @param articleId
      * @return
      */
-    List<Tag> queryByArticleId(Integer articleId) throws TaggingOperateException;
+    List<Tag> queryByArticleId(Integer articleId);
 
     /**
      * Query articles those tagged by a same tag.
@@ -102,7 +102,7 @@ public interface ITaggingServices {
      * @param pageable
      * @return
      */
-    Page<Article> queryArticlesUnderTag(Integer tagId, List<String> status, Pageable pageable) throws TaggingOperateException;
+    Page<Article> queryArticlesUnderTag(Integer tagId, List<String> status, Pageable pageable);
 
     /**
      * List all tags

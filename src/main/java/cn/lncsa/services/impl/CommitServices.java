@@ -7,7 +7,6 @@ import cn.lncsa.data.dao.user.IUserDAO;
 import cn.lncsa.data.model.article.Article;
 import cn.lncsa.data.model.article.Commit;
 import cn.lncsa.data.model.user.User;
-import cn.lncsa.services.IUserServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -40,29 +39,23 @@ public class CommitServices implements cn.lncsa.services.ICommitServices {
     }
 
     @Override
-    public Commit commitArticle(Integer articleId, Integer userId, String content) throws CommitOperateException {
-        Article article = articleDAO.findOne(articleId);
-        if (article == null) throw new CommitOperateException("Target article not found");
-        User user = userDAO.findOne(userId);
-        if (user == null) throw new CommitOperateException("User not exist");
-        Commit commit = new Commit(user.getId(), content, article.getId());
+    public Commit commitArticle(Integer articleId, Integer userId, String content){
+        Commit commit = new Commit(userId, content, articleId);
         commit.setDate(new Date());
         return commitDAO.save(commit);
     }
 
     @Override
-    public Commit replyToCommit(Integer commitId, Integer userId, String content) throws CommitOperateException {
-        Commit commit = getCommit(commitId);
+    public Commit replyToCommit(Integer commitId, Integer userId, String content){
+        Commit commit = get(commitId);
         Commit replyCommit = new Commit(userId, content, commit.getTargetArticle(), commit);
         replyCommit.setDate(new Date());
         return commitDAO.save(replyCommit);
     }
 
     @Override
-    public Commit getCommit(Integer commitId) throws CommitOperateException {
-        Commit commit = commitDAO.findOne(commitId);
-        if (commit == null) throw new CommitOperateException("Target commit not exist.");
-        return commit;
+    public Commit get(Integer commitId){
+        return commitDAO.findOne(commitId);
     }
 
     @Override
@@ -71,7 +64,7 @@ public class CommitServices implements cn.lncsa.services.ICommitServices {
     }
 
     @Override
-    public void deleteCommit(Integer commitId) {
+    public void delete(Integer commitId) {
         commitDAO.delete(commitId);
     }
 

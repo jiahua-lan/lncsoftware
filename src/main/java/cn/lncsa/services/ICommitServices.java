@@ -37,7 +37,7 @@ public interface ICommitServices {
      * @throws CommitOperateException if target commit not exist throw "Commit not exist".
      * @throws UserOperateException   if commit user not exist throw "User not exist".
      */
-    Commit replyToCommit(Integer commitId, Integer userId, String content) throws CommitOperateException;
+    Commit replyToCommit(Integer commitId, Integer userId, String content);
 
     /**
      * Delete a commit
@@ -46,7 +46,7 @@ public interface ICommitServices {
      * @return
      * @throws CommitOperateException commit not exist.
      */
-    void deleteCommit(Integer commitId) throws CommitOperateException;
+    void delete(Integer commitId);
 
     /*
     *
@@ -61,7 +61,7 @@ public interface ICommitServices {
      * @return
      * @throws CommitOperateException Target commit not exist.
      */
-    Commit getCommit(Integer commitId) throws CommitOperateException;
+    Commit get(Integer commitId);
 
     /**
      * Get commits from this user
