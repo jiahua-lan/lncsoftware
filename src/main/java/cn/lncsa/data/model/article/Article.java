@@ -1,5 +1,7 @@
 package cn.lncsa.data.model.article;
 
+import cn.lncsa.data.model.abstracts.IBaseModel;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -9,7 +11,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "articles")
-public class Article implements Serializable{
+public class Article implements Serializable, IBaseModel{
 
     //private static ArticleDAO dao = new ArticleDAO();
 

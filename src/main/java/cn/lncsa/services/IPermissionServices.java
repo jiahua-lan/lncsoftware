@@ -1,11 +1,9 @@
 package cn.lncsa.services;
 
-import cn.lncsa.common.exceptions.PermissionException;
-import cn.lncsa.common.exceptions.UserOperateException;
+import cn.lncsa.services.exceptions.PermissionException;
+import cn.lncsa.services.exceptions.UserOperateException;
 import cn.lncsa.data.model.permissions.Permission;
-import cn.lncsa.data.model.permissions.PermissionRole;
 import cn.lncsa.data.model.permissions.Role;
-import cn.lncsa.data.model.permissions.UserRole;
 
 import java.util.List;
 
@@ -20,9 +18,22 @@ public interface IPermissionServices {
     *
     * */
 
+    /**
+     * Add a permission
+     *
+     * @param permission
+     * @return
+     */
     Permission addPermission(Permission permission);
 
-    Permission removePermission(Integer permissionId) throws PermissionException;
+    /**
+     *
+     * Remove a permission
+     *
+     * @param permissionId
+     * @throws PermissionException
+     */
+    void removePermission(Integer permissionId) throws PermissionException;
 
     /*
     *
@@ -30,9 +41,22 @@ public interface IPermissionServices {
     *
     * */
 
+    /**
+     *
+     * Add a role
+     *
+     * @param role
+     * @return
+     */
     Role addRole(Role role);
 
-    Role removeRole(Integer roleId) throws PermissionException;
+    /**
+     * Remove a role
+     *
+     * @param roleId
+     * @throws PermissionException
+     */
+    void removeRole(Integer roleId) throws PermissionException;
 
     /*
     *
@@ -40,9 +64,23 @@ public interface IPermissionServices {
     *
     * */
 
-    PermissionRole setPermissionRoleRule(Integer permissionId, Integer roleId);
+    /**
+     * set permission-role relationships
+     *
+     * @param roleId
+     * @param permissions
+     * @return
+     * @throws PermissionException
+     */
+    void grantPermissionToRole(Integer roleId, List<Permission> permissions) throws PermissionException;
 
-    void removePermissionRoleRule(Integer permissionId, Integer ruleId);
+    /**
+     * remove permission-role relationships
+     *
+     * @param ruleId
+     * @param permissions
+     */
+    void retakePermissionFromRole(Integer ruleId, List<Permission> permissions);
 
     /*
     *
@@ -50,9 +88,22 @@ public interface IPermissionServices {
     *
     * */
 
-    UserRole setUserRoleRule(Integer userId, Integer roleId);
+    /**
+     * Set user-role relationships
+     *
+     * @param userId
+     * @param roles
+     * @return
+     */
+    void giveRoleToUser(Integer userId, List<Role> roles) throws PermissionException;
 
-    void removeUserRoleRule(Integer userId, Integer roleId);
+    /**
+     * Remove user-role relationships
+     *
+     * @param userId
+     * @param roles
+     */
+    void retakeRoleFromUser(Integer userId, List<Role> roles);
 
     /*
     *
@@ -60,11 +111,35 @@ public interface IPermissionServices {
     *
     * */
 
+    /**
+     * What permissions the user have
+     *
+     * @param userId
+     * @return
+     * @throws UserOperateException
+     */
     List<Permission> queryUserPermissions(Integer userId) throws UserOperateException;
 
+    /**
+     * What role the user are
+     *
+     * @param roleId
+     * @return
+     * @throws PermissionException
+     */
     List<Permission> queryRolePermissions(Integer roleId) throws PermissionException;
 
+    /**
+     * Show all roles in the system
+     *
+     * @return
+     */
     List<Role> listAllRoles();
 
+    /**
+     * show all permissions in the system
+     *
+     * @return
+     */
     List<Permission> listAllPermissions();
 }

@@ -1,4 +1,4 @@
-package cn.lncsa.common.exceptions;
+package cn.lncsa.services.exceptions;
 
 /**
  * Created by catten on 16/7/1.

@@ -13,10 +13,10 @@ import java.util.List;
 
 /**
  * Handling relationship between article and tag
- *
+ * <p>
  * Created by catten on 16/6/12.
  */
-public interface ITagArticleDAO extends JpaRepository<ArticleTag,Integer> {
+public interface ITagArticleDAO extends JpaRepository<ArticleTag, Integer>{
 
     /**
      * Delete tag-article relationship by article id
@@ -51,4 +51,25 @@ public interface ITagArticleDAO extends JpaRepository<ArticleTag,Integer> {
      */
     @Query("select at.tag from ArticleTag at where at.article.id = ?1")
     List<Tag> getByArticleId(Integer articleId);
+
+    /**
+     * Get ArticleTag relationship object
+     *
+     * @param articleId
+     * @param tags
+     * @return
+     */
+    @Query("select at from ArticleTag at where at.article.id = ?1 and at.tag in ?2")
+    List<ArticleTag> getRelationships(Integer articleId, List<Tag> tags);
+
+    /**
+     * Find article by tags
+     *
+     * @param tags     a list of tags
+     * @param status   what status allow
+     * @param pageable
+     * @return
+     */
+    @Query("select at.article from ArticleTag at join at.article where at.tag in ?1 and at.article.status in ?2")
+    Page<Article> findArticleByTags(List<Tag> tags, String[] status, Pageable pageable);
 }

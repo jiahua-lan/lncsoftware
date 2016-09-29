@@ -64,17 +64,6 @@ public interface IArticleDAO extends PagingAndSortingRepository<Article, Integer
     Page<Article> getArticleBetweenModifiedDate(Date start, Date end, String[] status, Pageable pageable);
 
     /**
-     * Find article by tags
-     *
-     * @param tags        a list of tags
-     * @param status      what status allow
-     * @param pageable
-     * @return
-     */
-    @Query("select at.article from ArticleTag at join at.article where at.tag in ?1 and at.article.status in ?2")
-    Page<Article> findArticleByTags(List<Tag> tags, String[] status, Pageable pageable);
-
-    /**
      * Find all article
      *
      * @param status      what status allow

@@ -1,5 +1,7 @@
 package cn.lncsa.data.model.permissions;
 
+import cn.lncsa.data.model.abstracts.IBaseModel;
+
 import javax.persistence.*;
 
 /**
@@ -7,10 +9,18 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "permission_roles")
-public class PermissionRole {
+public class PermissionRole implements IBaseModel {
     private Integer id;
     private Permission permission;
     private Role role;
+
+    public PermissionRole() {
+    }
+
+    public PermissionRole(Role role, Permission permission) {
+        this.permission = permission;
+        this.role = role;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

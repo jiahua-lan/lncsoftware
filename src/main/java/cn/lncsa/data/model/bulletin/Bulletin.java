@@ -1,5 +1,7 @@
 package cn.lncsa.data.model.bulletin;
 
+import cn.lncsa.data.model.abstracts.IBaseModel;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -8,7 +10,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "bulletins")
-public class Bulletin {
+public class Bulletin implements IBaseModel {
 
     private Integer id;
 

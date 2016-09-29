@@ -1,5 +1,7 @@
 package cn.lncsa.data.model.permissions;
 
+import cn.lncsa.data.model.abstracts.IBaseModel;
+
 import javax.persistence.*;
 
 /**
@@ -7,7 +9,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "permissions")
-public class Permission {
+public class Permission implements IBaseModel {
     private Integer id;
     private String title;
     private String uri;
@@ -45,5 +47,23 @@ public class Permission {
 
     public void setEnable(Boolean enable) {
         this.enable = enable;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Permission that = (Permission) o;
+
+        return title.equals(that.title) && uri.equals(that.uri);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = title.hashCode();
+        result = 31 * result + uri.hashCode();
+        return result;
     }
 }

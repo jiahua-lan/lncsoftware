@@ -36,7 +36,6 @@ public interface IRoleUserDAO extends PagingAndSortingRepository<UserRole,Intege
     @Query("select ur.role from UserRole ur where ur.user.id = ?1")
     List<Role> getRolesByUserId(Integer userId);
 
-    @Modifying
-    @Query("delete from UserRole ur where ur.user.id = ?1 and ur.role.id = ?2")
-    void deleteRelationship(Integer userId, Integer roleId);
+    @Query("select ur from UserRole ur where ur.user.id = ?1 and ur.role in ?2")
+    List<UserRole> getRelationships(Integer userId, List<Role> elements);
 }

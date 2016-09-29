@@ -15,7 +15,7 @@ public interface IBulletinServices {
      * @param bulletin
      * @return
      */
-    Bulletin saveBulletinItem(Bulletin bulletin);
+    void saveBulletinItem(Bulletin bulletin);
 
     /**
      * Delete a bulletin item
@@ -23,7 +23,7 @@ public interface IBulletinServices {
      * @param bulletinId
      * @return
      */
-    Bulletin deleteBulletin(Integer bulletinId);
+    void deleteBulletin(Integer bulletinId);
 
     /*
     *

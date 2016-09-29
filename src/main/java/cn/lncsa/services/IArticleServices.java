@@ -1,6 +1,6 @@
 package cn.lncsa.services;
 
-import cn.lncsa.common.exceptions.ArticleOperateException;
+import cn.lncsa.services.exceptions.ArticleOperateException;
 import cn.lncsa.data.model.article.Article;
 import cn.lncsa.data.model.article.Tag;
 import org.springframework.data.domain.Page;
@@ -23,7 +23,7 @@ public interface IArticleServices {
      * @return
      * @throws ArticleOperateException if save to article that have id but it not exist, throw "Article not exist"
      */
-    Article saveArticle(Article article, List<Tag> tags) throws ArticleOperateException;
+    void saveArticle(Article article, List<Tag> tags) throws ArticleOperateException;
 
     /**
      * Delete an article by Id
@@ -36,7 +36,7 @@ public interface IArticleServices {
      * @throws ArticleOperateException article not exist
      */
     @Transactional
-    Article deleteArticle(Integer articleId) throws ArticleOperateException;
+    void deleteArticle(Integer articleId) throws ArticleOperateException;
 
     /*
     *

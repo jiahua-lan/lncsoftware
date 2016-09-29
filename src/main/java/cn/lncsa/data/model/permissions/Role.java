@@ -1,5 +1,7 @@
 package cn.lncsa.data.model.permissions;
 
+import cn.lncsa.data.model.abstracts.IBaseModel;
+
 import javax.persistence.*;
 
 /**
@@ -7,7 +9,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "roles")
-public class Role {
+public class Role implements IBaseModel {
     private Integer id;
     private String name;
     private Boolean enable;
@@ -53,5 +55,21 @@ public class Role {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Role role = (Role) o;
+
+        return name.equals(role.name);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
     }
 }

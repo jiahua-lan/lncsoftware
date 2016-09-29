@@ -1,5 +1,7 @@
 package cn.lncsa.data.model.article;
 
+import cn.lncsa.data.model.abstracts.IBaseModel;
+
 import javax.persistence.*;
 
 /**
@@ -7,7 +9,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "article_tags")
-public class ArticleTag {
+public class ArticleTag implements IBaseModel {
     private Integer id;
     private Tag tag;
     private Article article;
@@ -46,5 +48,24 @@ public class ArticleTag {
 
     public void setArticle(Article article) {
         this.article = article;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ArticleTag that = (ArticleTag) o;
+
+        if (!tag.equals(that.tag)) return false;
+        return article.equals(that.article);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = tag.hashCode();
+        result = 31 * result + article.hashCode();
+        return result;
     }
 }

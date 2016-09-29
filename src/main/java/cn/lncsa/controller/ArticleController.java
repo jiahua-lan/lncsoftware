@@ -1,6 +1,6 @@
 package cn.lncsa.controller;
 
-import cn.lncsa.common.exceptions.UserOperateException;
+import cn.lncsa.services.exceptions.UserOperateException;
 import cn.lncsa.data.dto.IArticlePreview;
 import cn.lncsa.data.dto.impl.ArticlePreview;
 import cn.lncsa.data.model.article.Article;

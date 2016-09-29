@@ -1,7 +1,6 @@
 package cn.lncsa.services.impl;
 
-import cn.lncsa.common.exceptions.CommitOperateException;
-import cn.lncsa.common.exceptions.UserOperateException;
+import cn.lncsa.services.exceptions.CommitOperateException;
 import cn.lncsa.data.dao.article.IArticleDAO;
 import cn.lncsa.data.dao.article.ICommitDAO;
 import cn.lncsa.data.dao.user.IUserDAO;
@@ -10,6 +9,8 @@ import cn.lncsa.data.model.article.Commit;
 import cn.lncsa.data.model.user.User;
 import cn.lncsa.services.IUserServices;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -22,8 +23,6 @@ public class CommitServices implements cn.lncsa.services.ICommitServices {
     private ICommitDAO commitDAO;
     private IArticleDAO articleDAO;
     private IUserDAO userDAO;
-
-    private IUserServices userServices;
 
     @Autowired
     public void setCommitDAO(ICommitDAO commitDAO) {
@@ -40,27 +39,21 @@ public class CommitServices implements cn.lncsa.services.ICommitServices {
         this.userDAO = userDAO;
     }
 
-    @Autowired
-    public void setUserServices(IUserServices userServices) {
-        this.userServices = userServices;
-    }
-
     @Override
     public Commit commitArticle(Integer articleId, Integer userId, String content) throws CommitOperateException {
         Article article = articleDAO.findOne(articleId);
         if (article == null) throw new CommitOperateException("Target article not found");
         User user = userDAO.findOne(userId);
         if (user == null) throw new CommitOperateException("User not exist");
-        Commit commit = new Commit(user, content, article);
+        Commit commit = new Commit(user.getId(), content, article.getId());
         commit.setDate(new Date());
         return commitDAO.save(commit);
     }
 
     @Override
-    public Commit replyToCommit(Integer commitId, Integer userId, String content) throws CommitOperateException, UserOperateException {
-        User user = userServices.getUser(userId);
+    public Commit replyToCommit(Integer commitId, Integer userId, String content) throws CommitOperateException {
         Commit commit = getCommit(commitId);
-        Commit replyCommit = new Commit(user, content, commit);
+        Commit replyCommit = new Commit(userId, content, commit.getTargetArticle(), commit);
         replyCommit.setDate(new Date());
         return commitDAO.save(replyCommit);
     }
@@ -73,10 +66,13 @@ public class CommitServices implements cn.lncsa.services.ICommitServices {
     }
 
     @Override
-    public Commit deleteCommit(Integer commitId) throws CommitOperateException {
-        Commit commit = getCommit(commitId);
+    public Page<Commit> getUserCommits(Integer userId, Pageable pageable) {
+        return commitDAO.getByUserId(userId, pageable);
+    }
+
+    @Override
+    public void deleteCommit(Integer commitId) {
         commitDAO.delete(commitId);
-        return commit;
     }
 
 

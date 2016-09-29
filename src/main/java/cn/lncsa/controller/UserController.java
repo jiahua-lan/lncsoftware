@@ -1,6 +1,6 @@
 package cn.lncsa.controller;
 
-import cn.lncsa.common.exceptions.UserOperateException;
+import cn.lncsa.services.exceptions.UserOperateException;
 import cn.lncsa.data.model.user.User;
 import cn.lncsa.services.IUserServices;
 import org.springframework.beans.factory.annotation.Autowired;

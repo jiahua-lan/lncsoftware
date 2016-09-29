@@ -1,35 +1,28 @@
 package cn.lncsa.services.impl;
 
-import cn.lncsa.common.exceptions.ArticleOperateException;
-import cn.lncsa.data.dao.article.IArticleDAO;
+import cn.lncsa.common.ListTools;
 import cn.lncsa.data.dao.article.ITagArticleDAO;
-import cn.lncsa.data.dao.article.ICommitDAO;
+import cn.lncsa.data.model.article.ArticleTag;
+import cn.lncsa.data.dao.article.IArticleDAO;
 import cn.lncsa.data.dao.article.ITagDAO;
 import cn.lncsa.data.model.article.Article;
-import cn.lncsa.data.model.article.ArticleTag;
 import cn.lncsa.data.model.article.Tag;
 import cn.lncsa.services.IArticleServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by catten on 16/7/1.
  */
 @Service
 public class ArticleServices implements IArticleServices {
+
     private IArticleDAO articleDAO;
-    private ITagArticleDAO articleTagDAO;
-    private ICommitDAO commitDAO;
-    private ITagDAO tagDAO;
+    private ITagArticleDAO tagArticleDAO;
 
     @Autowired
     public void setArticleDAO(IArticleDAO articleDAO) {
@@ -37,108 +30,28 @@ public class ArticleServices implements IArticleServices {
     }
 
     @Autowired
-    public void setArticleTagDAO(ITagArticleDAO articleTagDAO) {
-        this.articleTagDAO = articleTagDAO;
-    }
-
-    @Autowired
-    public void setCommitDAO(ICommitDAO commitDAO) {
-        this.commitDAO = commitDAO;
-    }
-
-    @Autowired
-    public void setTagDAO(ITagDAO tagDAO) {
-        this.tagDAO = tagDAO;
-    }
-
-    public Article getArticle(Integer articleId) throws ArticleOperateException {
-        Article article = articleDAO.findOne(articleId);
-        if(article == null) throw new ArticleOperateException("Target article not exist.");
-        return article;
-    }
-
-    private static Pageable latestArticlePageable = new PageRequest(0, 5, new Sort(Sort.Direction.DESC, "createDate"));
-
-    @Override
-    public List<Article> getLatestArticle() {
-        return articleDAO.findAll(latestArticlePageable).getContent();
+    public void setTagArticleDAO(ITagArticleDAO tagArticleDAO) {
+        this.tagArticleDAO = tagArticleDAO;
     }
 
     @Override
-    @Transactional
-    public Article saveArticle(Article article, List<Tag> tags) throws ArticleOperateException {
-        //Check if article is a new article.
-        if (article.getId() != null) {
-            //If try to save a non-exist article then throw an exception
-            if (articleDAO.findOne(article.getId()) == null) throw new ArticleOperateException("Article not exist");
-            if (tags != null) {
-                List<Tag> articleTags = tagDAO.getByArticle(article);
-                saveTagList(article, articleTags, tags);
-                articleDAO.save(article);
-            }
-        } else {
-            //Save the article before tag it.
-            articleDAO.save(article);
-            saveTagList(article, tags);
-        }
-        return article;
-    }
+    public void saveArticle(Article article, List<Tag> tags) {
 
-    /**
-     * Tagging the article
-     *
-     * @param article    target article
-     * @param oldTagList the old tag list
-     * @param newTagList new tags for tagging
-     * @return
-     */
-    @Transactional
-    private List<Tag> saveTagList(Article article, List<Tag> oldTagList, List<Tag> newTagList) {
-        //Check if has tags that not exist in database
-        for (Tag tag : newTagList) {
-            List<Tag> createTagList = new LinkedList<>();
-            if (tag.getId() == null) createTagList.add(tag);
-            if (createTagList.size() > 0) tagDAO.save(createTagList);
-        }
-
-        //If old tag list not null, clear all tags.
-        if (oldTagList != null && oldTagList.size() != 0) tagDAO.delete(tagDAO.getByArticle(article));
-        //Re-tagging the article using new tags
-        if (newTagList.size() > 0) for (Tag tag : newTagList) articleTagDAO.save(new ArticleTag(tag, article));
-        return newTagList;
-    }
-
-    /**
-     * Tagging the article
-     * <p>
-     * Only use for tagging an no-tagged article
-     *
-     * @param article target article
-     * @param tagList tags for tagging
-     * @return
-     */
-    private List<Tag> saveTagList(Article article, List<Tag> tagList) {
-        return saveTagList(article, null, tagList);
+        boolean newArticle = (article.getId() == null);
+        articleDAO.save(article);
+        //If article is a new article, it will have no tags refer to it
+        if (newArticle) taggingArticle(article, tags);
+            //If not , may have some existed relationships, we just need to update different parts
+        else updateTagRelationship(
+                article,
+                ListTools.listDiff(tagArticleDAO.getByArticle(article), tags) //Compare the origin tagList and new tagList
+        );
     }
 
     @Override
-    @Transactional
-    public Article deleteArticle(Integer articleId) throws ArticleOperateException {
-        Article article = getArticle(articleId);
-        //Delete commits
-        commitDAO.deleteByArticleId(articleId);
-        //Delete article-tag relationship
-        articleTagDAO.deleteByArticleId(articleId);
-        //Delete article
+    public void deleteArticle(Integer articleId) {
+
         articleDAO.delete(articleId);
-        return article;
-    }
-
-    @Override
-    public Article setArticleStatus(Integer articleId, String status) throws ArticleOperateException {
-        Article article = getArticle(articleId);
-        article.setStatus(status);
-        return articleDAO.save(article);
     }
 
     @Override
@@ -148,37 +61,48 @@ public class ArticleServices implements IArticleServices {
 
     @Override
     public Page<Article> getArticleByTags(List<Tag> tags, Pageable pageable, String... status) {
-        return articleDAO.findArticleByTags(tags, status, pageable);
+        return tagArticleDAO.findArticleByTags(tags, status, pageable);
     }
 
     @Override
-    public Page<Article> getArticleByUserId(Integer userId, Pageable pageable, String... status){
-        return articleDAO.findByAuthorId(userId,status,pageable);
+    public Page<Article> getArticleByUserId(Integer userId, Pageable pageable, String... status) {
+        return articleDAO.findByAuthorId(userId, status, pageable);
     }
 
     @Override
-    public Page<Article> findArticleBetweenDate(Date startDate, Date endDate, Pageable pageable, String... status){
-        return articleDAO.getArticleBetweenCreateDate(startDate,endDate,status,pageable);
+    public Page<Article> findArticleBetweenDate(Date startDate, Date endDate, Pageable pageable, String... status) {
+        return articleDAO.getArticleBetweenCreateDate(startDate, endDate, status, pageable);
     }
 
     @Override
-    public Page<Article> findArticleBetweenModifiedDate(Date startDate, Date endDate, Pageable pageable, String... status){
-        return articleDAO.getArticleBetweenModifiedDate(startDate,endDate,status,pageable);
+    public Page<Article> findArticleBetweenModifiedDate(Date startDate, Date endDate, Pageable pageable, String... status) {
+        return articleDAO.getArticleBetweenModifiedDate(startDate, endDate, status, pageable);
     }
 
     @Override
-    public List<Tag> getArticleTags(Integer articleId){
-        return tagDAO.getByArticleId(articleId);
-    }
-
-    @Override
-    public Page<Article> findArticleByKeyword(String keyword, Pageable pageable, String... status){
-        //TODO
+    public Page<Article> findArticleByKeyword(String keyword, Pageable pageable, String... status) {
         return null;
     }
 
-    @Override
-    public Tag getTagByTitle(String tag) {
-        return tagDAO.getByTitle(tag);
+    /*
+    *
+    * Private procedure
+    *
+    * */
+
+    //
+    private void updateTagRelationship(Article article, List<Tag>[] tagDiff) {
+        List<ArticleTag> delList = tagArticleDAO.getRelationships(article.getId(), tagDiff[ListTools.LIST_DELETE]);
+        List<ArticleTag> addList = new LinkedList<>();
+        for (Tag tag : tagDiff[ListTools.LIST_ADD]) addList.add(new ArticleTag(tag, article));
+        tagArticleDAO.delete(delList);
+        tagArticleDAO.save(addList);
     }
+
+    private void taggingArticle(Article article, List<Tag> tagList) {
+        List<ArticleTag> relations = new LinkedList<>();
+        for (Tag tag : tagList) relations.add(new ArticleTag(tag, article));
+        tagArticleDAO.save(relations);
+    }
+
 }

@@ -1,4 +1,4 @@
-package cn.lncsa.data.dao;
+package cn.lncsa.data.dao.bulletin;
 
 import cn.lncsa.data.model.bulletin.Bulletin;
 import org.springframework.data.jpa.repository.JpaRepository;

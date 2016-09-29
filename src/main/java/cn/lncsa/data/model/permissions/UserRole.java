@@ -1,5 +1,6 @@
 package cn.lncsa.data.model.permissions;
 
+import cn.lncsa.data.model.abstracts.IBaseModel;
 import cn.lncsa.data.model.user.User;
 
 import javax.persistence.*;
@@ -9,7 +10,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "user_roles")
-public class UserRole {
+public class UserRole implements IBaseModel {
 
     private Integer id;
     private User user;

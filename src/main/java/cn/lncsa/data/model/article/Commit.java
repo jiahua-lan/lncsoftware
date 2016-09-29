@@ -1,7 +1,10 @@
 package cn.lncsa.data.model.article;
 
-import cn.lncsa.data.model.user.User;
+import cn.lncsa.data.model.abstracts.IBaseModel;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import javax.annotation.Generated;
 import javax.persistence.*;
 import java.util.Date;
 
@@ -10,29 +13,30 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "commits")
-public class Commit {
+public class Commit implements IBaseModel {
 
     private Integer id;
 
     private Integer userId;
     private String contents;
-    private Article targetArticle;
+    private Integer targetArticle;
     private Commit replyTo;
     private Date date;
 
     public Commit() {
     }
 
-    public Commit(Integer userId, String contents, Commit replyTo) {
-        this.userId = userId;
-        this.contents = contents;
-        this.replyTo = replyTo;
-    }
-
-    public Commit(Integer userId, String contents, Article targetArticle) {
+    public Commit(Integer userId, String contents, Integer targetArticle, Commit replyTo) {
         this.userId = userId;
         this.contents = contents;
         this.targetArticle = targetArticle;
+        this.replyTo = replyTo;
+    }
+
+    public Commit(Integer userId, String contents, Integer articleId) {
+        this.userId = userId;
+        this.contents = contents;
+        this.targetArticle = articleId;
     }
 
     @Id
@@ -69,12 +73,11 @@ public class Commit {
         this.date = date;
     }
 
-    @ManyToOne
-    public Article getTargetArticle() {
+    public Integer getTargetArticle() {
         return targetArticle;
     }
 
-    public void setTargetArticle(Article targetArticle) {
+    public void setTargetArticle(Integer targetArticle) {
         this.targetArticle = targetArticle;
     }
 

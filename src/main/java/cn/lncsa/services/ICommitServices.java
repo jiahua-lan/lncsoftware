@@ -1,7 +1,7 @@
 package cn.lncsa.services;
 
-import cn.lncsa.common.exceptions.CommitOperateException;
-import cn.lncsa.common.exceptions.UserOperateException;
+import cn.lncsa.services.exceptions.CommitOperateException;
+import cn.lncsa.services.exceptions.UserOperateException;
 import cn.lncsa.data.model.article.Commit;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -46,7 +46,7 @@ public interface ICommitServices {
      * @return
      * @throws CommitOperateException commit not exist.
      */
-    Commit deleteCommit(Integer commitId) throws CommitOperateException;
+    void deleteCommit(Integer commitId) throws CommitOperateException;
 
     /*
     *
