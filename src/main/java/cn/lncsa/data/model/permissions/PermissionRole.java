@@ -1,6 +1,7 @@
 package cn.lncsa.data.model.permissions;
 
 import cn.lncsa.data.model.abstracts.IBaseModel;
+import cn.lncsa.data.model.abstracts.IRelationship;
 
 import javax.persistence.*;
 
@@ -9,7 +10,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "permission_roles")
-public class PermissionRole implements IBaseModel {
+public class PermissionRole implements IBaseModel<Integer>,IRelationship<Role,Permission> {
     private Integer id;
     private Permission permission;
     private Role role;
@@ -48,5 +49,24 @@ public class PermissionRole implements IBaseModel {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    @Override
+    @Transient
+    public Role getMaster() {
+        return role;
+    }
+
+    @Override
+    @Transient
+    public Permission getSlave() {
+        return permission;
+    }
+
+    @Override
+    @Transient
+    public void setRelationship(Role master, Permission slave) {
+        role = master;
+        permission = slave;
     }
 }

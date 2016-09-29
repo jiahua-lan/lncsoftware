@@ -1,6 +1,9 @@
 package cn.lncsa.data.model.user;
 
 
+import cn.lncsa.data.model.abstracts.IBaseModel;
+import cn.lncsa.data.model.abstracts.IRelationMaster;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -9,7 +12,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements IBaseModel<Integer>, IRelationMaster {
 
     private Integer id;
     private String name;

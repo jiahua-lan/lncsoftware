@@ -3,15 +3,17 @@ package cn.lncsa.services;
 import cn.lncsa.data.model.article.Article;
 import cn.lncsa.data.model.article.ArticleTag;
 import cn.lncsa.data.model.article.Tag;
+import cn.lncsa.services.exceptions.TaggingOperateException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 /**
  * Created by cattenlinger on 2016/9/27.
  */
-public interface TaggingServices {
+public interface ITaggingServices {
 
     /**
      * Add a new tag or save an exist tag
@@ -29,7 +31,7 @@ public interface TaggingServices {
      * @param tagId
      * @return
      */
-    Tag deleteTag(Integer tagId);
+    void deleteTag(Integer tagId) throws TaggingOperateException;
 
     /*
     *
@@ -44,16 +46,7 @@ public interface TaggingServices {
      * @param articleId
      * @return
      */
-    ArticleTag taggingArticle(List<Tag> tagList, Integer articleId);
-
-    /**
-     * Tagging an article with single tag
-     *
-     * @param tagId
-     * @param articleId
-     * @return
-     */
-    ArticleTag addATagToArticle(Integer tagId, Integer articleId);
+    void taggingArticle(Integer articleId, List<Tag> tagList) throws TaggingOperateException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException;
 
     /**
      * Un-tagging an article with a list of tags
@@ -61,15 +54,7 @@ public interface TaggingServices {
      * @param tagList
      * @param articleId
      */
-    void removeTagFromArticle(List<Tag> tagList, Integer articleId);
-
-    /**
-     * Un-tagging an article with single tag
-     *
-     * @param tagId
-     * @param articleId
-     */
-    void removeATagFromArticle(Integer tagId, Integer articleId);
+    void removeTagFromArticle(Integer articleId, List<Tag> tagList) throws TaggingOperateException;
 
     /*
     *
@@ -93,13 +78,22 @@ public interface TaggingServices {
      */
     List<Tag> getListOfTagById(List<Integer> tagIds);
 
+
+    /**
+     * Query a list of tags using a list of tag-name
+     *
+     * @param tagName
+     * @return
+     */
+    List<Tag> getListOfTagByName(List<String> tagName);
+
     /**
      * Get tags those tagged to an article
      *
      * @param articleId
      * @return
      */
-    List<Tag> queryByArticleId(Integer articleId);
+    List<Tag> queryByArticleId(Integer articleId) throws TaggingOperateException;
 
     /**
      * Query articles those tagged by a same tag.
@@ -108,7 +102,7 @@ public interface TaggingServices {
      * @param pageable
      * @return
      */
-    Page<Article> queryArticlesUnderTag(Integer tagId, Pageable pageable);
+    Page<Article> queryArticlesUnderTag(Integer tagId, List<String> status, Pageable pageable) throws TaggingOperateException;
 
     /**
      * List all tags

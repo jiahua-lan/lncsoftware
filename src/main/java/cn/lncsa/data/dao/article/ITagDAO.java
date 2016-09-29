@@ -14,10 +14,11 @@ import java.util.List;
  */
 public interface ITagDAO extends JpaRepository<Tag,Integer> {
     /**
-     * Get a tag by title
+     * Get tags by title
      *
-     * @param name tag name
+     * @param names tag name
      * @return
      */
-    Tag getByTitle(String name);
+    @Query("select t from Tag t where t.title in ?1")
+    List<Tag> getByTitle(List<String> names);
 }

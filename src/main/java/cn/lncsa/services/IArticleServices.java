@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
 import java.util.List;
 
@@ -19,11 +20,11 @@ public interface IArticleServices {
      * Save an article and tag it
      *
      * @param article article which want to save
-     * @param tags    tags point to the article, will not make any change if set null
+     * @param tags    tag point to the article, will not make any change if set null
      * @return
      * @throws ArticleOperateException if save to article that have id but it not exist, throw "Article not exist"
      */
-    void saveArticle(Article article, List<Tag> tags) throws ArticleOperateException;
+    void saveArticle(Article article, List<Tag> tags) throws ArticleOperateException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException;
 
     /**
      * Delete an article by Id
@@ -53,14 +54,14 @@ public interface IArticleServices {
     Page<Article> getAllArticle(Pageable pageable, String... status);
 
     /**
-     * Get article by a list tags
+     * Get article by a list tag
      *
-     * @param tags
+     * @param tag
      * @param pageable
      * @param status   what status allow
      * @return
      */
-    Page<Article> getArticleByTags(List<Tag> tags, Pageable pageable, String... status);
+    Page<Article> getArticleByTag(Tag tag, Pageable pageable, String... status);
 
     /**
      * Get article by userId

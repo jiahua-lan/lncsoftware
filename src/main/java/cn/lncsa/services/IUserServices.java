@@ -24,7 +24,7 @@ public interface IUserServices {
     User saveUser(User user);
 
     /**
-     * Delete a user 
+     * Delete a user
      *
      * @param userId a user id
      * @return user

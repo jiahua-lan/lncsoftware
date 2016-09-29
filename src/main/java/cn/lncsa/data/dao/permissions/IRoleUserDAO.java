@@ -1,5 +1,6 @@
 package cn.lncsa.data.dao.permissions;
 
+import cn.lncsa.data.dao.abstracts.IRelationshipRepository;
 import cn.lncsa.data.model.permissions.Role;
 import cn.lncsa.data.model.user.User;
 import cn.lncsa.data.model.permissions.UserRole;
@@ -16,7 +17,7 @@ import java.util.List;
  *
  * Created by catte on 2016/6/12.
  */
-public interface IRoleUserDAO extends PagingAndSortingRepository<UserRole,Integer> {
+public interface IRoleUserDAO extends PagingAndSortingRepository<UserRole,Integer>, IRelationshipRepository<User,Role,UserRole> {
 
     /**
      * Get a list of user have specified role
@@ -38,4 +39,16 @@ public interface IRoleUserDAO extends PagingAndSortingRepository<UserRole,Intege
 
     @Query("select ur from UserRole ur where ur.user.id = ?1 and ur.role in ?2")
     List<UserRole> getRelationships(Integer userId, List<Role> elements);
+
+    @Override
+    @Query("select ur from UserRole ur where ur.role = ?1")
+    List<UserRole> getRelationships(Role slave);
+
+    @Override
+    @Query("select ur from UserRole ur where ur.user = ?1")
+    List<UserRole> getRelationships(User master);
+
+    @Override
+    @Query("select ur from UserRole ur where ur.user = ?1 and ur.role in ?2")
+    List<UserRole> getRelationships(User master, List<Role> slave);
 }

@@ -1,10 +1,10 @@
 package cn.lncsa.controller;
 
+import cn.lncsa.services.ITaggingServices;
 import cn.lncsa.services.exceptions.UserOperateException;
 import cn.lncsa.data.dto.IArticlePreview;
 import cn.lncsa.data.dto.impl.ArticlePreview;
 import cn.lncsa.data.model.article.Article;
-import cn.lncsa.data.model.article.Tag;
 import cn.lncsa.services.IArticleServices;
 import cn.lncsa.services.IUserServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +25,7 @@ import java.util.*;
 public class ArticleController {
     private IArticleServices articleServices;
     private IUserServices userServices;
+    private ITaggingServices taggingServices;
 
     @Autowired
     public void setArticleServices(IArticleServices articleServices) {
@@ -45,13 +46,8 @@ public class ArticleController {
     @RequestMapping(value = "/list/latest", method = RequestMethod.GET)
     public
     @ResponseBody
-    List latestArticleList(
-            @RequestParam(value = "preview", required = false) boolean preview) {
-        List<Article> articles = articleServices.getLatestArticle();
-        if (preview) {
-            return convertToPreviewList(articles);
-        }
-        return articleServices.getLatestArticle();
+    List latestArticleList(@RequestParam(value = "preview", required = false) boolean preview) {
+        return null;
     }
 
     /**
@@ -86,13 +82,13 @@ public class ArticleController {
         //If query with tags, will use the method which query with tags
         if (tags != null) {
             /*
-                Attention, the DAO-API which ArticleServices.getArticleByTags() uses is using ArticleTag to query, so
+                Attention, the DAO-API which ArticleServices.getArticleByTag() uses is using ArticleTag to query, so
                 we should change the sort option to fit the JPA query in DAO.
             */
             Pageable pageable = new PageRequest(page, 5, new Sort(Sort.Direction.DESC, "article." + sortOption));
 
-            return convertPageToHashMap(articleServices.getArticleByTags(
-                    getTagListByStrings(Arrays.asList(tags)),
+            return convertPageToHashMap(articleServices.getArticleByTag(
+                    taggingServices.getListOfTagByName(Arrays.asList(tags)),
                     pageable,
                     statusList
             ), preview);
@@ -146,16 +142,6 @@ public class ArticleController {
     //Check status list, if is null then return a new String array containing "shown"
     private String[] initializeStatusList(String[] originList) {
         return originList == null ? new String[]{"shown"} : originList;
-    }
-
-    //Get tags by tag's name
-    private List<Tag> getTagListByStrings(List<String> tags) {
-        List<Tag> tagList = new LinkedList<>();
-        for (String tagName : tags) {
-            Tag tag = articleServices.getTagByTitle(tagName);
-            if (tag != null) tagList.add(tag);
-        }
-        return tagList;
     }
 
     //Get base information from Page<Article> and fill into HashMap, set "preview" to true can get article preview info only

@@ -1,5 +1,6 @@
 package cn.lncsa.controller;
 
+import cn.lncsa.services.IPermissionServices;
 import cn.lncsa.services.exceptions.UserOperateException;
 import cn.lncsa.data.model.user.User;
 import cn.lncsa.services.IUserServices;
@@ -19,6 +20,7 @@ import java.util.Map;
 public class UserController {
 
     private IUserServices userServices;
+    private IPermissionServices permissionServices;
 
     @Autowired
     public void setUserServices(IUserServices userServices) {
@@ -52,14 +54,10 @@ public class UserController {
     public
     @ResponseBody
     Map<String, Object> queryUserRights(@PathVariable("userId") Integer userId) {
-        try {
-            HashMap<String, Object> hashMap = new HashMap<>();
-            hashMap.put("userId", userId);
-            hashMap.put("rights", userServices.listUserRoles(userId));
-            return hashMap;
-        } catch (UserOperateException e) {
-            return null;
-        }
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("userId", userId);
+        hashMap.put("rights", permissionServices.queryUserRoles(userId));
+        return hashMap;
     }
 
     /**
@@ -92,7 +90,7 @@ public class UserController {
         try {
             HashMap<String, Object> hashMap = new HashMap<>();
             hashMap.put("username", username);
-            hashMap.put("rights", userServices.listUserRoles(userServices.getUserByName(username).getId()));
+            hashMap.put("rights", permissionServices.queryUserRoles(userServices.getUserByName(username).getId()));
             return hashMap;
         } catch (UserOperateException e) {
             return null;

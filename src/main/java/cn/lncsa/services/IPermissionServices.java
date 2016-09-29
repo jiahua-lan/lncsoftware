@@ -5,6 +5,7 @@ import cn.lncsa.services.exceptions.UserOperateException;
 import cn.lncsa.data.model.permissions.Permission;
 import cn.lncsa.data.model.permissions.Role;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 /**
@@ -72,7 +73,7 @@ public interface IPermissionServices {
      * @return
      * @throws PermissionException
      */
-    void grantPermissionToRole(Integer roleId, List<Permission> permissions) throws PermissionException;
+    void grantPermissionToRole(Integer roleId, List<Permission> permissions) throws PermissionException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException;
 
     /**
      * remove permission-role relationships
@@ -95,7 +96,7 @@ public interface IPermissionServices {
      * @param roles
      * @return
      */
-    void giveRoleToUser(Integer userId, List<Role> roles) throws PermissionException;
+    void giveRoleToUser(Integer userId, List<Role> roles) throws PermissionException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException;
 
     /**
      * Remove user-role relationships
@@ -119,6 +120,14 @@ public interface IPermissionServices {
      * @throws UserOperateException
      */
     List<Permission> queryUserPermissions(Integer userId) throws UserOperateException;
+
+    /**
+     * What role the user is
+     *
+     * @param userId
+     * @return
+     */
+    List<Role> queryUserRoles(Integer userId);
 
     /**
      * What role the user are

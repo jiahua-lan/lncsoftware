@@ -1,6 +1,7 @@
 package cn.lncsa.data.model.permissions;
 
 import cn.lncsa.data.model.abstracts.IBaseModel;
+import cn.lncsa.data.model.abstracts.IRelationSlave;
 
 import javax.persistence.*;
 
@@ -9,7 +10,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "permissions")
-public class Permission implements IBaseModel {
+public class Permission implements IBaseModel<Integer>,IRelationSlave {
     private Integer id;
     private String title;
     private String uri;

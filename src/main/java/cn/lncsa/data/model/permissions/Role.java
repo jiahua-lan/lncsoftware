@@ -1,6 +1,8 @@
 package cn.lncsa.data.model.permissions;
 
 import cn.lncsa.data.model.abstracts.IBaseModel;
+import cn.lncsa.data.model.abstracts.IRelationMaster;
+import cn.lncsa.data.model.abstracts.IRelationSlave;
 
 import javax.persistence.*;
 
@@ -9,7 +11,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "roles")
-public class Role implements IBaseModel {
+public class Role implements IBaseModel<Integer>, IRelationMaster, IRelationSlave {
     private Integer id;
     private String name;
     private Boolean enable;

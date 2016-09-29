@@ -1,6 +1,7 @@
 package cn.lncsa.data.model.article;
 
 import cn.lncsa.data.model.abstracts.IBaseModel;
+import cn.lncsa.data.model.abstracts.IRelationSlave;
 
 import javax.persistence.*;
 
@@ -9,7 +10,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "tags")
-public class Tag implements IBaseModel {
+public class Tag implements IBaseModel<Integer>, IRelationSlave {
     private Integer id;
     private String title;
     private String color;

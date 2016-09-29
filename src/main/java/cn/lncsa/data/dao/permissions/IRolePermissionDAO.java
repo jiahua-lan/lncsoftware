@@ -1,7 +1,9 @@
 package cn.lncsa.data.dao.permissions;
 
+import cn.lncsa.data.dao.abstracts.IRelationshipRepository;
 import cn.lncsa.data.model.permissions.Permission;
 import cn.lncsa.data.model.permissions.PermissionRole;
+import cn.lncsa.data.model.permissions.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -10,7 +12,7 @@ import java.util.List;
 /**
  * Created by cattenlinger on 2016/9/26.
  */
-public interface IRolePermissionDAO extends JpaRepository<PermissionRole,Integer>{
+public interface IRolePermissionDAO extends JpaRepository<PermissionRole,Integer>, IRelationshipRepository<Role,Permission,PermissionRole>{
 
     /**
      *
@@ -31,4 +33,16 @@ public interface IRolePermissionDAO extends JpaRepository<PermissionRole,Integer
      */
     @Query("select pr from PermissionRole pr where pr.role.id = ?1 and pr.permission in ?2")
     List<PermissionRole> getRelationships(Integer roleId, List<Permission> permissions);
+
+    @Override
+    @Query("select pr from PermissionRole pr where pr.permission = ?1")
+    List<PermissionRole> getRelationships(Permission slave);
+
+    @Override
+    @Query("select pr from PermissionRole pr where pr.role = ?1")
+    List<PermissionRole> getRelationships(Role master);
+
+    @Override
+    @Query("select pr from PermissionRole pr where pr.role = ?1 and pr.permission in ?2")
+    List<PermissionRole> getRelationships(Role master, List<Permission> slave);
 }

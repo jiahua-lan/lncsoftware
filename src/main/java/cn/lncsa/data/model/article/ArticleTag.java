@@ -1,6 +1,7 @@
 package cn.lncsa.data.model.article;
 
 import cn.lncsa.data.model.abstracts.IBaseModel;
+import cn.lncsa.data.model.abstracts.IRelationship;
 
 import javax.persistence.*;
 
@@ -9,7 +10,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "article_tags")
-public class ArticleTag implements IBaseModel {
+public class ArticleTag implements IBaseModel<Integer>, IRelationship<Article,Tag> {
     private Integer id;
     private Tag tag;
     private Article article;
@@ -67,5 +68,24 @@ public class ArticleTag implements IBaseModel {
         int result = tag.hashCode();
         result = 31 * result + article.hashCode();
         return result;
+    }
+
+    @Override
+    @Transient
+    public Article getMaster() {
+        return article;
+    }
+
+    @Override
+    @Transient
+    public Tag getSlave() {
+        return tag;
+    }
+
+    @Override
+    @Transient
+    public void setRelationship(Article master, Tag slave) {
+        article = master;
+        tag = slave;
     }
 }

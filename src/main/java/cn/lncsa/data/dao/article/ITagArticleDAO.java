@@ -1,41 +1,25 @@
 package cn.lncsa.data.dao.article;
 
+import cn.lncsa.data.dao.abstracts.IRelationshipRepository;
 import cn.lncsa.data.model.article.Article;
 import cn.lncsa.data.model.article.ArticleTag;
 import cn.lncsa.data.model.article.Tag;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
 /**
- * Handling relationship between article and tag
+ * Handling relationship between master and tag
  * <p>
  * Created by catten on 16/6/12.
  */
-public interface ITagArticleDAO extends JpaRepository<ArticleTag, Integer>{
+public interface ITagArticleDAO extends JpaRepository<ArticleTag, Integer>, IRelationshipRepository<Article,Tag,ArticleTag> {
 
     /**
-     * Delete tag-article relationship by article id
-     *
-     * @param articleId
-     */
-    @Modifying
-    void deleteByArticleId(Integer articleId);
-
-    /**
-     * Delete tag-article relationship by tag id
-     *
-     * @param tagId
-     */
-    @Modifying
-    void deleteByTagId(Integer tagId);
-
-    /**
-     * Get article's tag
+     * Get master's tag
      *
      * @param article
      * @return
@@ -44,13 +28,32 @@ public interface ITagArticleDAO extends JpaRepository<ArticleTag, Integer>{
     List<Tag> getByArticle(Article article);
 
     /**
-     * Get article's tag by article id
+     * Get master's tag by master id
      *
      * @param articleId
      * @return
      */
     @Query("select at.tag from ArticleTag at where at.article.id = ?1")
     List<Tag> getByArticleId(Integer articleId);
+
+    /**
+     * Get relationships by tag
+     *
+     * @param tag
+     * @return
+     */
+    @Override
+    @Query("select at from ArticleTag at where at.tag = ?1")
+    List<ArticleTag> getRelationships(Tag tag);
+
+    /**
+     * Get relationships by master
+     *
+     * @param article
+     * @return
+     */
+    @Query("select at from ArticleTag at where at.article = ?1")
+    List<ArticleTag> getRelationships(Article article);
 
     /**
      * Get ArticleTag relationship object
@@ -63,13 +66,23 @@ public interface ITagArticleDAO extends JpaRepository<ArticleTag, Integer>{
     List<ArticleTag> getRelationships(Integer articleId, List<Tag> tags);
 
     /**
-     * Find article by tags
+     * Get ArticleTag relationship object
      *
-     * @param tags     a list of tags
+     * @param master
+     * @param slave
+     * @return
+     */
+    @Query("select at from ArticleTag at where at.article = ?1 and at.tag in ?2")
+    List<ArticleTag> getRelationships(Article master, List<Tag> slave);
+
+    /**
+     * Find master by slave
+     *
+     * @param tag     tag
      * @param status   what status allow
      * @param pageable
      * @return
      */
-    @Query("select at.article from ArticleTag at join at.article where at.tag in ?1 and at.article.status in ?2")
-    Page<Article> findArticleByTags(List<Tag> tags, String[] status, Pageable pageable);
+    @Query("select at.article from ArticleTag at join at.article where at.tag = ?1 and at.article.status in ?2")
+    Page<Article> findArticleByTag(Tag tag, List<String> status, Pageable pageable);
 }
