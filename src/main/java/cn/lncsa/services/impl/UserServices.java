@@ -26,12 +26,12 @@ public class UserServices implements IUserServices {
     }
 
     @Override
-    public User saveUser(User user) {
+    public User save(User user) {
         return userDAO.save(user);
     }
 
     @Override
-    public void deleteUser(Integer userId){
+    public void delete(Integer userId){
         userDAO.delete(userId);
     }
 

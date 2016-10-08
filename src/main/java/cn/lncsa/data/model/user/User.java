@@ -16,10 +16,9 @@ public class User implements IBaseModel<Integer>, IRelationMaster {
 
     private Integer id;
     private String name;
-    private String nickName;
     private String password;
+    private String profileId;
     private Date registerDate;
-    private String contactInfo;
 
     public User() {
 
@@ -28,12 +27,6 @@ public class User implements IBaseModel<Integer>, IRelationMaster {
     public User(String name, String password) {
         this.name = name;
         this.password = password;
-    }
-
-    public User(String name, String password, String contactInfo) {
-        this.name = name;
-        this.password = password;
-        this.contactInfo = contactInfo;
     }
 
     @Id
@@ -62,27 +55,19 @@ public class User implements IBaseModel<Integer>, IRelationMaster {
         this.password = password;
     }
 
+    public String getProfileId() {
+        return profileId;
+    }
+
+    public void setProfileId(String profileId) {
+        this.profileId = profileId;
+    }
+
     public Date getRegisterDate() {
         return registerDate;
     }
 
     public void setRegisterDate(Date registerDate) {
         this.registerDate = registerDate;
-    }
-
-    public String getContactInfo() {
-        return contactInfo;
-    }
-
-    public void setContactInfo(String contactInfo) {
-        this.contactInfo = contactInfo;
-    }
-
-    public String getNickName() {
-        return nickName;
-    }
-
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
     }
 }

@@ -13,18 +13,12 @@ import javax.persistence.*;
 public class Tag implements IBaseModel<Integer>, IRelationSlave {
     private Integer id;
     private String title;
-    private String color;
 
     public Tag() {
     }
 
     public Tag(String title) {
         this.title = title;
-    }
-
-    public Tag(String title, String color) {
-        this.title = title;
-        this.color = color;
     }
 
     @Id
@@ -44,14 +38,6 @@ public class Tag implements IBaseModel<Integer>, IRelationSlave {
     @Column(unique = true)
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
     }
 
     @Override

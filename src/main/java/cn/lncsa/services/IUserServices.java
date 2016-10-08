@@ -5,6 +5,9 @@ import cn.lncsa.data.model.user.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import sun.plugin.util.UserProfile;
+
+import java.util.List;
 
 /**
  * Created by catten on 16/6/19.
@@ -21,7 +24,7 @@ public interface IUserServices {
      * @param user
      * @return
      */
-    User saveUser(User user);
+    User save(User user);
 
     /**
      * Delete a user
@@ -30,7 +33,7 @@ public interface IUserServices {
      * @return user
      * @throws UserOperateException user not exist
      */
-    void deleteUser(Integer userId);
+    void delete(Integer userId);
 
     /*
     * User query methods
@@ -56,16 +59,6 @@ public interface IUserServices {
      */
     User getUserByName(String username);
 
-
-    /**
-     * Find user by nickname
-     *
-     * @param keyword     keyword
-     * @param pageable paging request
-     * @return
-     */
-    Page<User> findUserByNickname(String keyword, Pageable pageable);
-
     /**
      * Find user by username
      *
@@ -74,5 +67,12 @@ public interface IUserServices {
      * @return
      */
     Page<User> findUserByUsername(String keyword, Pageable pageable);
+
+    UserProfile getUserProfile(Integer userId);
+
+    List<UserProfile> getUserProfile(List<Integer> userId);
+
+    void saveUserProfile(Integer userId, UserProfile userProfile);
+
 
 }
