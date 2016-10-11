@@ -1,10 +1,8 @@
-package cn.lncsa.data.dao.abstracts;
+package cn.lncsa.data.domain;
 
-import cn.lncsa.data.model.abstracts.IBaseModel;
-import cn.lncsa.data.model.abstracts.IRelationMaster;
-import cn.lncsa.data.model.abstracts.IRelationSlave;
-import cn.lncsa.data.model.abstracts.IRelationship;
-import org.springframework.data.jpa.repository.Query;
+import cn.lncsa.data.domain.IRelationMaster;
+import cn.lncsa.data.domain.IRelationSlave;
+import cn.lncsa.data.domain.IRelationship;
 import org.springframework.data.repository.NoRepositoryBean;
 
 import java.util.List;

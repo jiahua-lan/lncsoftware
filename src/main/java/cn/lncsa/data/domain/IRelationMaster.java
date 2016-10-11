@@ -1,4 +1,4 @@
-package cn.lncsa.data.model.abstracts;
+package cn.lncsa.data.domain;
 
 /**
  * Created by cattenlinger on 2016/9/29.
