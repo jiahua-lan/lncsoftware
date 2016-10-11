@@ -1,11 +1,10 @@
 package cn.lncsa.services;
 
+import cn.lncsa.data.model.user.UserProfile;
 import cn.lncsa.services.exceptions.UserOperateException;
 import cn.lncsa.data.model.user.User;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import sun.plugin.util.UserProfile;
 
 import java.util.List;
 
@@ -68,10 +67,28 @@ public interface IUserServices {
      */
     Page<User> findUserByUsername(String keyword, Pageable pageable);
 
+    /**
+     * Get a user profile
+     *
+     * @param userId
+     * @return
+     */
     UserProfile getUserProfile(Integer userId);
 
-    List<UserProfile> getUserProfile(List<Integer> userId);
+    /**
+     * Get a list of user profiles
+     *
+     * @param userId
+     * @return
+     */
+    Page<UserProfile> getUserProfile(List<Integer> userId);
 
+    /**
+     * save user's profile
+     *
+     * @param userId
+     * @param userProfile
+     */
     void saveUserProfile(Integer userId, UserProfile userProfile);
 
 

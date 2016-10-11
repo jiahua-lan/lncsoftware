@@ -4,7 +4,9 @@ import cn.lncsa.data.model.user.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -18,6 +20,7 @@ public interface IUserDAO extends JpaRepository<User, Integer> {
      * @param name username
      * @return a user
      */
+    @Query("select u from User u where u.name = ?1")
     User getByName(String name);
 
     /**
@@ -26,14 +29,30 @@ public interface IUserDAO extends JpaRepository<User, Integer> {
      * @param keyword
      * @return
      */
+    @Query("select u from User u where u.name like ?1")
     Page<User> getByNameLike(String keyword, Pageable pageable);
 
     /**
-     * Search users that nickname include keyword
+     * Using profile's id to query user
      *
-     * @param keyword
+     * @param profileId
      * @return
      */
-    Page<User> getByNickNameLike(String keyword, Pageable pageable);
+    @Query("select u from User u where u.profileId = ?1")
+    User getByProfileId(Integer profileId);
+
+    /**
+     * Get user by register date range
+     *
+     * @param startDate
+     * @param endDate
+     * @param pageable
+     * @return
+     */
+    @Query("select u from User u where u.registerDate >= ?1 and u.registerDate <= ?2")
+    Page<User> getByRegisterDateRange(Date startDate, Date endDate, Pageable pageable);
+
+    @Query("select u.id, u.name, u.registerDate, u.id from User u where u.id = ?1")
+    Object[] getWithoutPassword(Integer userId);
 
 }

@@ -1,7 +1,9 @@
 package cn.lncsa.services.impl;
 
 import cn.lncsa.common.ListTools;
+import cn.lncsa.data.dao.article.IArticleBodyDAO;
 import cn.lncsa.data.dao.article.ITagArticleDAO;
+import cn.lncsa.data.model.article.ArticleBody;
 import cn.lncsa.data.model.article.ArticleTag;
 import cn.lncsa.data.dao.article.IArticleDAO;
 import cn.lncsa.data.model.article.Article;
@@ -25,6 +27,7 @@ public class ArticleServices implements IArticleServices {
 
     private IArticleDAO articleDAO;
     private ITagArticleDAO tagArticleDAO;
+    private IArticleBodyDAO articleBodyDAO;
 
     private RelationshipHelper<Article,Tag,ArticleTag> relationshipHelper;
 
@@ -42,23 +45,40 @@ public class ArticleServices implements IArticleServices {
         this.tagArticleDAO = tagArticleDAO;
     }
 
-    @Override
-    public void saveArticle(Article article, List<Tag> tags) throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
-
-        boolean newArticle = (article.getId() == null);
-        articleDAO.save(article);
-        //If article is a new article, it will have no tag refer to it
-        if (newArticle) taggingArticle(article, tags);
-            //If not , may have some existed relationships, we just need to update different parts
-        else relationshipHelper.updateRelationship(
-                article,
-                ListTools.listDiff(tagArticleDAO.getByArticle(article), tags), //Compare the origin tagList and new tagList
-                tagArticleDAO
-        );
+    @Autowired
+    public void setArticleBodyDAO(IArticleBodyDAO articleBodyDAO) {
+        this.articleBodyDAO = articleBodyDAO;
     }
 
     @Override
-    public void deleteArticle(Integer articleId) {
+    public void save(Article article, ArticleBody body, List<Tag> tags) throws ArticleOperateException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+        boolean isNewArticle = article.getContentId() == null;
+
+        articleBodyDAO.save(body);
+
+        //If article is a new article, it will have no tag refer to it
+        if (!isNewArticle) {
+            relationshipHelper.updateRelationship(
+                    article,
+                    ListTools.listDiff(tagArticleDAO.getByArticle(article), tags), //Compare the origin tagList and new tagList
+                    tagArticleDAO
+            );
+            if(!article.getContentId().equals(body.getId())) {
+                article.setContentId(body.getId());
+                articleDAO.save(article);
+            }
+        }
+        //If not , may have some existed relationships, we just need to update different parts
+        else {
+            article.setContentId(body.getId());
+            articleDAO.save(article);
+            taggingArticle(article, tags);
+        }
+
+    }
+
+    @Override
+    public void delete(Integer articleId) {
         articleDAO.delete(articleId);
     }
 
@@ -68,33 +88,38 @@ public class ArticleServices implements IArticleServices {
     }
 
     @Override
-    public Page<Article> getAllArticle(Pageable pageable, String... status) {
+    public Page<Article> get(Pageable pageable, String... status) {
         return articleDAO.findAll(status, pageable);
     }
 
     @Override
-    public Page<Article> getArticleByTag(Tag tag, Pageable pageable, String... status) {
+    public Page<Article> getByTag(Tag tag, Pageable pageable, String... status) {
         return tagArticleDAO.findArticleByTag(tag, Arrays.asList(status), pageable);
     }
 
     @Override
-    public Page<Article> getArticleByUserId(Integer userId, Pageable pageable, String... status) {
+    public Page<Article> getByUserId(Integer userId, Pageable pageable, String... status) {
         return articleDAO.findByAuthorId(userId, status, pageable);
     }
 
     @Override
-    public Page<Article> findArticleBetweenDate(Date startDate, Date endDate, Pageable pageable, String... status) {
+    public Page<Article> findBetweenDate(Date startDate, Date endDate, Pageable pageable, String... status) {
         return articleDAO.getArticleBetweenCreateDate(startDate, endDate, status, pageable);
     }
 
     @Override
-    public Page<Article> findArticleBetweenModifiedDate(Date startDate, Date endDate, Pageable pageable, String... status) {
+    public Page<Article> findBetweenModifiedDate(Date startDate, Date endDate, Pageable pageable, String... status) {
         return articleDAO.getArticleBetweenModifiedDate(startDate, endDate, status, pageable);
     }
 
     @Override
-    public Page<Article> findArticleByKeyword(String keyword, Pageable pageable, String... status) {
+    public Page<Article> findByKeyword(String keyword, Pageable pageable, String... status) {
         return null;
+    }
+
+    @Override
+    public ArticleBody getBody(Integer articleId) {
+        return articleBodyDAO.getOne(articleId);
     }
 
     /*

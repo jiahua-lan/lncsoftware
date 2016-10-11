@@ -7,28 +7,12 @@
     <groupId>cn.lncsa</groupId>
     <artifactId>lncsoftware</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <modules>
-        <module>lncsa-base</module>
-        <module>lncsa-common</module>
-        <module>lncsa-permission</module>
-        <module>lncsa-article</module>
-        <module>lncsa-web</module>
-        <module>lncsa-server</module>
-    </modules>
     <packaging>pom</packaging>
 
     <properties>
         <hibernate.version>5.1.0.Final</hibernate.version>
         <spring.version>4.2.5.RELEASE</spring.version>
     </properties>
-
-    <repositories>
-        <repository>
-            <id>jiyan</id>
-            <name>Jiyan Nexus Repository</name>
-            <url>http://10.15.219.23:8081/content/repositories/central/</url>
-        </repository>
-    </repositories>
 
     <dependencies>
 
@@ -174,6 +158,13 @@
             <groupId>com.github.springtestdbunit</groupId>
             <artifactId>spring-test-dbunit</artifactId>
             <version>1.2.1</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.7</version>
             <scope>test</scope>
         </dependency>
 

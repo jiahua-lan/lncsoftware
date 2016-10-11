@@ -1,9 +1,5 @@
 package cn.lncsa.data.model.user;
 
-import org.hibernate.annotations.GeneratorType;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.id.ForeignGenerator;
-
 import javax.persistence.*;
 import java.util.Date;
 
@@ -13,19 +9,19 @@ import java.util.Date;
 @Entity
 @Table(name = "user_profiles")
 public class UserProfile {
-    public Integer id;
-    public Boolean secret;
-    public String nickname;
-    public String realName;
-    public String gender;
-    public String headPic;
-    public String attendClass;
-    public String phoneNumber;
-    public String qq_account;
-    public String weChat_account;
-    public String email;
-    public Date birthday;
-    public Date admissionDate;
+    private Integer id;
+    private Boolean secret;
+    private String nickname;
+    private String realName;
+    private String gender;
+    private String headPic;
+    private String attendClass;
+    private String phoneNumber;
+    private String qq_account;
+    private String weChat_account;
+    private String email;
+    private Date birthday;
+    private Date admissionDate;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

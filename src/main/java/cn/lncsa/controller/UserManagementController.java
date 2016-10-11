@@ -1,6 +1,5 @@
 package cn.lncsa.controller;
 
-import cn.lncsa.data.model.user.User;
 import cn.lncsa.services.IUserServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

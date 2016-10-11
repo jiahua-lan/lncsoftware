@@ -1,5 +1,6 @@
 package cn.lncsa.services;
 
+import cn.lncsa.data.model.article.ArticleBody;
 import cn.lncsa.services.exceptions.ArticleOperateException;
 import cn.lncsa.data.model.article.Article;
 import cn.lncsa.data.model.article.Tag;
@@ -24,7 +25,7 @@ public interface IArticleServices {
      * @return
      * @throws ArticleOperateException if save to article that have id but it not exist, throw "Article not exist"
      */
-    void saveArticle(Article article, List<Tag> tags) throws ArticleOperateException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException;
+    void save(Article article, ArticleBody body, List<Tag> tags) throws ArticleOperateException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException;
 
     /**
      * Delete an article by Id
@@ -36,7 +37,7 @@ public interface IArticleServices {
      * @return article data which was deleted
      * @throws ArticleOperateException article not exist
      */
-    void deleteArticle(Integer articleId);
+    void delete(Integer articleId);
 
     /*
     *
@@ -58,7 +59,7 @@ public interface IArticleServices {
      * @param pageable paging request
      * @return
      */
-    Page<Article> getAllArticle(Pageable pageable, String... status);
+    Page<Article> get(Pageable pageable, String... status);
 
     /**
      * Get article by a list tag
@@ -68,7 +69,7 @@ public interface IArticleServices {
      * @param status   what status allow
      * @return
      */
-    Page<Article> getArticleByTag(Tag tag, Pageable pageable, String... status);
+    Page<Article> getByTag(Tag tag, Pageable pageable, String... status);
 
     /**
      * Get article by userId
@@ -78,7 +79,7 @@ public interface IArticleServices {
      * @param status   what status allow
      * @return
      */
-    Page<Article> getArticleByUserId(Integer userId, Pageable pageable, String... status);
+    Page<Article> getByUserId(Integer userId, Pageable pageable, String... status);
 
     /**
      * Find article between date
@@ -89,7 +90,7 @@ public interface IArticleServices {
      * @param status    what status allow
      * @return
      */
-    Page<Article> findArticleBetweenDate(Date startDate, Date endDate, Pageable pageable, String... status);
+    Page<Article> findBetweenDate(Date startDate, Date endDate, Pageable pageable, String... status);
 
     /**
      * Find articles between date
@@ -100,7 +101,7 @@ public interface IArticleServices {
      * @param status    what status allow
      * @return
      */
-    Page<Article> findArticleBetweenModifiedDate(Date startDate, Date endDate, Pageable pageable, String... status);
+    Page<Article> findBetweenModifiedDate(Date startDate, Date endDate, Pageable pageable, String... status);
 
     /**
      * Full article context searching
@@ -110,5 +111,13 @@ public interface IArticleServices {
      * @param status
      * @return
      */
-    Page<Article> findArticleByKeyword(String keyword, Pageable pageable, String... status);
+    Page<Article> findByKeyword(String keyword, Pageable pageable, String... status);
+
+    /**
+     * Get article content
+     *
+     * @param articleId
+     * @return
+     */
+    ArticleBody getBody(Integer articleId);
 }

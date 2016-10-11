@@ -11,7 +11,7 @@ import java.util.Date;
  * Created by catten on 16/1/15.
  */
 @Entity
-@Table(name = "articles")
+@Table(name = "article_head")
 public class Article implements Serializable, IBaseModel<Integer>, IRelationMaster{
 
     //private static ArticleDAO dao = new ArticleDAO();
@@ -19,21 +19,21 @@ public class Article implements Serializable, IBaseModel<Integer>, IRelationMast
     private Integer id;
 
     private String title;
-    private String context;
     private Date createDate;
     private Date lastModifiedDate;
     private Integer authorId;
     private String previewSentences;
     private String status;
+    private Integer contentId;
 
     public Article() {
     }
 
-    public Article(String title, String context, Date createDate, Integer authorId, String previewSentences, String status) {
+    public Article(String title,Integer contentId,Date createDate, Integer authorId, String previewSentences, String status) {
         this.title = title;
-        this.context = context;
         this.createDate = createDate;
         this.authorId = authorId;
+        this.contentId = contentId;
         this.previewSentences = previewSentences;
         this.status = status;
     }
@@ -52,15 +52,6 @@ public class Article implements Serializable, IBaseModel<Integer>, IRelationMast
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    @Column(length = 4096, columnDefinition = "TEXT")
-    public String getContext() {
-        return context;
-    }
-
-    public void setContext(String context) {
-        this.context = context;
     }
 
     public Date getCreateDate() {
@@ -104,5 +95,13 @@ public class Article implements Serializable, IBaseModel<Integer>, IRelationMast
 
     public void setLastModifiedDate(Date lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
+    }
+
+    public Integer getContentId() {
+        return contentId;
+    }
+
+    public void setContentId(Integer contentId) {
+        this.contentId = contentId;
     }
 }

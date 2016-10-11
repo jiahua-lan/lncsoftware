@@ -17,7 +17,7 @@ public class User implements IBaseModel<Integer>, IRelationMaster {
     private Integer id;
     private String name;
     private String password;
-    private String profileId;
+    private Integer profileId;
     private Date registerDate;
 
     public User() {
@@ -47,7 +47,13 @@ public class User implements IBaseModel<Integer>, IRelationMaster {
         this.name = name;
     }
 
-    public String getPassword() {
+    /**
+     * User's password will always a secret
+     * So this method should be can't access by other package
+     *
+     * @return
+     */
+    private String getPassword() {
         return password;
     }
 
@@ -55,11 +61,11 @@ public class User implements IBaseModel<Integer>, IRelationMaster {
         this.password = password;
     }
 
-    public String getProfileId() {
+    public Integer getProfileId() {
         return profileId;
     }
 
-    public void setProfileId(String profileId) {
+    public void setProfileId(Integer profileId) {
         this.profileId = profileId;
     }
 
@@ -70,4 +76,6 @@ public class User implements IBaseModel<Integer>, IRelationMaster {
     public void setRegisterDate(Date registerDate) {
         this.registerDate = registerDate;
     }
+
+
 }
