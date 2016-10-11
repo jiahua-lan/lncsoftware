@@ -50,12 +50,12 @@ public class TaggingServices implements ITaggingServices {
     }
 
     @Override
-    public Tag saveTag(Tag tag) {
+    public Tag save(Tag tag) {
         return tagDAO.save(tag);
     }
 
     @Override
-    public void deleteTag(Integer tagId){
+    public void delete(Integer tagId){
         tagArticleDAO.delete(tagArticleDAO.getRelationships(tagDAO.findOne(tagId)));
         tagDAO.delete(tagId);
     }
@@ -74,23 +74,28 @@ public class TaggingServices implements ITaggingServices {
     }
 
     @Override
+    public void removeAllTagsFromArticle(Integer articleId) {
+        tagArticleDAO.removeAllByArticleId(articleId);
+    }
+
+    @Override
     public Tag get(Integer tagId) {
         return tagDAO.findOne(tagId);
     }
 
     @Override
-    public List<Tag> getListOfTagById(List<Integer> tagIds) {
+    public List<Tag> get(List<Integer> tagIds) {
         return tagDAO.findAll(tagIds);
     }
 
     @Override
-    public List<Tag> getListOfTagByName(List<String> tagName) {
+    public List<Tag> getByName(List<String> tagName) {
         return tagDAO.getByTitle(tagName);
     }
 
     @Override
     public List<Tag> queryByArticleId(Integer articleId){
-        return tagArticleDAO.getByArticle(articleDAO.findOne(articleId));
+        return tagArticleDAO.getByArticleId(articleId);
     }
 
     @Override
@@ -99,7 +104,7 @@ public class TaggingServices implements ITaggingServices {
     }
 
     @Override
-    public Page<Tag> getAllTags(Pageable pageable) {
+    public Page<Tag> getAll(Pageable pageable) {
         return tagDAO.findAll(pageable);
     }
 

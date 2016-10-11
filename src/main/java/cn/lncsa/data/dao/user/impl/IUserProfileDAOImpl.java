@@ -35,7 +35,7 @@ public class IUserProfileDAOImpl extends SimpleJpaRepository<UserProfile,Integer
     public Page<UserProfile> getByUserId(List<Integer> userId, Pageable pageable) {
         Query query = entityManager.createQuery("select up from UserProfile up where (select u.profileId from User u where u.id = ?1) = ?1 and up.secret = false");
         query.setParameter(1,userId);
-
+        return null;
     }
 
     @Override

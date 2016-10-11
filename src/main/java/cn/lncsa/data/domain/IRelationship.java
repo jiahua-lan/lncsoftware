@@ -6,7 +6,7 @@ package cn.lncsa.data.domain;
  * IRelationship is an interface for storing data classes for master-slave relationships.
  * The generic parameter M represents the master object, and S represents the slave object.
  *
- * @see cn.lncsa.data.dao.abstracts.IRelationshipRepository
+ * @see IRelationshipRepository
  * @see IRelationMaster
  * @see IRelationSlave
  */

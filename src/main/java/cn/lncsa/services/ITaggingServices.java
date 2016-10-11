@@ -21,7 +21,7 @@ public interface ITaggingServices {
      * @param tag
      * @return
      */
-    Tag saveTag(Tag tag);
+    Tag save(Tag tag);
 
     /**
      * Delete a tag an remove this tag from all article
@@ -31,7 +31,7 @@ public interface ITaggingServices {
      * @param tagId
      * @return
      */
-    void deleteTag(Integer tagId);
+    void delete(Integer tagId);
 
     /*
     *
@@ -56,6 +56,13 @@ public interface ITaggingServices {
      */
     void removeTagFromArticle(Integer articleId, List<Tag> tagList);
 
+    /**
+     * Remove all relationships wired to an article
+     *
+     * @param articleId
+     */
+    void removeAllTagsFromArticle(Integer articleId);
+
     /*
     *
     * Query methods
@@ -76,7 +83,7 @@ public interface ITaggingServices {
      * @param tagIds
      * @return
      */
-    List<Tag> getListOfTagById(List<Integer> tagIds);
+    List<Tag> get(List<Integer> tagIds);
 
 
     /**
@@ -85,7 +92,7 @@ public interface ITaggingServices {
      * @param tagName
      * @return
      */
-    List<Tag> getListOfTagByName(List<String> tagName);
+    List<Tag> getByName(List<String> tagName);
 
     /**
      * Get tags those tagged to an article
@@ -110,5 +117,5 @@ public interface ITaggingServices {
      * @param pageable
      * @return
      */
-    Page<Tag> getAllTags(Pageable pageable);
+    Page<Tag> getAll(Pageable pageable);
 }

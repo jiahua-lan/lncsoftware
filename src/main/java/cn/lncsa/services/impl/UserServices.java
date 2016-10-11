@@ -1,5 +1,6 @@
 package cn.lncsa.services.impl;
 
+import cn.lncsa.data.dao.user.IPasswordDAO;
 import cn.lncsa.data.dao.user.IUserProfileDAO;
 import cn.lncsa.data.model.user.UserProfile;
 import cn.lncsa.data.dao.user.IUserDAO;
@@ -19,6 +20,7 @@ import java.util.List;
 public class UserServices implements IUserServices {
     private IUserDAO userDAO;
     private IUserProfileDAO userProfileDAO;
+    private IPasswordDAO passwordDAO;
 
     @Autowired
     public void setUserProfileDAO(IUserProfileDAO userProfileDAO) {
@@ -28,6 +30,11 @@ public class UserServices implements IUserServices {
     @Autowired
     public void setUserDAO(IUserDAO userDAO) {
         this.userDAO = userDAO;
+    }
+
+    @Autowired
+    public void setPasswordDAO(IPasswordDAO passwordDAO) {
+        this.passwordDAO = passwordDAO;
     }
 
     @Override
@@ -51,27 +58,27 @@ public class UserServices implements IUserServices {
     }
 
     @Override
-    public User getUserByName(String username){
+    public User getByName(String username){
         return userDAO.getByName(username);
     }
 
     @Override
-    public Page<User> findUserByUsername(String keyword, Pageable pageable) {
+    public Page<User> findByUsername(String keyword, Pageable pageable) {
         return userDAO.getByNameLike(keyword,pageable);
     }
 
     @Override
-    public UserProfile getUserProfile(Integer userId) {
+    public UserProfile getProfile(Integer userId) {
         return userProfileDAO.getByUserId(userId);
     }
 
     @Override
-    public Page<UserProfile> getUserProfile(List<Integer> userId) {
+    public Page<UserProfile> getProfile(List<Integer> userId) {
         return userProfileDAO.getByUserId(userId);
     }
 
     @Override
-    public void saveUserProfile(Integer userId, UserProfile userProfile) {
+    public void saveProfile(Integer userId, UserProfile userProfile) {
         User user = userDAO.getOne(userId);
         if(user.getProfileId() == null){
             userProfileDAO.save(userProfile);
@@ -81,5 +88,24 @@ public class UserServices implements IUserServices {
             userProfile.setId(userProfile.getId());
             userProfileDAO.save(userProfile);
         }
+    }
+
+    @Override
+    public boolean checkPassword(String username, String password) {
+        User user = userDAO.getByName(username);
+        if(user == null) return false;
+        return checkPassword(user.getId(),password);
+    }
+
+    @Override
+    public boolean checkPassword(User user, String password) {
+        if(user.getId() == null) return false;
+        return checkPassword(user.getId(),password);
+    }
+
+    @Override
+    public boolean checkPassword(Integer userId, String password) {
+        String userPassword = passwordDAO.get(userId);
+        return userPassword.equals(password);
     }
 }

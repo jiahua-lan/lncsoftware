@@ -1,5 +1,6 @@
 package cn.lncsa.controller;
 
+import cn.lncsa.common.ResultObject;
 import cn.lncsa.services.ITaggingServices;
 import cn.lncsa.services.exceptions.UserOperateException;
 import cn.lncsa.data.dto.IArticlePreview;
@@ -42,19 +43,25 @@ public class ArticleQueryController {
         this.taggingServices = taggingServices;
     }
 
-    public Object queryLatestArticles(int count,boolean preview){
-        return null;
+    /*
+    * Methods
+    *
+    * */
+
+    public Object queryLatestArticles(int count,String status){
+        List<Article> articles = articleServices.getLatest(count,status);
+        return new ResultObject(true,articles);
     }
 
-    public Object queryArticles(String ordering,boolean preview,Pageable pageable,String... status){
-        return null;
+    public Object queryArticles(Pageable pageable,String... status){
+        return new ResultObject(true,articleServices.get(pageable,status));
     }
 
-    public Object queryArticlesUnderTag(String tagTitle,boolean preview,String ordering,Pageable pageable,String... status){
-        return null;
+    public Object queryArticlesUnderTag(Integer tagId,Pageable pageable,List<String> status){
+        return new ResultObject(true,taggingServices.queryArticlesUnderTag(tagId,status,pageable));
     }
 
-    public Object queryArticlesByUser(int userId,boolean preview,Pageable pageable,String... status){
-        return null;
+    public Object queryArticlesByUser(int userId,Pageable pageable,String... status){
+        return new ResultObject(true,articleServices.getByUserId(userId,pageable,status));
     }
 }

@@ -56,7 +56,7 @@ public interface IUserServices {
      * @param username username
      * @return
      */
-    User getUserByName(String username);
+    User getByName(String username);
 
     /**
      * Find user by username
@@ -65,7 +65,7 @@ public interface IUserServices {
      * @param pageable
      * @return
      */
-    Page<User> findUserByUsername(String keyword, Pageable pageable);
+    Page<User> findByUsername(String keyword, Pageable pageable);
 
     /**
      * Get a user profile
@@ -73,7 +73,7 @@ public interface IUserServices {
      * @param userId
      * @return
      */
-    UserProfile getUserProfile(Integer userId);
+    UserProfile getProfile(Integer userId);
 
     /**
      * Get a list of user profiles
@@ -81,7 +81,7 @@ public interface IUserServices {
      * @param userId
      * @return
      */
-    Page<UserProfile> getUserProfile(List<Integer> userId);
+    Page<UserProfile> getProfile(List<Integer> userId);
 
     /**
      * save user's profile
@@ -89,7 +89,18 @@ public interface IUserServices {
      * @param userId
      * @param userProfile
      */
-    void saveUserProfile(Integer userId, UserProfile userProfile);
+    void saveProfile(Integer userId, UserProfile userProfile);
 
+    /**
+     * Password checking
+     *
+     * @param username
+     * @param password
+     * @return
+     */
+    boolean checkPassword(String username, String password);
 
+    boolean checkPassword(User user, String password);
+
+    boolean checkPassword(Integer userId, String password);
 }

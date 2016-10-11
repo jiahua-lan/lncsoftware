@@ -1,5 +1,6 @@
 package cn.lncsa.controller;
 
+import cn.lncsa.common.ResultObject;
 import cn.lncsa.data.model.bulletin.Bulletin;
 import cn.lncsa.services.IBulletinServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +21,18 @@ public class BulletinModifyingController {
         this.bulletinServices = bulletinServices;
     }
 
+    /*
+    * Methods
+    *
+    * */
+
     public Object saveBulletin(Bulletin bulletin){
-        return null;
+        bulletinServices.save(bulletin);
+        return new ResultObject(true);
     }
 
     public Object deleteBulletin(Integer bulletinId){
-        return null;
+        bulletinServices.delete(bulletinId);
+        return new ResultObject(true);
     }
 }

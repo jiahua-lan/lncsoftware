@@ -25,10 +25,8 @@ public class ListTools {
     public static <T> List<T>[] listDiff(List<T> originList, List<T> modifiedList) {
         if (originList != null && modifiedList != null) {
 
-            Set<T> set1 = new HashSet<>();
-            for (T o : originList) set1.add(o);
-            Set<T> set2 = new HashSet<>();
-            for (T o : modifiedList) set2.add(o);
+            Set<T> set1 = new HashSet<>(originList);
+            Set<T> set2 = new HashSet<>(modifiedList);
 
             List<T> addList = new LinkedList<>();
             List<T> delList = new LinkedList<>();

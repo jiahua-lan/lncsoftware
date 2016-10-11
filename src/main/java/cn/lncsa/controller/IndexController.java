@@ -26,7 +26,7 @@ public class IndexController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index(Model model, HttpSession session){
         /*
-        model.addAttribute(bulletinServices.getBulletin("main_page"));
+        model.addAttribute(bulletinServices.get("main_page"));
         Object object = session.getAttribute("session_passport");
         if(object instanceof User){
             model.addAttribute("nickName",((User) object).getNickName());

@@ -1,12 +1,13 @@
 package cn.lncsa.data.dao.article;
 
-import cn.lncsa.data.dao.abstracts.IRelationshipRepository;
+import cn.lncsa.data.domain.IRelationshipRepository;
 import cn.lncsa.data.model.article.Article;
 import cn.lncsa.data.model.article.ArticleTag;
 import cn.lncsa.data.model.article.Tag;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
@@ -85,4 +86,8 @@ public interface ITagArticleDAO extends JpaRepository<ArticleTag, Integer>, IRel
      */
     @Query("select at.article from ArticleTag at join at.article where at.tag = ?1 and at.article.status in ?2")
     Page<Article> findArticleByTag(Tag tag, List<String> status, Pageable pageable);
+
+    @Modifying
+    @Query("delete from ArticleTag where ArticleTag.article.id = ?1")
+    void removeAllByArticleId(Integer articleId);
 }

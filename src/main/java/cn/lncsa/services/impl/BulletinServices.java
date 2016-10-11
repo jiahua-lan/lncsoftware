@@ -4,6 +4,8 @@ import cn.lncsa.data.dao.bulletin.IBulletinDAO;
 import cn.lncsa.data.model.bulletin.Bulletin;
 import cn.lncsa.services.IBulletinServices;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,12 +23,12 @@ public class BulletinServices implements IBulletinServices {
     }
 
     @Override
-    public void saveBulletinItem(Bulletin bulletin) {
+    public void save(Bulletin bulletin) {
         bulletinDAO.save(bulletin);
     }
 
     @Override
-    public void deleteBulletin(Integer bulletinId) {
+    public void delete(Integer bulletinId) {
         bulletinDAO.delete(bulletinId);
     }
 
@@ -36,15 +38,13 @@ public class BulletinServices implements IBulletinServices {
     }
 
     @Override
-    public Bulletin getBulletin(String type) {
+    public Bulletin get(String type) {
         List<Bulletin> bulletins = bulletinDAO.getByType(type);
         return bulletins.size() > 0 ? bulletins.get(0) : null;
     }
 
     @Override
-    public List<Bulletin> getBulletinItems(String type, int count) {
-        List<Bulletin> bulletins = bulletinDAO.getByType(type);
-        if (count > bulletins.size()) return bulletins;
-        return bulletins.size() > 0 ? bulletins.subList(0, count - 1) : null;
+    public Page<Bulletin> get(String type, Pageable pageable) {
+        return bulletinDAO.getByType(type,pageable);
     }
 }

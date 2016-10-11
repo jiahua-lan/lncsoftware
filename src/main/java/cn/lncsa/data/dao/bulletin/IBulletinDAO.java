@@ -1,6 +1,8 @@
 package cn.lncsa.data.dao.bulletin;
 
 import cn.lncsa.data.model.bulletin.Bulletin;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -18,4 +20,7 @@ public interface IBulletinDAO extends JpaRepository<Bulletin, Integer> {
      */
     @Query("select b from Bulletin b where b.type = ?1 order by b.date")
     List<Bulletin> getByType(String type);
+
+    @Query("select b from Bulletin b where b.type = ?1 order by b.date")
+    Page<Bulletin> getByType(String type, Pageable pageable);
 }

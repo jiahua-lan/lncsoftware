@@ -1,11 +1,7 @@
 package cn.lncsa.data.model.article;
 
-import cn.lncsa.data.model.abstracts.IBaseModel;
-import cn.lncsa.data.model.abstracts.IRelationSlave;
-import org.hibernate.annotations.Type;
-import org.hibernate.annotations.UpdateTimestamp;
+import cn.lncsa.data.domain.IBaseModel;
 
-import javax.annotation.Generated;
 import javax.persistence.*;
 import java.util.Date;
 

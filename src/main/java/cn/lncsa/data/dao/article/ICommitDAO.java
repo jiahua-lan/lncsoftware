@@ -75,4 +75,13 @@ public interface ICommitDAO extends PagingAndSortingRepository<Commit,Integer> {
     @Modifying
     @Query("delete from Commit c where c.userId = ?1")
     void deleteByUserId(Integer userId);
+
+    /**
+     * Delete all relationships wired to an article
+     *
+     * @param articleId
+     */
+    @Modifying
+    @Query("delete from Commit where Commit.targetArticle = ?1")
+    void deleteByArticleID(Integer articleId);
 }

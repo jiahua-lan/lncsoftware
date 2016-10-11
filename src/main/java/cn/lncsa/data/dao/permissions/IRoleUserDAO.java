@@ -1,12 +1,11 @@
 package cn.lncsa.data.dao.permissions;
 
-import cn.lncsa.data.dao.abstracts.IRelationshipRepository;
+import cn.lncsa.data.domain.IRelationshipRepository;
 import cn.lncsa.data.model.permissions.Role;
 import cn.lncsa.data.model.user.User;
 import cn.lncsa.data.model.permissions.UserRole;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 

@@ -1,6 +1,5 @@
 package cn.lncsa.services.impl;
 
-import cn.lncsa.common.ListTools;
 import cn.lncsa.data.dao.article.IArticleBodyDAO;
 import cn.lncsa.data.dao.article.ITagArticleDAO;
 import cn.lncsa.data.model.article.ArticleBody;
@@ -9,14 +8,13 @@ import cn.lncsa.data.dao.article.IArticleDAO;
 import cn.lncsa.data.model.article.Article;
 import cn.lncsa.data.model.article.Tag;
 import cn.lncsa.services.IArticleServices;
-import cn.lncsa.services.exceptions.ArticleOperateException;
-import cn.lncsa.services.helper.RelationshipHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 /**
@@ -28,12 +26,6 @@ public class ArticleServices implements IArticleServices {
     private IArticleDAO articleDAO;
     private ITagArticleDAO tagArticleDAO;
     private IArticleBodyDAO articleBodyDAO;
-
-    private RelationshipHelper<Article,Tag,ArticleTag> relationshipHelper;
-
-    public ArticleServices(){
-        relationshipHelper = new RelationshipHelper<>();
-    }
 
     @Autowired
     public void setArticleDAO(IArticleDAO articleDAO) {
@@ -51,19 +43,14 @@ public class ArticleServices implements IArticleServices {
     }
 
     @Override
-    public void save(Article article, ArticleBody body, List<Tag> tags) throws ArticleOperateException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+    public void save(Article article, ArticleBody body){
         boolean isNewArticle = article.getContentId() == null;
 
         articleBodyDAO.save(body);
 
         //If article is a new article, it will have no tag refer to it
         if (!isNewArticle) {
-            relationshipHelper.updateRelationship(
-                    article,
-                    ListTools.listDiff(tagArticleDAO.getByArticle(article), tags), //Compare the origin tagList and new tagList
-                    tagArticleDAO
-            );
-            if(!article.getContentId().equals(body.getId())) {
+            if (!article.getContentId().equals(body.getId())) {
                 article.setContentId(body.getId());
                 articleDAO.save(article);
             }
@@ -72,9 +59,17 @@ public class ArticleServices implements IArticleServices {
         else {
             article.setContentId(body.getId());
             articleDAO.save(article);
-            taggingArticle(article, tags);
         }
+    }
 
+    @Override
+    public void saveHead(Article article) {
+        articleDAO.save(article);
+    }
+
+    @Override
+    public void saveBody(ArticleBody articleBody) {
+        articleBodyDAO.save(articleBody);
     }
 
     @Override
@@ -90,6 +85,11 @@ public class ArticleServices implements IArticleServices {
     @Override
     public Page<Article> get(Pageable pageable, String... status) {
         return articleDAO.findAll(status, pageable);
+    }
+
+    @Override
+    public List<Article> getLatest(Integer count, String... status) {
+        return articleDAO.findAll(status,new PageRequest(0,count,Sort.Direction.DESC)).getContent();
     }
 
     @Override

@@ -1,8 +1,8 @@
 package cn.lncsa.services;
 
 import cn.lncsa.data.model.bulletin.Bulletin;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 /**
  * Created by catten on 16/7/2.
@@ -15,7 +15,7 @@ public interface IBulletinServices {
      * @param bulletin
      * @return
      */
-    void saveBulletinItem(Bulletin bulletin);
+    void save(Bulletin bulletin);
 
     /**
      * Delete a bulletin item
@@ -23,7 +23,7 @@ public interface IBulletinServices {
      * @param bulletinId
      * @return
      */
-    void deleteBulletin(Integer bulletinId);
+    void delete(Integer bulletinId);
 
     /*
     *
@@ -47,16 +47,16 @@ public interface IBulletinServices {
      * @param type
      * @return
      */
-    Bulletin getBulletin(String type);
+    Bulletin get(String type);
 
     /**
      * Get all bulletin of specific type
      * <p>
      * If actually items count lesser than count, will return origin List object
      *
+     * @param
      * @param type
-     * @param count
      * @return
      */
-    List<Bulletin> getBulletinItems(String type, int count);
+    Page<Bulletin> get(String type, Pageable pageable);
 }

@@ -59,13 +59,18 @@ public class CommitServices implements cn.lncsa.services.ICommitServices {
     }
 
     @Override
-    public Page<Commit> getUserCommits(Integer userId, Pageable pageable) {
+    public Page<Commit> get(Integer userId, Pageable pageable) {
         return commitDAO.getByUserId(userId, pageable);
     }
 
     @Override
     public void delete(Integer commitId) {
         commitDAO.delete(commitId);
+    }
+
+    @Override
+    public void deleteAllByArticleId(Integer articleId) {
+        commitDAO.deleteByArticleId(articleId);
     }
 
 

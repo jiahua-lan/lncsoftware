@@ -5,11 +5,13 @@ import cn.lncsa.services.exceptions.UserOperateException;
 import cn.lncsa.data.model.user.User;
 import cn.lncsa.services.IUserServices;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -26,19 +28,15 @@ public class UserQueryController {
         this.userServices = userServices;
     }
 
-    public Object queryUserById(Integer userId){
+    public Object getUserById(Integer userId){
         return null;
     }
 
-    public Object queryUserByName(String username){
+    public Object getUserByName(String username){
         return null;
     }
 
-    public Object queryUserByNickname(String nickname){
-        return null;
-    }
-
-    public Object queryUserByContactInfo(String contactInfo){
+    public Object searchUserByProfileInfo(Map<String,String> fields, Pageable pageable){
         return null;
     }
 }

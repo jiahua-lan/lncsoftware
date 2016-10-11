@@ -18,14 +18,28 @@ import java.util.List;
 public interface IArticleServices {
 
     /**
-     * Save an article and tag it
+     * Save an article
      *
      * @param article article which want to save
-     * @param tags    tag point to the article, will not make any change if set null
+     * @param body    the body of this article
      * @return
      * @throws ArticleOperateException if save to article that have id but it not exist, throw "Article not exist"
      */
-    void save(Article article, ArticleBody body, List<Tag> tags) throws ArticleOperateException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException;
+    void save(Article article, ArticleBody body);
+
+    /**
+     * Only save article head
+     *
+     * @param article
+     */
+    void saveHead(Article article);
+
+    /**
+     * Only save article body
+     *
+     * @param articleBody
+     */
+    void saveBody(ArticleBody articleBody);
 
     /**
      * Delete an article by Id
@@ -60,6 +74,8 @@ public interface IArticleServices {
      * @return
      */
     Page<Article> get(Pageable pageable, String... status);
+
+    List<Article> getLatest(Integer count, String... status);
 
     /**
      * Get article by a list tag

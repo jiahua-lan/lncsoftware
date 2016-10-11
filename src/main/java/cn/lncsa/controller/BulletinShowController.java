@@ -1,5 +1,6 @@
 package cn.lncsa.controller;
 
+import cn.lncsa.common.ResultObject;
 import cn.lncsa.data.model.bulletin.Bulletin;
 import cn.lncsa.services.IBulletinServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,14 +24,14 @@ public class BulletinShowController {
     }
 
     public Object getBulletin(String typeName){
-        return null;
+        return new ResultObject(true,bulletinServices.get(typeName));
     }
 
     public Object getBulletin(Integer bulletinId){
-        return null;
+        return new ResultObject(true,bulletinServices.get(bulletinId));
     }
 
     public Object getBulletinList(String type){
-        return null;
+        return new ResultObject(true,bulletinServices.get(type));
     }
 }

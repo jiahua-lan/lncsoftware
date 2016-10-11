@@ -13,6 +13,11 @@ public class ResultObject {
     public ResultObject() {
     }
 
+    public ResultObject(boolean success, Object content){
+        this.success = success;
+        this.content = content;
+    }
+
     public ResultObject(boolean success, String message) {
         this.success = success;
         this.message = message;

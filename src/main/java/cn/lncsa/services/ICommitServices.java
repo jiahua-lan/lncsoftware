@@ -48,6 +48,8 @@ public interface ICommitServices {
      */
     void delete(Integer commitId);
 
+    void deleteAllByArticleId(Integer articleId);
+
     /*
     *
     * Query methods
@@ -69,5 +71,5 @@ public interface ICommitServices {
      * @param userId
      * @return
      */
-    Page<Commit> getUserCommits(Integer userId, Pageable pageable);
+    Page<Commit> get(Integer userId, Pageable pageable);
 }

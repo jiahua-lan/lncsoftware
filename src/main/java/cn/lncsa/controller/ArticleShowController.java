@@ -1,5 +1,6 @@
 package cn.lncsa.controller;
 
+import cn.lncsa.common.ResultObject;
 import cn.lncsa.services.IArticleServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,7 +19,12 @@ public class ArticleShowController {
         this.articleServices = articleServices;
     }
 
+    /*
+    * Methods
+    *
+    * */
+
     public Object showArticle(int articleId){
-        return null;
+        return new ResultObject(true,articleServices.getBody(articleId));
     }
 }
