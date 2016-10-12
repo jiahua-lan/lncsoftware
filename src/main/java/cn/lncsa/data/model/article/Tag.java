@@ -1,7 +1,7 @@
 package cn.lncsa.data.model.article;
 
-import cn.lncsa.data.domain.IBaseModel;
-import cn.lncsa.data.domain.IRelationSlave;
+import cn.lncsa.data.model.base.IBaseModel;
+import cn.lncsa.data.model.domain.IRelationSlave;
 
 import javax.persistence.*;
 

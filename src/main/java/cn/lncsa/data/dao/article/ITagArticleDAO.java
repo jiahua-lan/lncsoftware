@@ -1,6 +1,6 @@
 package cn.lncsa.data.dao.article;
 
-import cn.lncsa.data.domain.IRelationshipRepository;
+import cn.lncsa.data.dao.domain.IRelationshipRepository;
 import cn.lncsa.data.model.article.Article;
 import cn.lncsa.data.model.article.ArticleTag;
 import cn.lncsa.data.model.article.Tag;
@@ -88,6 +88,6 @@ public interface ITagArticleDAO extends JpaRepository<ArticleTag, Integer>, IRel
     Page<Article> findArticleByTag(Tag tag, List<String> status, Pageable pageable);
 
     @Modifying
-    @Query("delete from ArticleTag where ArticleTag.article.id = ?1")
-    void removeAllByArticleId(Integer articleId);
+    @Query("delete from ArticleTag at where at.article = ?1")
+    void removeAllByArticleId(Article article);
 }

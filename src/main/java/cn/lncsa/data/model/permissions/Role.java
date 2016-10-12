@@ -1,8 +1,8 @@
 package cn.lncsa.data.model.permissions;
 
-import cn.lncsa.data.domain.IBaseModel;
-import cn.lncsa.data.domain.IRelationMaster;
-import cn.lncsa.data.domain.IRelationSlave;
+import cn.lncsa.data.model.base.IBaseModel;
+import cn.lncsa.data.model.domain.IRelationMaster;
+import cn.lncsa.data.model.domain.IRelationSlave;
 
 import javax.persistence.*;
 

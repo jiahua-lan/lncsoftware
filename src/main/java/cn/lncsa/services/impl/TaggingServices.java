@@ -75,7 +75,7 @@ public class TaggingServices implements ITaggingServices {
 
     @Override
     public void removeAllTagsFromArticle(Integer articleId) {
-        tagArticleDAO.removeAllByArticleId(articleId);
+        tagArticleDAO.removeAllByArticleId(articleDAO.findOne(articleId));
     }
 
     @Override

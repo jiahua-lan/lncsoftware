@@ -1,5 +1,6 @@
 package cn.lncsa.data.dao.user;
 
+import cn.lncsa.data.dao.base.IFieldBaseQueryDAO;
 import cn.lncsa.data.model.user.UserProfile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,7 +16,7 @@ import java.util.Objects;
  * Created by cattenlinger on 2016/10/8.
  */
 @NoRepositoryBean
-public interface IUserProfileDAO extends JpaRepository<UserProfile, Integer> {
+public interface IUserProfileDAO extends JpaRepository<UserProfile, Integer>, IFieldBaseQueryDAO<UserProfile>{
 
     /**
      * Get user profile by single user id
@@ -43,6 +44,4 @@ public interface IUserProfileDAO extends JpaRepository<UserProfile, Integer> {
      */
     //@Query("select up from UserProfile up where up.id in (select u from User u where u.id in ?1)")
     Page<UserProfile> getByUserIdIgnoreSecret(Integer userId);
-
-    Page<UserProfile> queryByField(Map<String,String> queryFields,Pageable pageable);
 }

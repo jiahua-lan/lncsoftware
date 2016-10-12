@@ -81,7 +81,7 @@ public interface IUserServices {
      * @param userId
      * @return
      */
-    Page<UserProfile> getProfile(List<Integer> userId);
+    Page<UserProfile> getProfile(List<Integer> userId, Pageable pageable);
 
     /**
      * save user's profile

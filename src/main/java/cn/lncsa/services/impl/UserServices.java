@@ -7,6 +7,7 @@ import cn.lncsa.data.dao.user.IUserDAO;
 import cn.lncsa.data.model.user.User;
 import cn.lncsa.services.IUserServices;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,7 @@ public class UserServices implements IUserServices {
     private IPasswordDAO passwordDAO;
 
     @Autowired
-    public void setUserProfileDAO(IUserProfileDAO userProfileDAO) {
+    public void setUserProfileDAO(@Qualifier("IUserProfileDAO") IUserProfileDAO userProfileDAO) {
         this.userProfileDAO = userProfileDAO;
     }
 
@@ -73,8 +74,8 @@ public class UserServices implements IUserServices {
     }
 
     @Override
-    public Page<UserProfile> getProfile(List<Integer> userId) {
-        return userProfileDAO.getByUserId(userId);
+    public Page<UserProfile> getProfile(List<Integer> userId, Pageable pageable) {
+        return userProfileDAO.getByUserId(userId, pageable);
     }
 
     @Override

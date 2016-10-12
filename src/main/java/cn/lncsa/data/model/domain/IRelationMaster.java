@@ -1,4 +1,6 @@
-package cn.lncsa.data.domain;
+package cn.lncsa.data.model.domain;
+
+import org.springframework.data.repository.NoRepositoryBean;
 
 /**
  * Created by cattenlinger on 2016/9/29.
@@ -7,6 +9,7 @@ package cn.lncsa.data.domain;
  *
  * @see IRelationship
  */
+@NoRepositoryBean
 public interface IRelationMaster {
 
 }

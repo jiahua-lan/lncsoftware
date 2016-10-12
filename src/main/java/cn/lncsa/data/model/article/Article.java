@@ -1,7 +1,7 @@
 package cn.lncsa.data.model.article;
 
-import cn.lncsa.data.domain.IBaseModel;
-import cn.lncsa.data.domain.IRelationMaster;
+import cn.lncsa.data.model.base.IBaseModel;
+import cn.lncsa.data.model.domain.IRelationMaster;
 
 import javax.persistence.*;
 import java.io.Serializable;

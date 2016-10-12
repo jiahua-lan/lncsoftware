@@ -13,7 +13,7 @@ import java.util.Objects;
  * Created by cattenlinger on 2016/10/6.
  */
 @Controller
-@RequestMapping("/user/manage")
+@RequestMapping("/users/manage")
 public class UserManagementController {
 
     private IUserServices userServices;

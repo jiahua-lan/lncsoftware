@@ -1,6 +1,6 @@
 package cn.lncsa.data.model.bulletin;
 
-import cn.lncsa.data.domain.IBaseModel;
+import cn.lncsa.data.model.base.IBaseModel;
 
 import javax.persistence.*;
 import java.util.Date;

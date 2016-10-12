@@ -1,8 +1,8 @@
-package cn.lncsa.data.domain;
+package cn.lncsa.data.dao.domain;
 
-import cn.lncsa.data.domain.IRelationMaster;
-import cn.lncsa.data.domain.IRelationSlave;
-import cn.lncsa.data.domain.IRelationship;
+import cn.lncsa.data.model.domain.IRelationMaster;
+import cn.lncsa.data.model.domain.IRelationSlave;
+import cn.lncsa.data.model.domain.IRelationship;
 import org.springframework.data.repository.NoRepositoryBean;
 
 import java.util.List;

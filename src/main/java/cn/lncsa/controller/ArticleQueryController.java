@@ -25,17 +25,11 @@ import java.util.*;
 @RequestMapping("/articles/query")
 public class ArticleQueryController {
     private IArticleServices articleServices;
-    private IUserServices userServices;
     private ITaggingServices taggingServices;
 
     @Autowired
     public void setArticleServices(IArticleServices articleServices) {
         this.articleServices = articleServices;
-    }
-
-    @Autowired
-    public void setUserServices(IUserServices userServices) {
-        this.userServices = userServices;
     }
 
     @Autowired

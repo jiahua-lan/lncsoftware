@@ -1,10 +1,10 @@
 package cn.lncsa.services.helper;
 
 import cn.lncsa.common.ListTools;
-import cn.lncsa.data.domain.IRelationshipRepository;
-import cn.lncsa.data.domain.IRelationMaster;
-import cn.lncsa.data.domain.IRelationSlave;
-import cn.lncsa.data.domain.IRelationship;
+import cn.lncsa.data.dao.domain.IRelationshipRepository;
+import cn.lncsa.data.model.domain.IRelationMaster;
+import cn.lncsa.data.model.domain.IRelationSlave;
+import cn.lncsa.data.model.domain.IRelationship;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
