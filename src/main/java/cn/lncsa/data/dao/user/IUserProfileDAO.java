@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.NoRepositoryBean;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -22,7 +23,7 @@ public interface IUserProfileDAO extends JpaRepository<UserProfile, Integer> {
      * @param userId
      * @return
      */
-    @Query("select up from UserProfile up where (select u.profileId from User u where u.id = ?1) = ?1 and up.secret = false ")
+    //@Query("select up from UserProfile up where (select u.profileId from User u where u.id = ?1) = ?1 and up.secret = false ")
     UserProfile getByUserId(Integer userId);
 
     /**
@@ -31,7 +32,7 @@ public interface IUserProfileDAO extends JpaRepository<UserProfile, Integer> {
      * @param userId
      * @return
      */
-    @Query("select up from UserProfile up where up.id in (select u from User u where u.id in ?1) and up.secret = false ")
+    //@Query("select up from UserProfile up where up.id in (select u from User u where u.id in ?1) and up.secret = false ")
     Page<UserProfile> getByUserId(List<Integer> userId, Pageable pageable);
 
     /**
@@ -40,6 +41,8 @@ public interface IUserProfileDAO extends JpaRepository<UserProfile, Integer> {
      * @param userId
      * @return
      */
-    @Query("select up from UserProfile up where up.id in (select u from User u where u.id in ?1)")
+    //@Query("select up from UserProfile up where up.id in (select u from User u where u.id in ?1)")
     Page<UserProfile> getByUserIdIgnoreSecret(Integer userId);
+
+    Page<UserProfile> queryByField(Map<String,String> queryFields,Pageable pageable);
 }

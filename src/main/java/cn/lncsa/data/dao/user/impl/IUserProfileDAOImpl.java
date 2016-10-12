@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by catten on 10/11/16.
@@ -43,5 +44,9 @@ public class IUserProfileDAOImpl extends SimpleJpaRepository<UserProfile,Integer
         return null;
     }
 
+    @Override
+    public Page<UserProfile> queryByField(Map<String, String> queryFields, Pageable pageable) {
+        return null;
+    }
 
 }
