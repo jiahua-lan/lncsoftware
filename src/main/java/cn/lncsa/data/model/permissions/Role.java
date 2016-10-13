@@ -11,7 +11,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "roles")
-public class Role implements IBaseModel<Integer>, IRelationMaster, IRelationSlave {
+public class Role implements IRelationMaster<Integer>, IRelationSlave<Integer> {
     private Integer id;
     private String name;
     private Boolean enable;

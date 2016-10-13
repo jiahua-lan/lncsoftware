@@ -10,7 +10,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "article_tags")
-public class ArticleTag implements IBaseModel<Integer>, IRelationship<Article,Tag> {
+public class ArticleTag implements IRelationship<Article,Tag,Integer> {
     private Integer id;
     private Tag tag;
     private Article article;

@@ -10,7 +10,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "tags")
-public class Tag implements IBaseModel<Integer>, IRelationSlave {
+public class Tag implements IRelationSlave<Integer> {
     private Integer id;
     private String title;
 

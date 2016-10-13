@@ -10,7 +10,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "permission_roles")
-public class PermissionRole implements IBaseModel<Integer>,IRelationship<Role,Permission> {
+public class PermissionRole implements IRelationship<Role,Permission,Integer> {
     private Integer id;
     private Permission permission;
     private Role role;

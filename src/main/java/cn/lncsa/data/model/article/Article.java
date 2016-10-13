@@ -12,7 +12,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "article_head")
-public class Article implements Serializable, IBaseModel<Integer>, IRelationMaster{
+public class Article implements Serializable, IRelationMaster<Integer>{
 
     //private static ArticleDAO dao = new ArticleDAO();
 

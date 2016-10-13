@@ -11,7 +11,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "user_roles")
-public class UserRole implements IBaseModel<Integer>, IRelationship<User,Role> {
+public class UserRole implements IRelationship<User,Role,Integer> {
 
     private Integer id;
     private User user;

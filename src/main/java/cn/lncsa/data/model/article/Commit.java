@@ -10,7 +10,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "commits")
-public class Commit implements IBaseModel<Integer> {
+public class Commit {
 
     private Integer id;
 

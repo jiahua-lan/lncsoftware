@@ -1,5 +1,6 @@
 package cn.lncsa.data.dao.article;
 
+import cn.lncsa.data.dao.base.IFieldBaseQueryDAO;
 import cn.lncsa.data.model.article.Article;
 import cn.lncsa.data.model.article.Tag;
 import cn.lncsa.data.model.user.User;
@@ -8,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.util.Date;
@@ -16,7 +18,8 @@ import java.util.List;
 /**
  * Created by catten on 2016/6/12.
  */
-public interface IArticleDAO extends PagingAndSortingRepository<Article, Integer> {
+@NoRepositoryBean
+public interface IArticleDAO extends PagingAndSortingRepository<Article, Integer>, IFieldBaseQueryDAO<Article> {
     /**
      * Find articles that match keyword in title
      *

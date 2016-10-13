@@ -10,7 +10,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "bulletins")
-public class Bulletin implements IBaseModel<Integer> {
+public class Bulletin {
 
     private Integer id;
 

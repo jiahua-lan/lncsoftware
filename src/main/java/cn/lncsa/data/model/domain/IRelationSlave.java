@@ -1,6 +1,9 @@
 package cn.lncsa.data.model.domain;
 
+import cn.lncsa.data.model.base.IBaseModel;
 import org.springframework.data.repository.NoRepositoryBean;
+
+import java.io.Serializable;
 
 /**
  * Created by cattenlinger on 2016/9/29.
@@ -10,5 +13,5 @@ import org.springframework.data.repository.NoRepositoryBean;
  * @see IRelationship
  */
 @NoRepositoryBean
-public interface IRelationSlave {
+public interface IRelationSlave<I extends Serializable> extends IBaseModel<I> {
 }

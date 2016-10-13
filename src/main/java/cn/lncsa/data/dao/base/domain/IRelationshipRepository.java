@@ -1,4 +1,4 @@
-package cn.lncsa.data.dao.domain;
+package cn.lncsa.data.dao.base.domain;
 
 import cn.lncsa.data.model.domain.IRelationMaster;
 import cn.lncsa.data.model.domain.IRelationSlave;

@@ -1,7 +1,7 @@
 package cn.lncsa.services.helper;
 
 import cn.lncsa.common.ListTools;
-import cn.lncsa.data.dao.domain.IRelationshipRepository;
+import cn.lncsa.data.dao.base.domain.IRelationshipRepository;
 import cn.lncsa.data.model.domain.IRelationMaster;
 import cn.lncsa.data.model.domain.IRelationSlave;
 import cn.lncsa.data.model.domain.IRelationship;
