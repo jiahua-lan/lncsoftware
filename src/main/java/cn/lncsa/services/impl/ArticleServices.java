@@ -120,7 +120,7 @@ public class ArticleServices implements IArticleServices {
 
     @Override
     public ArticleBody getBody(Integer articleId) {
-        return articleBodyDAO.getOne(articleId);
+        return articleBodyDAO.findOne(articleId);
     }
 
     /*

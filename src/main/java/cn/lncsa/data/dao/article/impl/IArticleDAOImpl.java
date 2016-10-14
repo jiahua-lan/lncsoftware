@@ -8,9 +8,11 @@ import cn.lncsa.data.model.article.Tag;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -20,7 +22,8 @@ import java.util.List;
 /**
  * Created by cattenlinger on 2016/10/13.
  */
-public class IArticleDAOImpl extends IFieldBaseQueryDAOImpl<Article,Integer> implements IArticleDAO {
+public class IArticleDAOImpl extends IFieldBaseQueryDAOImpl<Article> implements IArticleDAO {
+
 
     public IArticleDAOImpl(Class<Article> domainClass, EntityManager em) {
         super(domainClass, em);

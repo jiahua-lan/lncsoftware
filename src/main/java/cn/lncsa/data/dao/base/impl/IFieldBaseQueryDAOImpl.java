@@ -19,7 +19,7 @@ import java.util.*;
  * Created by catten on 10/12/16.
  */
 @NoRepositoryBean
-public class IFieldBaseQueryDAOImpl<M, ID extends Serializable> extends SimpleJpaRepository<M, ID> implements IFieldBaseQueryDAO<M> {
+public class IFieldBaseQueryDAOImpl<M> extends SimpleJpaRepository<M, Integer> implements IFieldBaseQueryDAO<M> {
     private final EntityManager entityManager;
     private final Class<M> domainClass;
 

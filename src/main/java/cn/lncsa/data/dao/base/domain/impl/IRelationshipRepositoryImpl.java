@@ -21,8 +21,11 @@ import java.util.List;
  * Created by catten on 10/13/16.
  */
 @NoRepositoryBean
-public class IRelationshipRepositoryImpl<M extends IRelationMaster,S extends IRelationSlave,R extends IRelationship>
-        extends SimpleJpaRepository<R, Integer> implements IRelationshipRepository<M, S, R> {
+public class IRelationshipRepositoryImpl<
+        M extends IRelationMaster<?>,
+        S extends IRelationSlave<?>,
+        R extends IRelationship<M,S,?>> extends SimpleJpaRepository<R,Integer> implements IRelationshipRepository<M, S, R> {
+
 
     public IRelationshipRepositoryImpl(Class<R> domainClass, EntityManager em) {
         super(domainClass, em);

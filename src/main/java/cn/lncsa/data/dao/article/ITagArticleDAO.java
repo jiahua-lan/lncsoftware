@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 
 import java.util.List;
@@ -18,12 +19,14 @@ import java.util.List;
  * <p>
  * Created by catten on 16/6/12.
  */
-public interface ITagArticleDAO extends JpaRepository<ArticleTag, Integer>, IRelationshipRepository<Article,Tag,ArticleTag> {
+public interface ITagArticleDAO extends CrudRepository<ArticleTag, Integer>, IRelationshipRepository<Article,Tag,ArticleTag> {
 
     /**
      * Remove all tags related to an article
      *
-     * @param articleId
+     * @param article
      */
-    void removeAllByArticleId(Integer articleId);
+    @Modifying
+    @Query("delete from ArticleTag at where at.article = ?1")
+    void removeAllByArticleId(Article article);
 }

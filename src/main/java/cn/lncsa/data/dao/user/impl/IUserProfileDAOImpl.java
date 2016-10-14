@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * Created by catten on 10/11/16.
  */
-public class IUserProfileDAOImpl extends IFieldBaseQueryDAOImpl<UserProfile,Integer> implements IUserProfileDAO {
+public class IUserProfileDAOImpl extends IFieldBaseQueryDAOImpl<UserProfile> implements IUserProfileDAO {
 
     public IUserProfileDAOImpl(Class<UserProfile> domainClass, EntityManager em) {
         super(domainClass, em);

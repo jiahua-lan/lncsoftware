@@ -3,6 +3,7 @@ package cn.lncsa.data.dao.base.domain;
 import cn.lncsa.data.model.domain.IRelationMaster;
 import cn.lncsa.data.model.domain.IRelationSlave;
 import cn.lncsa.data.model.domain.IRelationship;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 
 import java.util.List;
@@ -21,7 +22,10 @@ import java.util.List;
  * @see IRelationship
  */
 @NoRepositoryBean
-public interface IRelationshipRepository<M extends IRelationMaster,S extends IRelationSlave,R extends IRelationship>{
+public interface IRelationshipRepository<
+        M extends IRelationMaster,
+        S extends IRelationSlave,
+        R extends IRelationship> extends CrudRepository<R,Integer>{
     /**
      * Obtaining relationships throw a slave object
      *
