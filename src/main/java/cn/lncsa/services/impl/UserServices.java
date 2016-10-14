@@ -1,6 +1,5 @@
 package cn.lncsa.services.impl;
 
-import cn.lncsa.data.dao.user.IPasswordDAO;
 import cn.lncsa.data.dao.user.IUserProfileDAO;
 import cn.lncsa.data.model.user.UserProfile;
 import cn.lncsa.data.dao.user.IUserDAO;
@@ -21,7 +20,6 @@ import java.util.List;
 public class UserServices implements IUserServices {
     private IUserDAO userDAO;
     private IUserProfileDAO userProfileDAO;
-    private IPasswordDAO passwordDAO;
 
     @Autowired
     public void setUserProfileDAO(@Qualifier("IUserProfileDAO") IUserProfileDAO userProfileDAO) {
@@ -31,11 +29,6 @@ public class UserServices implements IUserServices {
     @Autowired
     public void setUserDAO(IUserDAO userDAO) {
         this.userDAO = userDAO;
-    }
-
-    @Autowired
-    public void setPasswordDAO(IPasswordDAO passwordDAO) {
-        this.passwordDAO = passwordDAO;
     }
 
     @Override
@@ -106,7 +99,6 @@ public class UserServices implements IUserServices {
 
     @Override
     public boolean checkPassword(Integer userId, String password) {
-        String userPassword = passwordDAO.get(userId);
-        return userPassword.equals(password);
+        return false;
     }
 }

@@ -58,19 +58,6 @@ public interface IArticleDAO extends PagingAndSortingRepository<Article, Integer
     Page<Article> findAll(String[] status, Pageable pageable);
 
     /**
-     * Get article by tags
-     *
-     * Due to Spring Data JPA designing, a specific entity should managed by their DAO, so
-     * this method can't put in to ITagArticleDAO.
-     *
-     * @param tags
-     * @param status
-     * @param pageable
-     * @return
-     */
-    Page<Article> getByTags(List<Tag> tags,List<String> status, Pageable pageable);
-
-    /**
      * Delete articles by author id
      *
      * @param authorId

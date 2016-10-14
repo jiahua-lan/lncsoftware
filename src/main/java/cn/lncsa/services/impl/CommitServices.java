@@ -1,12 +1,9 @@
 package cn.lncsa.services.impl;
 
-import cn.lncsa.services.exceptions.CommitOperateException;
 import cn.lncsa.data.dao.article.IArticleDAO;
 import cn.lncsa.data.dao.article.ICommitDAO;
 import cn.lncsa.data.dao.user.IUserDAO;
-import cn.lncsa.data.model.article.Article;
 import cn.lncsa.data.model.article.Commit;
-import cn.lncsa.data.model.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -70,7 +67,7 @@ public class CommitServices implements cn.lncsa.services.ICommitServices {
 
     @Override
     public void deleteAllByArticleId(Integer articleId) {
-        commitDAO.deleteByArticleId(articleId);
+        commitDAO.deleteByTargetArticle(articleId);
     }
 
 

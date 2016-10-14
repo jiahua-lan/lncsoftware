@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.repository.query.Param;
 
 /**
  * Created by catten on 2016/6/12.
@@ -59,15 +60,6 @@ public interface ICommitDAO extends PagingAndSortingRepository<Commit,Integer> {
     Commit getByReplyToById(Integer commitId);
 
     /**
-     * Delete commits by target article id.
-     *
-     * @param articleId
-     */
-    @Modifying
-    @Query("delete from Commit c where c.targetArticle.id = ?1")
-    void deleteByArticleId(Integer articleId);
-
-    /**
      * Delete commits by user's id
      *
      * @param userId
@@ -77,11 +69,10 @@ public interface ICommitDAO extends PagingAndSortingRepository<Commit,Integer> {
     void deleteByUserId(Integer userId);
 
     /**
-     * Delete all relationships wired to an article
+     * Delete all commits wired to an article
      *
      * @param articleId
      */
     @Modifying
-    @Query("delete from Commit where Commit.targetArticle = ?1")
-    void deleteByArticleID(Integer articleId);
+    void deleteByTargetArticle(Integer articleId);
 }

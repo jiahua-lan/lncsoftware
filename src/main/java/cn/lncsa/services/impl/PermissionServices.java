@@ -89,7 +89,7 @@ public class PermissionServices implements IPermissionServices {
     public void grantPermissionToRole(Integer roleId, List<Permission> permissions) throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
         rolePermissionRelationshipHelper.updateRelationship(
                 getRole(roleId),
-                ListTools.listDiff(permissionDAO.getPermissionsByRole(roleId), permissions),
+                ListTools.listDiff(permissionRoleDAO.getPermissionsByRole(roleId), permissions),
                 permissionRoleDAO
         );
     }
@@ -103,7 +103,7 @@ public class PermissionServices implements IPermissionServices {
     public void giveRoleToUser(Integer userId, List<Role> roles) throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
         userRoleRelationshipHelper.updateRelationship(
                 userDAO.findOne(userId),
-                ListTools.listDiff(roleDAO.getByUserId(userId), roles),
+                ListTools.listDiff(roleUserDAO.getByUserId(userId), roles),
                 roleUserDAO);
     }
 
@@ -114,11 +114,11 @@ public class PermissionServices implements IPermissionServices {
 
     @Override
     public List<Permission> queryUserPermissions(Integer userId){
-        List<Role> roles = roleDAO.getByUserId(userId);
+        List<Role> roles = roleUserDAO.getByUserId(userId);
         if (roles.size() == 0) return new LinkedList<>();
         List<Permission> permissions = new LinkedList<>();
         for (Role role : roles) {
-            permissions.addAll(permissionDAO.getPermissionsByRole(role.getId()));
+            permissions.addAll(permissionRoleDAO.getPermissionsByRole(role.getId()));
         }
         return permissions;
     }
@@ -130,12 +130,12 @@ public class PermissionServices implements IPermissionServices {
 
     @Override
     public List<Role> queryUserRoles(Integer userId) {
-        return roleDAO.getByUserId(userId);
+        return roleUserDAO.getByUserId(userId);
     }
 
     @Override
     public List<Permission> queryRolePermissions(Integer roleId){
-        return permissionDAO.getPermissionsByRole(roleId);
+        return permissionRoleDAO.getPermissionsByRole(roleId);
     }
 
     @Override

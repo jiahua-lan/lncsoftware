@@ -66,7 +66,7 @@ public class TaggingServices implements ITaggingServices {
     public void taggingArticle(Integer articleId, List<Tag> tagList) throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
         relationshipHelper.updateRelationship(
                 articleDAO.findOne(articleId),
-                ListTools.listDiff(tagDAO.getByArticle(articleDAO.findOne(articleId)),tagList),
+                ListTools.listDiff(tagArticleDAO.getByArticle(articleDAO.findOne(articleId)),tagList),
                 tagArticleDAO);
     }
 
@@ -77,7 +77,7 @@ public class TaggingServices implements ITaggingServices {
 
     @Override
     public void removeAllTagsFromArticle(Integer articleId) {
-        tagArticleDAO.removeAllByArticleId(articleId);
+        tagArticleDAO.removeAllByArticleId(articleDAO.findOne(articleId));
     }
 
     @Override
@@ -97,12 +97,12 @@ public class TaggingServices implements ITaggingServices {
 
     @Override
     public List<Tag> queryByArticleId(Integer articleId){
-        return tagDAO.getByArticle(articleDAO.findOne(articleId));
+        return tagArticleDAO.getByArticle(articleDAO.findOne(articleId));
     }
 
     @Override
     public Page<Article> queryArticlesUnderTag(Integer tagId, List<String> status, Pageable pageable){
-        return articleDAO.getByTags(Arrays.asList(tagDAO.findOne(tagId)),status,pageable);
+        return tagArticleDAO.getByTags(Arrays.asList(tagDAO.findOne(tagId)),status,pageable);
     }
 
     @Override

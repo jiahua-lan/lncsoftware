@@ -29,4 +29,27 @@ public interface ITagArticleDAO extends CrudRepository<ArticleTag, Integer>, IRe
     @Modifying
     @Query("delete from ArticleTag at where at.article = ?1")
     void removeAllByArticleId(Article article);
+
+    /**
+     * Get article by tags
+     *
+     *
+     * @param tags
+     * @param status
+     * @param pageable
+     * @return
+     */
+    @Query("select at.article from ArticleTag at join Article where at.tag in ?1 and at.article.status in ?2")
+    Page<Article> getByTags(List<Tag> tags,List<String> status, Pageable pageable);
+
+    /**
+     * Get tags tagged to an article
+     *
+     * @{see} cn.lncsa.data.dao.article.IArticleDAO getByTags()
+     *
+     * @param article
+     * @return
+     */
+    @Query("select at.tag from ArticleTag at where at.article = ?1")
+    List<Tag> getByArticle(Article article);
 }

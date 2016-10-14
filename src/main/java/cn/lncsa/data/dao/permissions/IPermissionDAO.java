@@ -20,15 +20,4 @@ public interface IPermissionDAO extends JpaRepository<Permission,Integer> {
      */
     @Query("select p from Permission p where p.title = ?1")
     List<Permission> getByTitle(String title);
-
-
-    /**
-     *
-     * Get all permissions the role have
-     *
-     * @param roleId
-     * @return
-     */
-    @Query("select pr.permission from PermissionRole pr where pr.role.id = ?1")
-    List<Permission> getPermissionsByRole(Integer roleId);
 }

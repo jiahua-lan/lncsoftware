@@ -19,13 +19,4 @@ public interface IRoleDAO extends JpaRepository<Role, Integer> {
      * @return
      */
     Role getByName(String name);
-
-    /**
-     * Get a list of rights that the user have
-     *
-     * @param userId a user id
-     * @return list of rights
-     */
-    @Query("select ur.role from UserRole ur where ur.user.id = ?1")
-    List<Role> getByUserId(Integer userId);
 }

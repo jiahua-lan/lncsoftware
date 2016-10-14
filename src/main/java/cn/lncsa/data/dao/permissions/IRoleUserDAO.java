@@ -18,5 +18,12 @@ import java.util.List;
  * Created by catte on 2016/6/12.
  */
 public interface IRoleUserDAO extends PagingAndSortingRepository<UserRole,Integer>, IRelationshipRepository<User,Role,UserRole> {
-
+    /**
+     * Get a list of rights that the user have
+     *
+     * @param userId a user id
+     * @return list of rights
+     */
+    @Query("select ur.role from UserRole ur where ur.user.id = ?1")
+    List<Role> getByUserId(Integer userId);
 }
