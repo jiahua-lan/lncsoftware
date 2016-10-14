@@ -73,7 +73,7 @@ public interface IUserServices {
      * @param userId
      * @return
      */
-    UserProfile getProfile(Integer userId);
+    UserProfile getProfile(Integer userId, boolean ignoreSecret);
 
     /**
      * Get a list of user profiles
@@ -81,7 +81,7 @@ public interface IUserServices {
      * @param userId
      * @return
      */
-    Page<UserProfile> getProfile(List<Integer> userId, Pageable pageable);
+    Page<UserProfile> getProfile(List<Integer> userId,boolean ignoreSecret, Pageable pageable);
 
     /**
      * save user's profile

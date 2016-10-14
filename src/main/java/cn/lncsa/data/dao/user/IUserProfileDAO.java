@@ -24,8 +24,7 @@ public interface IUserProfileDAO extends JpaRepository<UserProfile, Integer>, IF
      * @param userId
      * @return
      */
-    //@Query("select up from UserProfile up where (select u.profileId from User u where u.id = ?1) = ?1 and up.secret = false ")
-    UserProfile getByUserId(Integer userId);
+    UserProfile getByUserId(Integer userId, boolean ignoreSecret);
 
     /**
      * Get a list of user profile
@@ -33,15 +32,5 @@ public interface IUserProfileDAO extends JpaRepository<UserProfile, Integer>, IF
      * @param userId
      * @return
      */
-    //@Query("select up from UserProfile up where up.id in (select u from User u where u.id in ?1) and up.secret = false ")
-    Page<UserProfile> getByUserId(List<Integer> userId, Pageable pageable);
-
-    /**
-     * Get a list of user profile ignore user's secret setting
-     *
-     * @param userId
-     * @return
-     */
-    //@Query("select up from UserProfile up where up.id in (select u from User u where u.id in ?1)")
-    Page<UserProfile> getByUserIdIgnoreSecret(Integer userId);
+    Page<UserProfile> getByUserId(List<Integer> userId,boolean ignoreSecret, Pageable pageable);
 }

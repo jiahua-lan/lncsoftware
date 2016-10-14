@@ -9,6 +9,7 @@ import cn.lncsa.data.model.article.Article;
 import cn.lncsa.data.model.article.Tag;
 import cn.lncsa.services.IArticleServices;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -28,12 +29,12 @@ public class ArticleServices implements IArticleServices {
     private IArticleBodyDAO articleBodyDAO;
 
     @Autowired
-    public void setArticleDAO(IArticleDAO articleDAO) {
+    public void setArticleDAO(@Qualifier("IArticleDAO") IArticleDAO articleDAO) {
         this.articleDAO = articleDAO;
     }
 
     @Autowired
-    public void setTagArticleDAO(ITagArticleDAO tagArticleDAO) {
+    public void setTagArticleDAO(@Qualifier("ITagArticleDAO") ITagArticleDAO tagArticleDAO) {
         this.tagArticleDAO = tagArticleDAO;
     }
 
@@ -94,7 +95,7 @@ public class ArticleServices implements IArticleServices {
 
     @Override
     public Page<Article> getByTag(Tag tag, Pageable pageable, String... status) {
-        return tagArticleDAO.findArticleByTag(tag, Arrays.asList(status), pageable);
+        return null;
     }
 
     @Override
@@ -104,12 +105,12 @@ public class ArticleServices implements IArticleServices {
 
     @Override
     public Page<Article> findBetweenDate(Date startDate, Date endDate, Pageable pageable, String... status) {
-        return articleDAO.getArticleBetweenCreateDate(startDate, endDate, status, pageable);
+        return null;
     }
 
     @Override
     public Page<Article> findBetweenModifiedDate(Date startDate, Date endDate, Pageable pageable, String... status) {
-        return articleDAO.getArticleBetweenModifiedDate(startDate, endDate, status, pageable);
+        return null;
     }
 
     @Override

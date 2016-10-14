@@ -10,7 +10,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "permissions")
-public class Permission implements IBaseModel<Integer>,IRelationSlave {
+public class Permission implements IRelationSlave<Integer> {
     private Integer id;
     private String title;
     private String uri;

@@ -12,7 +12,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "users")
-public class User implements IBaseModel<Integer>, IRelationMaster {
+public class User implements IRelationMaster<Integer> {
 
     private Integer id;
     private String name;

@@ -16,6 +16,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -64,18 +66,18 @@ public class TaggingServices implements ITaggingServices {
     public void taggingArticle(Integer articleId, List<Tag> tagList) throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
         relationshipHelper.updateRelationship(
                 articleDAO.findOne(articleId),
-                ListTools.listDiff(tagArticleDAO.getByArticleId(articleId),tagList),
+                ListTools.listDiff(tagDAO.getByArticle(articleDAO.findOne(articleId)),tagList),
                 tagArticleDAO);
     }
 
     @Override
     public void removeTagFromArticle(Integer articleId, List<Tag> tagList){
-        tagArticleDAO.delete(tagArticleDAO.getRelationships(articleId,tagList));
+        tagArticleDAO.delete(tagArticleDAO.getRelationships(articleDAO.findOne(articleId),tagList));
     }
 
     @Override
     public void removeAllTagsFromArticle(Integer articleId) {
-        tagArticleDAO.removeAllByArticleId(articleDAO.findOne(articleId));
+        tagArticleDAO.removeAllByArticleId(articleId);
     }
 
     @Override
@@ -95,12 +97,12 @@ public class TaggingServices implements ITaggingServices {
 
     @Override
     public List<Tag> queryByArticleId(Integer articleId){
-        return tagArticleDAO.getByArticleId(articleId);
+        return tagDAO.getByArticle(articleDAO.findOne(articleId));
     }
 
     @Override
     public Page<Article> queryArticlesUnderTag(Integer tagId, List<String> status, Pageable pageable){
-        return tagArticleDAO.findArticleByTag(tagDAO.findOne(tagId),status,pageable);
+        return articleDAO.getByTags(Arrays.asList(tagDAO.findOne(tagId)),status,pageable);
     }
 
     @Override

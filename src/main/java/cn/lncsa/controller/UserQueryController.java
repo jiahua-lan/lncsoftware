@@ -51,7 +51,7 @@ public class UserQueryController {
     }
 
     public Object searchUserByProfileInfo(Map<String,Object> fields, Map<String, Object> orderingField, Pageable pageable){
-        return new ResultObject(true,userProfileDAO.queryByField(fields,orderingField,pageable));
+        return null;
     }
 }
 

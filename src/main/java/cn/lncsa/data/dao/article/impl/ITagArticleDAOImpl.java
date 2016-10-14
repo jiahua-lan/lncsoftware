@@ -7,8 +7,17 @@ import cn.lncsa.data.model.article.ArticleTag;
 import cn.lncsa.data.model.article.Tag;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import java.io.Serializable;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -21,27 +30,15 @@ public class ITagArticleDAOImpl extends IRelationshipRepositoryImpl<Article,Tag,
     }
 
     @Override
-    public List<Tag> getByArticle(Article article) {
-        return null;
-    }
+    public void removeAllByArticleId(final Integer articleId) {
 
-    @Override
-    public List<Tag> getByArticleId(Integer articleId) {
-        return null;
-    }
-
-    @Override
-    public List<ArticleTag> getRelationships(Integer articleId, List<Tag> tags) {
-        return null;
-    }
-
-    @Override
-    public Page<Article> findArticleByTag(Tag tag, List<String> status, Pageable pageable) {
-        return null;
-    }
-
-    @Override
-    public void removeAllByArticleId(Article article) {
-
+        for (ArticleTag articleTag : findAll(new Specification<ArticleTag>() {
+            @Override
+            public Predicate toPredicate(Root<ArticleTag> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+                return cb.equal(root.get("article"), articleId);
+            }
+        })) {
+            delete(articleTag);
+        }
     }
 }

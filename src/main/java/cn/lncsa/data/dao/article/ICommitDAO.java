@@ -38,7 +38,7 @@ public interface ICommitDAO extends PagingAndSortingRepository<Commit,Integer> {
      * @param targetArticleId
      * @return
      */
-    @Query("select c from Commit c where c.targetArticle.id = ?1")
+    @Query("select c from Commit c where c.targetArticle = ?1")
     Page<Commit> getByTargetArticleId(Integer targetArticleId, Pageable pageable);
 
     /**

@@ -18,18 +18,12 @@ import java.util.List;
 /**
  * Created by catten on 2016/6/12.
  */
-@NoRepositoryBean
 public interface IArticleDAO extends PagingAndSortingRepository<Article, Integer>, IFieldBaseQueryDAO<Article> {
-    /**
-     * Find articles that match keyword in title
-     *
-     * @param keyword  keyword
-     * @param status   what status allow
-     * @param pageable
-     * @return a list of articles that match keyword
-     */
-    @Query("select a from Article a where a.title like ?1 and a.status in ?2")
-    Page<Article> findByTitleLike(String keyword, String[] status, Pageable pageable);
+
+    enum DateType{
+        createDate,
+        modifiedDate
+    }
 
     /**
      * Find articles by author id
@@ -51,20 +45,7 @@ public interface IArticleDAO extends PagingAndSortingRepository<Article, Integer
      * @param pageable
      * @return
      */
-    @Query("select a from Article a where a.createDate > ?1 and a.createDate < ?2 and a.status in ?2")
-    Page<Article> getArticleBetweenCreateDate(Date start, Date end, String[] status, Pageable pageable);
-
-    /**
-     * Get article that modified date between two specified date.
-     *
-     * @param start    start date
-     * @param end      end date
-     * @param status   what status allow
-     * @param pageable
-     * @return
-     */
-    @Query("select a from Article a where a.lastModifiedDate > ?1 and a.lastModifiedDate < ?2")
-    Page<Article> getArticleBetweenModifiedDate(Date start, Date end, String[] status, Pageable pageable);
+    Page<Article> getArticleBetweenDate(Date start, Date end,DateType dateType, String[] status, Pageable pageable);
 
     /**
      * Find all article
@@ -77,12 +58,23 @@ public interface IArticleDAO extends PagingAndSortingRepository<Article, Integer
     Page<Article> findAll(String[] status, Pageable pageable);
 
     /**
+     * Get article by tags
+     *
+     * Due to Spring Data JPA designing, a specific entity should managed by their DAO, so
+     * this method can't put in to ITagArticleDAO.
+     *
+     * @param tags
+     * @param status
+     * @param pageable
+     * @return
+     */
+    Page<Article> getByTags(List<Tag> tags,List<String> status, Pageable pageable);
+
+    /**
      * Delete articles by author id
      *
      * @param authorId
      */
-    @Modifying
-    @Query("delete from Article a where a.authorId = ?1")
-    void deleteArticleByAuthorId(Integer authorId);
+    void deleteByAuthorId(Integer authorId);
 
 }

@@ -18,78 +18,12 @@ import java.util.List;
  * <p>
  * Created by catten on 16/6/12.
  */
-@NoRepositoryBean
 public interface ITagArticleDAO extends JpaRepository<ArticleTag, Integer>, IRelationshipRepository<Article,Tag,ArticleTag> {
 
     /**
-     * Get master's tag
-     *
-     * @param article
-     * @return
-     */
-    @Query("select at.tag from ArticleTag at where at.article = ?1")
-    List<Tag> getByArticle(Article article);
-
-    /**
-     * Get master's tag by master id
+     * Remove all tags related to an article
      *
      * @param articleId
-     * @return
      */
-    @Query("select at.tag from ArticleTag at where at.article.id = ?1")
-    List<Tag> getByArticleId(Integer articleId);
-
-    /**
-     * Get relationships by tag
-     *
-     * @param tag
-     * @return
-     */
-    @Override
-    @Query("select at from ArticleTag at where at.tag = ?1")
-    List<ArticleTag> getRelationships(Tag tag);
-
-    /**
-     * Get relationships by master
-     *
-     * @param article
-     * @return
-     */
-    @Query("select at from ArticleTag at where at.article = ?1")
-    List<ArticleTag> getRelationships(Article article);
-
-    /**
-     * Get ArticleTag relationship object
-     *
-     * @param articleId
-     * @param tags
-     * @return
-     */
-    @Query("select at from ArticleTag at where at.article.id = ?1 and at.tag in ?2")
-    List<ArticleTag> getRelationships(Integer articleId, List<Tag> tags);
-
-    /**
-     * Get ArticleTag relationship object
-     *
-     * @param master
-     * @param slave
-     * @return
-     */
-    @Query("select at from ArticleTag at where at.article = ?1 and at.tag in ?2")
-    List<ArticleTag> getRelationships(Article master, List<Tag> slave);
-
-    /**
-     * Find master by slave
-     *
-     * @param tag     tag
-     * @param status   what status allow
-     * @param pageable
-     * @return
-     */
-    @Query("select at.article from ArticleTag at join at.article where at.tag = ?1 and at.article.status in ?2")
-    Page<Article> findArticleByTag(Tag tag, List<String> status, Pageable pageable);
-
-    @Modifying
-    @Query("delete from ArticleTag at where at.article = ?1")
-    void removeAllByArticleId(Article article);
+    void removeAllByArticleId(Integer articleId);
 }

@@ -7,6 +7,7 @@ import cn.lncsa.data.model.permissions.UserRole;
 import cn.lncsa.data.model.user.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -20,33 +21,4 @@ public class IRoleUserDAOImpl extends IRelationshipRepositoryImpl<User,Role,User
         super(domainClass, em);
     }
 
-    @Override
-    public Page<User> getUsersByRoleId(Integer rightId, Pageable pageable) {
-        return null;
-    }
-
-    @Override
-    public List<Role> getRolesByUserId(Integer userId) {
-        return null;
-    }
-
-    @Override
-    public List<UserRole> getRelationships(Integer userId, List<Role> elements) {
-        return null;
-    }
-
-    @Override
-    public List<UserRole> getRelationships(Role slave) {
-        return null;
-    }
-
-    @Override
-    public List<UserRole> getRelationships(User master) {
-        return null;
-    }
-
-    @Override
-    public List<UserRole> getRelationships(User master, List<Role> slave) {
-        return null;
-    }
 }

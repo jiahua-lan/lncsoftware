@@ -52,7 +52,13 @@ public interface IUserDAO extends JpaRepository<User, Integer> {
     @Query("select u from User u where u.registerDate >= ?1 and u.registerDate <= ?2")
     Page<User> getByRegisterDateRange(Date startDate, Date endDate, Pageable pageable);
 
-    @Query("select u.id, u.name, u.registerDate, u.id from User u where u.id = ?1")
-    Object[] getWithoutPassword(Integer userId);
+    /**
+     * Get a list of user have specified role
+     *
+     * @param rightId a existed role's id
+     * @return a list of user
+     */
+    @Query("select ur.user from UserRole ur where ur.role.id = ?1")
+    Page<User> getUsersByRoleId(Integer rightId, Pageable pageable);
 
 }

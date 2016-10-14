@@ -69,13 +69,13 @@ public class UserServices implements IUserServices {
     }
 
     @Override
-    public UserProfile getProfile(Integer userId) {
-        return userProfileDAO.getByUserId(userId);
+    public UserProfile getProfile(Integer userId,boolean ignoreSecret) {
+        return userProfileDAO.getByUserId(userId, ignoreSecret);
     }
 
     @Override
-    public Page<UserProfile> getProfile(List<Integer> userId, Pageable pageable) {
-        return userProfileDAO.getByUserId(userId, pageable);
+    public Page<UserProfile> getProfile(List<Integer> userId,boolean ignoreSecret, Pageable pageable) {
+        return userProfileDAO.getByUserId(userId, ignoreSecret ,pageable);
     }
 
     @Override

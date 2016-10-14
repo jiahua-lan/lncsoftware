@@ -1,6 +1,5 @@
 package cn.lncsa.data.model.article;
 
-import cn.lncsa.data.model.base.IBaseModel;
 import cn.lncsa.data.model.domain.IRelationMaster;
 
 import javax.persistence.*;
@@ -20,16 +19,16 @@ public class Article implements Serializable, IRelationMaster<Integer>{
 
     private String title;
     private Date createDate;
-    private Date lastModifiedDate;
+    private Date modifiedDate;
     private Integer authorId;
     private String previewSentences;
-    private String status;
+    private ArticleStatus status;
     private Integer contentId;
 
     public Article() {
     }
 
-    public Article(String title,Integer contentId,Date createDate, Integer authorId, String previewSentences, String status) {
+    public Article(String title,Integer contentId,Date createDate, Integer authorId, String previewSentences, ArticleStatus status) {
         this.title = title;
         this.createDate = createDate;
         this.authorId = authorId;
@@ -38,11 +37,12 @@ public class Article implements Serializable, IRelationMaster<Integer>{
         this.status = status;
     }
 
-    public String getStatus() {
+    @Enumerated(value = EnumType.STRING)
+    public ArticleStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(ArticleStatus status) {
         this.status = status;
     }
 
@@ -89,12 +89,12 @@ public class Article implements Serializable, IRelationMaster<Integer>{
         this.id = id;
     }
 
-    public Date getLastModifiedDate() {
-        return lastModifiedDate;
+    public Date getModifiedDate() {
+        return modifiedDate;
     }
 
-    public void setLastModifiedDate(Date lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
+    public void setModifiedDate(Date lastModifiedDate) {
+        this.modifiedDate = lastModifiedDate;
     }
 
     public Integer getContentId() {

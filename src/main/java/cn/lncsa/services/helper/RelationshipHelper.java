@@ -6,6 +6,7 @@ import cn.lncsa.data.model.domain.IRelationMaster;
 import cn.lncsa.data.model.domain.IRelationSlave;
 import cn.lncsa.data.model.domain.IRelationship;
 
+import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.LinkedList;
@@ -21,7 +22,7 @@ import java.util.List;
  *
  * @see IRelationshipRepository
  */
-public class RelationshipHelper<M extends IRelationMaster,S extends IRelationSlave,R extends IRelationship<M,S>> {
+public class RelationshipHelper<M extends IRelationMaster,S extends IRelationSlave,R extends IRelationship> {
 
     //Get master class type
     private Class<IRelationMaster> masterClass = IRelationMaster.class;
@@ -52,7 +53,7 @@ public class RelationshipHelper<M extends IRelationMaster,S extends IRelationSla
 
     @SuppressWarnings("unchecked")
     private R slaveFactory(M master, S slave) throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
-        IRelationship<M,S> relationship = (IRelationship<M, S>) relationClass.newInstance();
+        IRelationship<M,S,Serializable> relationship = (IRelationship<M, S, Serializable>) relationClass.newInstance();
         Method setRelationship = relationClass.getMethod("setRelationship",masterClass,slaveClass);
         setRelationship.invoke(relationship,master,slave);
         return (R) relationship;

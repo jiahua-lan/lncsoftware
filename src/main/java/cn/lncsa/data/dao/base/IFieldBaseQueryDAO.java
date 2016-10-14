@@ -13,5 +13,12 @@ import java.util.Map;
 @NoRepositoryBean
 public interface IFieldBaseQueryDAO<M>{
 
-    Page<M> queryByField(Map<String,Object> queryFields, Map<String,Object> orderingField, Pageable pageable);
+    /**
+     * Query entity by entity's field
+     *
+     * @param queryFields
+     * @param pageable
+     * @return
+     */
+    Page<M> queryByField(Map<String,Object> queryFields, Pageable pageable);
 }

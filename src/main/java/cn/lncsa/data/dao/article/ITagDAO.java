@@ -21,4 +21,15 @@ public interface ITagDAO extends JpaRepository<Tag,Integer> {
      */
     @Query("select t from Tag t where t.title in ?1")
     List<Tag> getByTitle(List<String> names);
+
+    /**
+     * Get tags tagged to an article
+     *
+     * @{see} cn.lncsa.data.dao.article.IArticleDAO getByTags()
+     *
+     * @param article
+     * @return
+     */
+    @Query("select t from Tag t join ArticleTag at where at.article = ?1")
+    List<Tag> getByArticle(Article article);
 }

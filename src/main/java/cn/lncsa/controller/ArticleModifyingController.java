@@ -3,6 +3,7 @@ package cn.lncsa.controller;
 import cn.lncsa.common.ResultObject;
 import cn.lncsa.data.model.article.Article;
 import cn.lncsa.data.model.article.ArticleBody;
+import cn.lncsa.data.model.article.ArticleStatus;
 import cn.lncsa.data.model.article.Tag;
 import cn.lncsa.services.IArticleServices;
 import cn.lncsa.services.ICommitServices;
@@ -106,7 +107,7 @@ public class ArticleModifyingController {
 
         //If "force" flag not on, will only set article to "recycle" status
         if (!force) {
-            article.setStatus("recycled");
+            article.setStatus(ArticleStatus.Recycled);
             articleServices.saveHead(article);
             return new ResultObject(true);
         } else {
@@ -117,18 +118,10 @@ public class ArticleModifyingController {
         return new ResultObject(true, "deleted all things about this article");
     }
 
-    public Object setArticleStatus(Integer articleId,String status) {
-        switch (status) {
-            case "hidden":
-            case "shown":
-            case "recycled":
-            case "private":
-                Article article = articleServices.get(articleId);
-                article.setStatus(status);
-                return new ResultObject(true);
-            default:
-                return new ResultObject(false);
-        }
+    public Object setArticleStatus(Integer articleId,ArticleStatus status) {
+        Article article = articleServices.get(articleId);
+        article.setStatus(status);
+        return new ResultObject(true);
     }
 
     /*

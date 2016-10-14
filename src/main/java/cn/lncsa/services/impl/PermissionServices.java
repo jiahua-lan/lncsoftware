@@ -4,8 +4,6 @@ import cn.lncsa.common.ListTools;
 import cn.lncsa.data.dao.permissions.IRoleUserDAO;
 import cn.lncsa.data.model.permissions.UserRole;
 import cn.lncsa.data.model.user.User;
-import cn.lncsa.services.exceptions.PermissionException;
-import cn.lncsa.services.exceptions.UserOperateException;
 import cn.lncsa.data.dao.permissions.IPermissionDAO;
 import cn.lncsa.data.dao.permissions.IRolePermissionDAO;
 import cn.lncsa.data.dao.permissions.IRoleDAO;
@@ -18,7 +16,6 @@ import cn.lncsa.services.helper.RelationshipHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.management.relation.RoleNotFoundException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedList;
 import java.util.List;
@@ -92,36 +89,36 @@ public class PermissionServices implements IPermissionServices {
     public void grantPermissionToRole(Integer roleId, List<Permission> permissions) throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
         rolePermissionRelationshipHelper.updateRelationship(
                 getRole(roleId),
-                ListTools.listDiff(permissionRoleDAO.getPermissionsByRole(roleId), permissions),
+                ListTools.listDiff(permissionDAO.getPermissionsByRole(roleId), permissions),
                 permissionRoleDAO
         );
     }
 
     @Override
     public void retakePermissionFromRole(Integer roleId, List<Permission> permissions) {
-        permissionRoleDAO.delete(permissionRoleDAO.getRelationships(roleId, permissions));
+        permissionRoleDAO.delete(permissionRoleDAO.getRelationships(roleDAO.getOne(roleId), permissions));
     }
 
     @Override
     public void giveRoleToUser(Integer userId, List<Role> roles) throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
         userRoleRelationshipHelper.updateRelationship(
                 userDAO.findOne(userId),
-                ListTools.listDiff(roleUserDAO.getRolesByUserId(userId), roles),
+                ListTools.listDiff(roleDAO.getByUserId(userId), roles),
                 roleUserDAO);
     }
 
     @Override
     public void retakeRoleFromUser(Integer userId, List<Role> roles) {
-        roleUserDAO.delete(roleUserDAO.getRelationships(userId, roles));
+        roleUserDAO.delete(roleUserDAO.getRelationships(userDAO.getOne(userId), roles));
     }
 
     @Override
     public List<Permission> queryUserPermissions(Integer userId){
-        List<Role> roles = roleUserDAO.getRolesByUserId(userId);
+        List<Role> roles = roleDAO.getByUserId(userId);
         if (roles.size() == 0) return new LinkedList<>();
         List<Permission> permissions = new LinkedList<>();
         for (Role role : roles) {
-            permissions.addAll(permissionRoleDAO.getPermissionsByRole(role.getId()));
+            permissions.addAll(permissionDAO.getPermissionsByRole(role.getId()));
         }
         return permissions;
     }
@@ -133,12 +130,12 @@ public class PermissionServices implements IPermissionServices {
 
     @Override
     public List<Role> queryUserRoles(Integer userId) {
-        return roleUserDAO.getRolesByUserId(userId);
+        return roleDAO.getByUserId(userId);
     }
 
     @Override
     public List<Permission> queryRolePermissions(Integer roleId){
-        return permissionRoleDAO.getPermissionsByRole(roleId);
+        return permissionDAO.getPermissionsByRole(roleId);
     }
 
     @Override

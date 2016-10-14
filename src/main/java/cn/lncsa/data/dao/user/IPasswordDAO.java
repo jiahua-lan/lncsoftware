@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.Query;
  */
 public interface IPasswordDAO extends JpaRepository<String,Integer> {
 
-    @Query(value = "select password from users where id = ?1",nativeQuery = true)
+    @Query("select User.password from User where User.id = ?1")
     String get(Integer userId);
 }

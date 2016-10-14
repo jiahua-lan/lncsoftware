@@ -5,6 +5,7 @@ import cn.lncsa.data.dao.permissions.IRolePermissionDAO;
 import cn.lncsa.data.model.permissions.Permission;
 import cn.lncsa.data.model.permissions.PermissionRole;
 import cn.lncsa.data.model.permissions.Role;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -18,28 +19,4 @@ public class IRolePermissionDAOImpl extends IRelationshipRepositoryImpl<Role,Per
         super(domainClass, em);
     }
 
-    @Override
-    public List<Permission> getPermissionsByRole(Integer roleId) {
-        return null;
-    }
-
-    @Override
-    public List<PermissionRole> getRelationships(Integer roleId, List<Permission> permissions) {
-        return null;
-    }
-
-    @Override
-    public List<PermissionRole> getRelationships(Permission slave) {
-        return null;
-    }
-
-    @Override
-    public List<PermissionRole> getRelationships(Role master) {
-        return null;
-    }
-
-    @Override
-    public List<PermissionRole> getRelationships(Role master, List<Permission> slave) {
-        return null;
-    }
 }
