@@ -1,6 +1,8 @@
 package cn.lncsa.controller;
 
 import cn.lncsa.common.ResultObject;
+import cn.lncsa.data.dao.article.IArticleDAO;
+import cn.lncsa.data.model.article.ArticleStatus;
 import cn.lncsa.services.ITaggingServices;
 import cn.lncsa.services.exceptions.UserOperateException;
 import cn.lncsa.data.dto.IArticlePreview;
@@ -42,20 +44,30 @@ public class ArticleQueryController {
     *
     * */
 
-    public Object queryLatestArticles(int count,String status){
-        List<Article> articles = articleServices.getLatest(count,status);
+    // /articles/query/latest
+    // count={int}
+    // status={string}
+    public Object queryLatestArticles(int count){
+        List<Article> articles = articleServices.getLatest(count, ArticleStatus.Shown.name());
         return new ResultObject(true,articles);
     }
 
-    public Object queryArticles(Pageable pageable,String... status){
-        return new ResultObject(true,articleServices.get(pageable,status));
+    // /articles/query/search
+    // PageRequest
+    // tag={int}
+    // user={int}
+    // pKeyword={String}
+    // beginDate={Date}
+    // endDate={Date}
+    // dateType={IArticleDAO.dateType}
+    // status={boolean}
+    public Object queryArticles(Map<String,Object> model,Pageable pageable){
+        return null;
     }
 
-    public Object queryArticlesUnderTag(Integer tagId,Pageable pageable,List<String> status){
-        return new ResultObject(true,taggingServices.queryArticlesUnderTag(tagId,status,pageable));
-    }
-
-    public Object queryArticlesByUser(int userId,Pageable pageable,String... status){
-        return new ResultObject(true,articleServices.getByUserId(userId,pageable,status));
+    // /articles/query/user/{userId}
+    // PageRequest
+    public Object queryArticles(Integer userId,Pageable pageable){
+        return null;
     }
 }

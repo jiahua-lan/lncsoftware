@@ -23,15 +23,27 @@ public class UserManagementController {
         this.userServices = userServices;
     }
 
-    public Object registUser(User user) {
+    // /users/manage/register
+    // User
+    public Object register(User user) {
         return null;
     }
 
+    // /users/manage/{userId}/profile/save
+    // UserProfile
     public Object updateUserInfo(UserProfile userProfile) {
         return null;
     }
 
-    public Object updateUser(User user){
+    // /users/manage/update/{userId}
+    // User
+    public Object updateUser(User user) {
+        return null;
+    }
+
+    // /users/manage/update/password
+    // password={string}
+    public Object updatePassword(Integer userId, String newPassword) {
         return null;
     }
 }

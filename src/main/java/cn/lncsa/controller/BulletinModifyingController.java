@@ -26,11 +26,14 @@ public class BulletinModifyingController {
     *
     * */
 
+    // /bulletins/modify/save
+    // Bulletin
     public Object saveBulletin(Bulletin bulletin){
         bulletinServices.save(bulletin);
         return new ResultObject(true);
     }
 
+    // /bulletin/modify/delete/{bulletinId}
     public Object deleteBulletin(Integer bulletinId){
         bulletinServices.delete(bulletinId);
         return new ResultObject(true);

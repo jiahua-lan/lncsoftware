@@ -40,17 +40,22 @@ public class UserQueryController {
         this.userProfileDAO = userProfileDAO;
     }
 
+    // /users/query/{userId}
     public Object getUserById(Integer userId){
         User user = userServices.get(userId);
         return user == null ? new ResultObject(false,"not found") : new ResultObject(true,user);
     }
 
+    // /users/query/{username}
     public Object getUserByName(String username){
         User user = userServices.getByName(username);
         return user == null ? new ResultObject(false,"not found") : new ResultObject(true,user);
     }
 
-    public Object searchUserByProfileInfo(Map<String,Object> fields, Map<String, Object> orderingField, Pageable pageable){
+    // /users/query
+    // fieldName = {object}
+    // ...
+    public Object searchUserByProfileInfo(Map<String,Object> fields, Pageable pageable){
         return null;
     }
 }

@@ -22,10 +22,10 @@ import java.util.List;
 @RequestMapping("/articles/modify")
 public class ArticleModifyingController {
 
-    private static int FLAG_MODIFIED_NOTHING = 0;//000
-    private static int FLAG_MODIFIED_ARTICLE = 1;//001
-    private static int FLAG_MODIFIED_CONTENT = 2;//010
-    private static int FLAG_MODIFIED_TAGS = 4;//100
+    private static int FLAG_MODIFIED_NOTHING = 0;//0000
+    private static int FLAG_MODIFIED_ARTICLE = 1;//0001
+    private static int FLAG_MODIFIED_CONTENT = 2;//0010
+    private static int FLAG_MODIFIED_TAGS    = 4;//0100
 
     private IArticleServices articleServices;
     private ITaggingServices taggingServices;
@@ -52,6 +52,9 @@ public class ArticleModifyingController {
     *
     * */
 
+    // /articles/modify/new
+    // ArticleObject
+    // tag={int}...
     public Object newArticle(Article article, String content, List<Integer> tags) {
         ArticleBody articleBody = new ArticleBody();
         articleBody.setContent(content);
@@ -60,6 +63,11 @@ public class ArticleModifyingController {
         return new ResultObject(true);
     }
 
+    // /articles/modify/save
+    // ArticleObject
+    // content={string}
+    // tag={int}
+    // modifyFlag={int}
     public Object saveArticle(Article article, String content, List<Integer> tagIds, int modifyFlag) {
         //Check if any changing flags, if has then action.
         if ((modifyFlag | FLAG_MODIFIED_NOTHING) != FLAG_MODIFIED_NOTHING) {
@@ -101,6 +109,8 @@ public class ArticleModifyingController {
         return new ResultObject(true);
     }
 
+    // /articles/modify/delete/{articleId}
+    // force={boolean}
     public Object deleteArticle(Integer articleId, boolean force) {
         Article article = articleServices.get(articleId);
         if (article == null) return new ResultObject(false, "article not found");
@@ -116,12 +126,6 @@ public class ArticleModifyingController {
         }
 
         return new ResultObject(true, "deleted all things about this article");
-    }
-
-    public Object setArticleStatus(Integer articleId,ArticleStatus status) {
-        Article article = articleServices.get(articleId);
-        article.setStatus(status);
-        return new ResultObject(true);
     }
 
     /*

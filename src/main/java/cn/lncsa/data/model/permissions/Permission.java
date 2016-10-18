@@ -15,6 +15,7 @@ public class Permission implements IRelationSlave<Integer> {
     private String title;
     private String uri;
     private Boolean enable;
+    private Boolean negative;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -66,5 +67,13 @@ public class Permission implements IRelationSlave<Integer> {
         int result = title.hashCode();
         result = 31 * result + uri.hashCode();
         return result;
+    }
+
+    public Boolean getNegative() {
+        return negative;
+    }
+
+    public void setNegative(Boolean negative) {
+        this.negative = negative;
     }
 }

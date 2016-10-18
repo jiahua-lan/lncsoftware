@@ -23,27 +23,37 @@ public class PermissionManagementController {
         this.permissionServices = permissionServices;
     }
 
+    // /permissions/manage/{userId}/roles/save
+    // role={int}...
     public Object modifyUserRole(Integer userId, List<Integer> roleList){
         return null;
     }
 
-    public Object modifyRolePermission(Integer roleId, List<Permission> permissionList){
+    // /permissions/manage/{roleId}/permissions/save
+    // permission={int}...
+    public Object modifyRolePermission(Integer roleId, List<Integer> permissionIds){
         return null;
     }
 
+    // /permissions/manage/roles/save
+    // Role
     public Object saveRole(Role role){
         return null;
     }
 
+    // /permissions/manage/permissions/save
+    // Permission
     public Object savePermission(Permission permission){
         return null;
     }
 
-    public Object deleteRole(Integer roleId){
+    // /permissions/manage/roles/{roleId}/delete
+    public Object deleteRole(Integer roleId, boolean force){
         return null;
     }
 
-    public Object deletePermission(Integer permissionId){
+    // /permissions/manage/permissions/{permissionId}/delete
+    public Object deletePermission(Integer permissionId, boolean force){
         return null;
     }
 }

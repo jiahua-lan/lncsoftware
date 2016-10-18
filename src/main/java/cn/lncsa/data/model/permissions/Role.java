@@ -15,7 +15,6 @@ public class Role implements IRelationMaster<Integer>, IRelationSlave<Integer> {
     private Integer id;
     private String name;
     private Boolean enable;
-    private String color;
 
     public Role() {
 
@@ -49,14 +48,6 @@ public class Role implements IRelationMaster<Integer>, IRelationSlave<Integer> {
 
     public void setEnable(Boolean enable) {
         this.enable = enable;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
     }
 
     @Override

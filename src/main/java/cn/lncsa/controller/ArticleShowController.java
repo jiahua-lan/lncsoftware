@@ -24,6 +24,7 @@ public class ArticleShowController {
     *
     * */
 
+    // /article/view/{articleId}
     public Object showArticle(int articleId){
         return new ResultObject(true,articleServices.getBody(articleId));
     }
