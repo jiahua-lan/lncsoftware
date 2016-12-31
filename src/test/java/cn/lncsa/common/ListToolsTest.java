@@ -17,17 +17,17 @@ public class ListToolsTest {
     public void listDiff() throws Exception {
 
         List<String> list1 = Arrays.asList(
-                "Tag 1",
-                "Tag 2",
-                "Tag 3",
-                "Tag 4"
+                "Topic 1",
+                "Topic 2",
+                "Topic 3",
+                "Topic 4"
         );
 
         List<String> list2 = Arrays.asList(
-                "Tag 3",
-                "Tag 4",
-                "Tag 5",
-                "Tag 6"
+                "Topic 3",
+                "Topic 4",
+                "Topic 5",
+                "Topic 6"
         );
 
         List<String>[] result = ListTools.listDiff(list1,list2);

@@ -89,7 +89,7 @@ CREATE TABLE `article_tag` (
   PRIMARY KEY (`id`),
   KEY `FKenqeees0y8hkm7x1p1ittuuye` (`article_id`),
   KEY `FK3nvn435qf5rn1e9ph51e3r55h` (`tag_id`),
-  CONSTRAINT `FK3nvn435qf5rn1e9ph51e3r55h` FOREIGN KEY (`tag_id`) REFERENCES `tags` (`id`),
+  CONSTRAINT `FK3nvn435qf5rn1e9ph51e3r55h` FOREIGN KEY (`tag_id`) REFERENCES `topics` (`id`),
   CONSTRAINT `FKenqeees0y8hkm7x1p1ittuuye` FOREIGN KEY (`article_id`) REFERENCES `article` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=88 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -192,13 +192,13 @@ INSERT INTO `roles` VALUES (25,'green','login','/user/*'),(26,'red','administrat
 UNLOCK TABLES;
 
 --
--- Table structure for table `tags`
+-- Table structure for table `topics`
 --
 
-DROP TABLE IF EXISTS `tags`;
+DROP TABLE IF EXISTS `topics`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `tags` (
+CREATE TABLE `topics` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `color` varchar(255) DEFAULT NULL,
   `title` varchar(255) DEFAULT NULL,
@@ -207,13 +207,13 @@ CREATE TABLE `tags` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `tags`
+-- Dumping data for table `topics`
 --
 
-LOCK TABLES `tags` WRITE;
-/*!40000 ALTER TABLE `tags` DISABLE KEYS */;
-INSERT INTO `tags` VALUES (21,'green','Network'),(22,'green','Test'),(23,'blue','System'),(24,'red','Java'),(25,'red','C#'),(26,'red','Java Script'),(27,'gray','Lorem Ipsum'),(28,'blue','Web');
-/*!40000 ALTER TABLE `tags` ENABLE KEYS */;
+LOCK TABLES `topics` WRITE;
+/*!40000 ALTER TABLE `topics` DISABLE KEYS */;
+INSERT INTO `topics` VALUES (21,'green','Network'),(22,'green','Test'),(23,'blue','System'),(24,'red','Java'),(25,'red','C#'),(26,'red','Java Script'),(27,'gray','Lorem Ipsum'),(28,'blue','Web');
+/*!40000 ALTER TABLE `topics` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --

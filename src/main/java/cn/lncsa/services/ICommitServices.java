@@ -1,8 +1,10 @@
 package cn.lncsa.services;
 
+import cn.lncsa.data.model.Article;
+import cn.lncsa.data.model.User;
 import cn.lncsa.services.exceptions.CommitOperateException;
 import cn.lncsa.services.exceptions.UserOperateException;
-import cn.lncsa.data.model.article.Commit;
+import cn.lncsa.data.model.Commit;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -25,7 +27,7 @@ public interface ICommitServices {
      * @return
      * @throws CommitOperateException if user not exist throw "User not exist", if article not exist throw "Target article not exist"
      */
-    Commit commitArticle(Integer articleId, Integer userId, String content) throws CommitOperateException;
+    Commit commitArticle(Article articleId, User userId, String content) throws CommitOperateException;
 
     /**
      * Make a commit reply to an existed commit.
@@ -37,7 +39,7 @@ public interface ICommitServices {
      * @throws CommitOperateException if target commit not exist throw "Commit not exist".
      * @throws UserOperateException   if commit user not exist throw "User not exist".
      */
-    Commit replyToCommit(Integer commitId, Integer userId, String content);
+    Commit replyToCommit(Integer commitId, User userId, String content);
 
     /**
      * Delete a commit

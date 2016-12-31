@@ -2,8 +2,8 @@ package cn.lncsa.services;
 
 import cn.lncsa.services.exceptions.PermissionException;
 import cn.lncsa.services.exceptions.UserOperateException;
-import cn.lncsa.data.model.permissions.Permission;
-import cn.lncsa.data.model.permissions.Role;
+import cn.lncsa.data.model.Permission;
+import cn.lncsa.data.model.Role;
 
 import javax.management.relation.RoleNotFoundException;
 import java.lang.reflect.InvocationTargetException;
@@ -74,7 +74,7 @@ public interface IPermissionServices {
      * @return
      * @throws PermissionException
      */
-    void grantPermissionToRole(Integer roleId, List<Permission> permissions) throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException;
+    void grantPermissionToRole(Role roleId, List<Permission> permissions) throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException;
 
     /**
      * remove permission-role relationships
@@ -119,7 +119,7 @@ public interface IPermissionServices {
      * @param roleId
      * @return
      */
-    Role getRole(Integer roleId) throws RoleNotFoundException;
+    Role getRole(Role roleId) throws RoleNotFoundException;
 
     /**
      * Get a permission
@@ -153,7 +153,7 @@ public interface IPermissionServices {
      * @return
      * @throws PermissionException
      */
-    List<Permission> queryRolePermissions(Integer roleId);
+    List<Permission> queryRolePermissions(Role roleId);
 
     /**
      * Show all roles in the system

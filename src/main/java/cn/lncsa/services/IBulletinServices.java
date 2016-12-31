@@ -1,6 +1,6 @@
 package cn.lncsa.services;
 
-import cn.lncsa.data.model.bulletin.Bulletin;
+import cn.lncsa.data.model.Bulletin;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

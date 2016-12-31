@@ -1,9 +1,7 @@
 package cn.lncsa.services;
 
-import cn.lncsa.data.model.article.Article;
-import cn.lncsa.data.model.article.ArticleTag;
-import cn.lncsa.data.model.article.Tag;
-import cn.lncsa.services.exceptions.TaggingOperateException;
+import cn.lncsa.data.model.Article;
+import cn.lncsa.data.model.Topic;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -16,12 +14,12 @@ import java.util.List;
 public interface ITaggingServices {
 
     /**
-     * Add a new tag or save an exist tag
+     * Add a new topic or save an exist topic
      *
-     * @param tag
+     * @param topic
      * @return
      */
-    Tag save(Tag tag);
+    Topic save(Topic topic);
 
     /**
      * Delete a tag an remove this tag from all article
@@ -35,26 +33,26 @@ public interface ITaggingServices {
 
     /*
     *
-    * Operation to Article-Tag relationship
+    * Operation to Article-Topic relationship
     *
     * */
 
     /**
      * Tagging an article with a list of tags
      *
-     * @param tagList
+     * @param topicList
      * @param articleId
      * @return
      */
-    void taggingArticle(Integer articleId, List<Tag> tagList) throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException;
+    void taggingArticle(Integer articleId, List<Topic> topicList) throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException;
 
     /**
      * Un-tagging an article with a list of tags
      *
-     * @param tagList
+     * @param topicList
      * @param articleId
      */
-    void removeTagFromArticle(Integer articleId, List<Tag> tagList);
+    void removeTagFromArticle(Integer articleId, List<Topic> topicList);
 
     /**
      * Remove all relationships wired to an article
@@ -75,7 +73,7 @@ public interface ITaggingServices {
      * @param tagId
      * @return
      */
-    Tag get(Integer tagId);
+    Topic get(Integer tagId);
 
     /**
      * Query a list of tags using a list of tag-id
@@ -83,7 +81,7 @@ public interface ITaggingServices {
      * @param tagIds
      * @return
      */
-    List<Tag> get(List<Integer> tagIds);
+    List<Topic> get(List<Integer> tagIds);
 
 
     /**
@@ -92,7 +90,7 @@ public interface ITaggingServices {
      * @param tagName
      * @return
      */
-    List<Tag> getByName(List<String> tagName);
+    List<Topic> getByName(List<String> tagName);
 
     /**
      * Get tags those tagged to an article
@@ -100,7 +98,7 @@ public interface ITaggingServices {
      * @param articleId
      * @return
      */
-    List<Tag> queryByArticleId(Integer articleId);
+    List<Topic> queryByArticleId(Integer articleId);
 
     /**
      * Query articles those tagged by a same tag.
@@ -117,5 +115,5 @@ public interface ITaggingServices {
      * @param pageable
      * @return
      */
-    Page<Tag> getAll(Pageable pageable);
+    Page<Topic> getAll(Pageable pageable);
 }

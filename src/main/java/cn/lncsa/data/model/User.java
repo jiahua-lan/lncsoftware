@@ -1,0 +1,117 @@
+package cn.lncsa.data.model;
+
+
+import org.springframework.stereotype.Component;
+
+import javax.persistence.*;
+import java.util.Date;
+import java.util.Set;
+
+/**
+ * Created by catten on 16/1/15.
+ */
+@Component
+@Entity
+@Table(name = "users")
+public class User implements IBaseModel<Integer> {
+
+    private Integer id;
+    private String name;
+    private String password;
+
+    private UserProfile profile;
+
+    private Date registerDate;
+
+    private Set<Role> roles;
+
+    public User() {
+        this.registerDate = new Date();
+    }
+
+    public User(String name, String password) {
+        this.name = name;
+        this.password = password;
+    }
+
+    /*
+    *
+    * Getter and setter
+    *
+    * */
+
+    @Id
+    @Column(length = 32)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    @OneToOne
+    public UserProfile getProfile() {
+        return profile;
+    }
+
+    public void setProfile(UserProfile profileId) {
+        this.profile = profileId;
+    }
+
+    @Temporal(TemporalType.DATE)
+    public Date getRegisterDate() {
+        return registerDate;
+    }
+
+    public void setRegisterDate(Date registerDate) {
+        this.registerDate = registerDate;
+    }
+
+    @Column(name = "roles_id")
+    @ManyToMany
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        if (!name.equals(user.name)) return false;
+        if (!password.equals(user.password)) return false;
+        return registerDate.equals(user.registerDate);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name.hashCode();
+        result = 31 * result + password.hashCode();
+        result = 31 * result + registerDate.hashCode();
+        return result;
+    }
+}

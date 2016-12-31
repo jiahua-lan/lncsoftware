@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel>
+      <module name="lncsa-article" target="1.8" />
+      <module name="lncsa-bulletin" target="1.8" />
+      <module name="lncsa-common" target="1.8" />
+      <module name="lncsa-core" target="1.8" />
+      <module name="lncsa-core-permission" target="1.8" />
+      <module name="lncsa-core-user" target="1.8" />
+      <module name="lncsa-topic" target="1.8" />
+      <module name="lncsoftware" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

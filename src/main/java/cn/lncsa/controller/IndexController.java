@@ -1,6 +1,5 @@
 package cn.lncsa.controller;
 
-import cn.lncsa.data.model.user.User;
 import cn.lncsa.services.IBulletinServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,22 +15,13 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class IndexController {
 
-    private IBulletinServices bulletinServices;
+//    @RequestMapping(value = "/", method = RequestMethod.GET)
+//    public String index(Model model, HttpSession session){
+//        return "index";
+//    }
 
-    @Autowired
-    public void setBulletinServices(IBulletinServices bulletinServices) {
-        this.bulletinServices = bulletinServices;
-    }
-
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String index(Model model, HttpSession session){
-        /*
-        model.addAttribute(bulletinServices.get("main_page"));
-        Object object = session.getAttribute("session_passport");
-        if(object instanceof User){
-            model.addAttribute("nickName",((User) object).getNickName());
-        }
-        * */
+    @RequestMapping("/")
+    public String index(){
         return "index";
     }
 }
