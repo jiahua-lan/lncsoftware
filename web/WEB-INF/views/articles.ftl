@@ -1,4 +1,5 @@
-<#import "template/temp.ftl" as templates>
+<#import "template/mainTemp.ftl" as templates>
+<#import "template/articleTemp.ftl" as articleTemp>
 <@templates.body title="Article">
 <div class="container">
     <div class="page-header">
@@ -7,25 +8,7 @@
     <@templates.mainNav activeOrder=1/>
     <div class="row">
         <div class="col-md-8">
-            <div class="list-group">
-                <#if (articles?? && articles.size > 0) >
-                    <#list articles.content as a>
-                        <a class="list-group-item" href="#">
-                            <div class="media">
-                                <div class="media-left" href="#">
-                                    <img src="holder.js/64x64/gray">
-                                </div>
-                                <div class="media-body">
-                                    <h4 class="media-heading">${a.title}</h4>
-                                    <p>${a.subtitle}</p>
-                                </div>
-                            </div>
-                        </a>
-                    </#list>
-                <#else>
-                    <a class="list-group-item disabled">No Content here...</a>
-                </#if>
-            </div>
+            <@articleTemp.mediaGroupListItem itemset=articles type="article" />
         </div>
         <div class="col-md-4">
             <div class="panel panel-primary">

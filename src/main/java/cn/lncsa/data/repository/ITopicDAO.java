@@ -11,6 +11,4 @@ import org.springframework.data.jpa.repository.Query;
  */
 public interface ITopicDAO extends IBaseDAO<Topic> {
 
-    @Query("select t.articles from Topic t where t = ?1")
-    Page<Article>  getArticles(Topic topic, Pageable pageable);
 }

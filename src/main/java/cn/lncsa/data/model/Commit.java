@@ -1,5 +1,7 @@
 package cn.lncsa.data.model;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -45,6 +47,7 @@ public class Commit implements IBaseModel<Integer> {
         this.user = userId;
     }
 
+    @NotEmpty(message = "validate_commit_content_empty")
     public String getContents() {
         return contents;
     }

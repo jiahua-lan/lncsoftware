@@ -1,6 +1,10 @@
 package cn.lncsa.data.model;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 import java.util.Date;
 import java.util.Set;
 
@@ -22,17 +26,6 @@ public class Article implements IBaseModel<Integer> {
     public Article(){
         this.status = STATUS_DRAFT;
         this.createDate = new Date();
-        this.modifiedDate = createDate;
-    }
-
-    @Transient
-    public void setAnonymous(){
-        this.author = null;
-    }
-
-    @Transient
-    public boolean notModified() {
-        return modifiedDate == null || createDate.getTime() == modifiedDate.getTime();
     }
 
     private Integer id;
@@ -42,7 +35,6 @@ public class Article implements IBaseModel<Integer> {
     private String status;
 
     private Date createDate;
-    private Date modifiedDate;
 
     private User author;
 
@@ -53,7 +45,9 @@ public class Article implements IBaseModel<Integer> {
     *  Getter and setter
     * */
 
-    @Column(nullable = false)
+    @Column(nullable = false,length = 15)
+    @NotEmpty(message = "validate_article_status_empty")
+    @Pattern(regexp = "^(draft|submitted|published|private|delete|banned|auditing)$", message = "validate_article_status_not_in_set")
     public String getStatus() {
         return status;
     }
@@ -63,6 +57,8 @@ public class Article implements IBaseModel<Integer> {
     }
 
     @Column(nullable = false)
+    @Length(min = 1, max = 128, message = "validate_article_title_not_in_range")
+    @NotEmpty(message = "validate_article_title_empty")
     public String getTitle() {
         return title;
     }
@@ -107,15 +103,6 @@ public class Article implements IBaseModel<Integer> {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    @Temporal(TemporalType.TIMESTAMP)
-    public Date getModifiedDate() {
-        return modifiedDate;
-    }
-
-    public void setModifiedDate(Date lastModifiedDate) {
-        this.modifiedDate = lastModifiedDate;
     }
 
     @OneToOne(fetch = FetchType.LAZY)

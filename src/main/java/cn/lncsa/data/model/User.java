@@ -1,9 +1,13 @@
 package cn.lncsa.data.model;
 
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.util.Date;
 import java.util.Set;
 
@@ -51,6 +55,10 @@ public class User implements IBaseModel<Integer> {
         this.id = id;
     }
 
+    @NotEmpty(message = "validate_username_empty")
+    @Length(max = 32, min = 6 , message = "validate_username_not_in_range")
+    @Pattern(regexp = "^.([A-Za-z-_]|\\d){6,32}$",message = "validate_username_not_match_pattern")
+    @Column(length = 32)
     public String getName() {
         return name;
     }
@@ -59,6 +67,8 @@ public class User implements IBaseModel<Integer> {
         this.name = name;
     }
 
+    @NotEmpty(message = "validate_password_empty")
+    @Length(max = 32 , min = 6, message = "validate_password_not_in_range")
     public String getPassword() {
         return password;
     }

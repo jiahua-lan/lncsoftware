@@ -1,4 +1,4 @@
-<#import "template/temp.ftl" as template>
+<#import "../template/mainTemp.ftl" as template>
 <@template.body title="Welcome - "+login_username>
     <div class="container">
         <div class="page-header">
@@ -6,7 +6,7 @@
         </div>
         <div class="row">
             <div class="col-md-4 col-md-offset-4">
-                <a class="btn btn-block btn-success" href="/">Back to home</a>
+                <a class="btn btn-block btn-success" href="/">Back to Homepage</a>
             </div>
         </div>
     </div>

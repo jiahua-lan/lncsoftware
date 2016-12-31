@@ -2,16 +2,14 @@ package cn.lncsa.controller;
 
 import cn.lncsa.data.model.Article;
 import cn.lncsa.data.model.ArticleBody;
+import cn.lncsa.data.model.User;
 import cn.lncsa.services.ArticleServices;
 import cn.lncsa.services.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
@@ -41,6 +39,19 @@ public class ArticleController {
         return "articles";
     }
 
+    @RequestMapping(value = "/{id}",method = RequestMethod.GET)
+    public String article(@PathVariable("id") Integer id, Model model){
+        Article article = articleServices.get(id);
+        if(article == null || article.getId() == null) return "dialogs/articleNotFound";
+
+        model.addAttribute("article",article);
+        model.addAttribute("author",article.getAuthor().getName());
+        model.addAttribute("modifiedDate",article.getBody().getLatestModifiedDate());
+        model.addAttribute("content",article.getBody().getContent());
+
+        return "article";
+    }
+
     @RequestMapping(value = "/write",method = RequestMethod.GET)
     public String write(){
         return "writeArticle";
@@ -56,7 +67,7 @@ public class ArticleController {
         articleServices.save(article,new ArticleBody(body));
         model.addAttribute("article_title",article.getTitle());
 
-        return "articlePosted";
+        return "dialogs/articlePosted";
     }
 
 }

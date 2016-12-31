@@ -34,7 +34,7 @@ public class ArticleServices{
 
     public void save(Article article, ArticleBody body) {
         if(article.getId() == null) article.setCreateDate(new Date());
-        article.setModifiedDate(new Date());
+        //body.setLatestModifiedDate(new Date());
 
         articleBodyDAO.saveAndFlush(body);
         article.setBody(body);
@@ -59,7 +59,7 @@ public class ArticleServices{
 
     
     public Article get(Integer articleId) {
-        return null;
+        return articleDAO.findOne(articleId);
     }
 
     

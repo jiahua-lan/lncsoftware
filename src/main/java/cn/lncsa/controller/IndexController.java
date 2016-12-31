@@ -1,13 +1,10 @@
 package cn.lncsa.controller;
 
-import cn.lncsa.services.IBulletinServices;
+import cn.lncsa.services.BulletinServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-
-import javax.servlet.http.HttpSession;
 
 /**
  * Created by catten on 16/7/1.
@@ -15,13 +12,16 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class IndexController {
 
-//    @RequestMapping(value = "/", method = RequestMethod.GET)
-//    public String index(Model model, HttpSession session){
-//        return "index";
-//    }
+    private BulletinServices bulletinServices;
+
+    @Autowired
+    private void setBulletinServices(BulletinServices bulletinServices) {
+        this.bulletinServices = bulletinServices;
+    }
 
     @RequestMapping("/")
-    public String index(){
+    public String index(Model model) {
+        model.addAttribute("bulletin",bulletinServices.getLatestOne());
         return "index";
     }
 }

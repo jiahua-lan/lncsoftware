@@ -24,12 +24,20 @@
         <ul class="nav navbar-nav">
             <li <#if activeOrder==0>class="active"</#if>><a href="/">Home</a></li>
             <li <#if activeOrder==1>class="active"</#if>><a href="/article/">Articles</a></li>
-            <li <#if activeOrder==2>class="active"</#if>><a href="#">About Us</a></li>
+            <li <#if activeOrder==2>class="active"</#if>><a href="/bulletin/">Bulletins</a> </li>
+            <li <#if activeOrder==3>class="active"</#if>><a href="#">About Us</a></li>
         </ul>
+        <#if (Session.session_userid??) >
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="/user/${Session.session_userid}">Welcome, ${Session.session_username?html}. </a></li>
+            <li><a href="/user/logout">Logout</a></li>
+        </ul>
+        <#else>
         <ul class="nav navbar-nav navbar-right">
             <li><a href="/user/login">Login</a></li>
             <li><a href="/user/register">Register</a></li>
         </ul>
+        </#if>
     </div>
 </nav>
 </#macro>

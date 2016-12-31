@@ -1,4 +1,4 @@
-<#import "template/temp.ftl" as template>
+<#import "template/mainTemp.ftl" as template>
 <@template.body title="Write Article">
     <div class="container">
         <div class="page-header">
@@ -30,8 +30,9 @@
                 </select>
             </div>
             <div class="form-group">
-                <div class="col-md-4 col-md-offset-4">
+                <div class="col-md-2 col-md-offset-10">
                     <input type="submit" class="btn btn-success btn-block" value="Post">
+                    <a class="btn btn-default btn-block" href="/article/">Back</a>
                 </div>
             </div>
         </form>

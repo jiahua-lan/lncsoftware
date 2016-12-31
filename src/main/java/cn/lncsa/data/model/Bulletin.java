@@ -1,5 +1,7 @@
 package cn.lncsa.data.model;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -8,7 +10,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "bulletins")
-public class Bulletin {
+public class Bulletin implements IBaseModel<Integer> {
 
     @Transient
     public boolean isTimeToShow(){
@@ -18,7 +20,7 @@ public class Bulletin {
     private Integer id;
 
     private String type;
-    private String context;
+    private String content;
     private String imageLink;
     private String link;
 
@@ -39,6 +41,8 @@ public class Bulletin {
         this.link = link;
     }
 
+    @Column(length = 15)
+    @NotEmpty(message = "validate_bulletin_type_empty")
     public String getType() {
         return type;
     }
@@ -47,12 +51,13 @@ public class Bulletin {
         this.type = type;
     }
 
-    public String getContext() {
-        return context;
+    @NotEmpty(message = "validate_bulletin_content_empty")
+    public String getContent() {
+        return content;
     }
 
-    public void setContext(String context) {
-        this.context = context;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -88,7 +93,7 @@ public class Bulletin {
         return author;
     }
 
-    public void setAuthor(User author_id) {
-        this.author = author_id;
+    public void setAuthor(User author) {
+        this.author = author;
     }
 }

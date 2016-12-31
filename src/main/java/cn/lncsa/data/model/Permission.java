@@ -1,5 +1,7 @@
 package cn.lncsa.data.model;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -27,6 +29,7 @@ public class Permission implements IBaseModel<Integer> {
         this.id = id;
     }
 
+    @NotEmpty(message = "validate_permission_title_empty")
     public String getTitle() {
         return title;
     }
@@ -35,6 +38,7 @@ public class Permission implements IBaseModel<Integer> {
         this.title = title;
     }
 
+    @NotEmpty(message = "validate_permission_uri_empty")
     public String getUri() {
         return uri;
     }

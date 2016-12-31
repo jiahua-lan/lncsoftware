@@ -53,7 +53,7 @@ DROP TABLE IF EXISTS `article`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `article` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `context` text,
+  `content` text,
   `createDate` datetime DEFAULT NULL,
   `lastModifiedDate` datetime DEFAULT NULL,
   `previewSentences` varchar(255) DEFAULT NULL,
@@ -113,7 +113,7 @@ DROP TABLE IF EXISTS `bulletin`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `bulletin` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `context` varchar(255) DEFAULT NULL,
+  `content` varchar(255) DEFAULT NULL,
   `date` datetime DEFAULT NULL,
   `imageLink` varchar(255) DEFAULT NULL,
   `link` varchar(255) DEFAULT NULL,
