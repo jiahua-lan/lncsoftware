@@ -1,5 +1,6 @@
 package cn.lncsa.controller;
 
+import cn.lncsa.services.ArticleServices;
 import cn.lncsa.services.BulletinServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class IndexController {
 
     private BulletinServices bulletinServices;
+    private ArticleServices articleServices;
+
+    @Autowired
+    private void setArticleServices(ArticleServices articleServices) {
+        this.articleServices = articleServices;
+    }
 
     @Autowired
     private void setBulletinServices(BulletinServices bulletinServices) {
@@ -22,6 +29,12 @@ public class IndexController {
     @RequestMapping("/")
     public String index(Model model) {
         model.addAttribute("bulletin",bulletinServices.getLatestOne());
+        model.addAttribute("articles",articleServices.getLatest(5));
         return "index";
+    }
+
+    @RequestMapping("/about")
+    public String about(){
+        return "about";
     }
 }

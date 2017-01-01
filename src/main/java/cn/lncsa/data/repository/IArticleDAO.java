@@ -12,11 +12,6 @@ import java.util.Date;
  */
 public interface IArticleDAO extends IBaseDAO<Article>{
 
-    enum DateType{
-        createDate,
-        modifiedDate
-    }
-
     /**
      * Get articles that create date between two specified date.
      *
@@ -38,5 +33,8 @@ public interface IArticleDAO extends IBaseDAO<Article>{
      */
     @Query("select a from Article a where a.status in ?1")
     Page<Article> findAll(String[] status, Pageable pageable);
+
+    @Query("select a from Article a where a.status = ?1 order by a.createDate desc")
+    Page<Article> findRecent(String status ,Pageable pageable);
 
 }

@@ -60,7 +60,7 @@ public class UserController {
 
         session.setAttribute("session_userid", user.getId());
         session.setAttribute("session_username",user.getName());
-        return "loginSuccess";
+        return "dialogs/loginSuccess";
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)

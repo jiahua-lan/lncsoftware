@@ -29,7 +29,7 @@
 </a>
 </#macro>
 
-<#macro mediaGroupListItem itemset type>
+<#macro mediaGroupListPageItem itemset type>
 <div class="list-group">
     <#if ( itemset?? && (itemset.content?size > 0) ) >
         <#switch type>
@@ -40,6 +40,27 @@
                 <#break>
             <#case "bulletin">
                 <#list itemset.content as i>
+                    <@bulletinListItem item=i />
+                </#list>
+                <#break>
+        </#switch>
+    <#else>
+        <a class="list-group-item disabled" href="#">No Content here...</a>
+    </#if>
+</div>
+</#macro>
+
+<#macro mediaGroupListItem itemset type>
+<div class="list-group">
+    <#if ( itemset?? && (itemset?size > 0) ) >
+        <#switch type>
+            <#case "article">
+                <#list itemset as i>
+                    <@articleListItem item=i imglink="holder.js/64x64/gray" />
+                </#list>
+                <#break>
+            <#case "bulletin">
+                <#list itemset as i>
                     <@bulletinListItem item=i />
                 </#list>
                 <#break>

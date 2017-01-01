@@ -35,7 +35,7 @@ public class ArticleController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String articles(@RequestParam(value = "page",defaultValue = "0") int page, Model model){
-        model.addAttribute("articles",articleServices.get(new PageRequest(page,10), Article.STATUS_PUBLISHED));
+        model.addAttribute("articles",articleServices.get(new PageRequest(page,5), Article.STATUS_PUBLISHED));
         return "articles";
     }
 
