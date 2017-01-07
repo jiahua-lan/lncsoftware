@@ -41,6 +41,7 @@
 - [FreeMarker 获取页面request、session](http://blog.csdn.net/feiyu8607/article/details/6557159)
 - [FreeMarker 中对空字符串"" 和 null 的判断](http://www.liuqianfei.com/article/87f8317eb7ee4d3f80cd41e64d4e6240)
 - [【原创】纯干货，Spring-data-jpa详解，全方位介绍](http://www.cnblogs.com/dreamroute/p/5173896.html)
+- [JPA select from collection with many-to-many association](http://stackoverflow.com/questions/15153877/jpa-select-from-collection-with-many-to-many-association)
 
 还有一只懒喵
 

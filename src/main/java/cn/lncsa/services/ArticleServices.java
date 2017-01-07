@@ -79,6 +79,12 @@ public class ArticleServices{
 
     public Page<Article> getByTopic(Topic topic, Pageable pageable, String... status) {
         return articleDAO.findByTopic(topic,status,pageable);
+//        return articleDAO.findAll(new Specification<Article>() {
+//            @Override
+//            public Predicate toPredicate(Root<Article> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+//                return cb.and(root.get("status").in((Object) status)),root.);
+//            }
+//        }, pageable);
     }
 
     public Page<Article> getByUserId(Integer userId, Pageable pageable, String... status) {

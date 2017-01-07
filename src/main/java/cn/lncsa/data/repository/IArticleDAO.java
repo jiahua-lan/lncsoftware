@@ -22,7 +22,7 @@ public interface IArticleDAO extends IBaseDAO<Article>{
     @Query("select a from Article a where a.status in ?1")
     Page<Article> findAll(String[] status, Pageable pageable);
 
-    @Query("select a from Article a join fetch a.topics t where a.status in ?2 and a.topics = ?1")
-    Page<Article> findByTopic(Topic topic, String[] status, Pageable pageable);
+    @Query("select a from Article a join a.topics t where t in ?1 and a.status in ?2")
+    Page<Article> findByTopic(Topic topic,String[] status,Pageable pageable);
 
 }

@@ -1,5 +1,5 @@
 <#macro bulletinCarousel bulletinSet>
-<div class="row carousel slide" id="carousel_banner" style="height: 200px">
+<div class="row carousel slide" id="carousel_banner" style="height: 240px">
     <div class="col-md-4">
         <div class="panel panel-success">
             <div class="list-group" id="index_bulletin_list">

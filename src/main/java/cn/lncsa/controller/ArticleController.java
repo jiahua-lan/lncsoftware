@@ -46,7 +46,7 @@ public class ArticleController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String articles(@RequestParam(value = "page",defaultValue = "0") int page, Model model){
-        model.addAttribute("articles",articleServices.get(new PageRequest(page,5), Article.STATUS_PUBLISHED));
+        model.addAttribute("articles",articleServices.get(new PageRequest(page,5, Sort.Direction.DESC, "createDate"), Article.STATUS_PUBLISHED));
         model.addAttribute("topics",topicServices.mostWeightTopics(10));
         return "articles";
     }
@@ -67,7 +67,8 @@ public class ArticleController {
     @RequestMapping(value = "/topic/{topicId}",method = RequestMethod.GET)
     public String topic(@PathVariable("topicId") int topicId,@RequestParam(value = "page",defaultValue = "0") int page ,Model model){
         Topic topic = topicServices.get(topicId);
-        model.addAttribute("articles",articleServices.getByTopic(topic,new PageRequest(page,5),Article.STATUS_PUBLISHED));
+        model.addAttribute("articles",articleServices.getByTopic(topic,new PageRequest(page,5, Sort.Direction.DESC, "createDate"),Article.STATUS_PUBLISHED));
+        model.addAttribute("topics",topicServices.mostWeightTopics(10));
         model.addAttribute("current_topic",topic.getTitle());
         return "articles";
     }

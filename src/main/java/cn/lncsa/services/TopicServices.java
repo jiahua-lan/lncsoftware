@@ -60,7 +60,7 @@ public class TopicServices{
     }
 
     public Topic get(Integer tagId) {
-        return null;
+        return topicDAO.getOne(tagId);
     }
 
     public List<Topic> get(List<Integer> topicIds) {
