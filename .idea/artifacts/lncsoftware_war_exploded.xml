@@ -9,8 +9,8 @@
         <element id="directory" name="lib">
           <element id="library" level="project" name="Maven: jstl:jstl:1.2" />
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.7.0" />
-          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.7.0" />
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-core:2.7.0" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.7.0" />
           <element id="library" level="project" name="Maven: org.pegdown:pegdown:1.6.0" />
           <element id="library" level="project" name="Maven: org.parboiled:parboiled-java:1.1.7" />
           <element id="library" level="project" name="Maven: org.parboiled:parboiled-core:1.1.7" />

@@ -1,5 +1,6 @@
 package cn.lncsa.data.model;
 
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
@@ -15,12 +16,11 @@ public class Topic implements IBaseModel<Integer> {
 
     private Integer id;
 
-    @Column(unique = true)
     private String title;
+    private Date createDate;
+    private Integer weight;
 
     private User creator;
-
-    private Date createDate;
 
     @ManyToMany(mappedBy = "topics")
     private Set<Article> articles;
@@ -44,6 +44,7 @@ public class Topic implements IBaseModel<Integer> {
     }
 
     @NotEmpty(message = "validate_topics_title_empty")
+    @Column(unique = true)
     public String getTitle() {
         return title;
     }
@@ -68,5 +69,14 @@ public class Topic implements IBaseModel<Integer> {
 
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
+    }
+
+    @ColumnDefault("0")
+    public Integer getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Integer weight) {
+        this.weight = weight;
     }
 }

@@ -1,6 +1,8 @@
 package cn.lncsa.data.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -10,12 +12,8 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "bulletins")
+@JsonIgnoreProperties({"author"})
 public class Bulletin implements IBaseModel<Integer> {
-
-    @Transient
-    public boolean isTimeToShow(){
-        return this.date.after(new Date());
-    }
 
     private Integer id;
 
@@ -24,7 +22,8 @@ public class Bulletin implements IBaseModel<Integer> {
     private String imageLink;
     private String link;
 
-    private Date date;
+    private Date createDate;
+    private Date periodOfValidity;
 
     private User author;
 
@@ -61,12 +60,12 @@ public class Bulletin implements IBaseModel<Integer> {
     }
 
     @Temporal(TemporalType.TIMESTAMP)
-    public Date getDate() {
-        return date;
+    public Date getCreateDate() {
+        return createDate;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
     }
 
     public String getImageLink() {
@@ -95,5 +94,15 @@ public class Bulletin implements IBaseModel<Integer> {
 
     public void setAuthor(User author) {
         this.author = author;
+    }
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    public Date getPeriodOfValidity() {
+        return periodOfValidity;
+    }
+
+    public void setPeriodOfValidity(Date periodOfValidity) {
+        this.periodOfValidity = periodOfValidity;
     }
 }

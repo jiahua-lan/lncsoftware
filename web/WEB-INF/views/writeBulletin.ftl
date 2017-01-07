@@ -22,6 +22,10 @@
             <input type="url" id="b_link" name="link" class="form-control">
         </div>
         <div class="form-group">
+            <label for="b_period_of_validity">Period Of Validity</label>
+            <input class="form-control" type="datetime" name="periodOfValidity" id="b_period_of_validity">
+        </div>
+        <div class="form-group">
             <div class="col-md-2 col-md-offset-10">
                 <input type="submit" class="btn btn-success btn-block" value="Post">
                 <a class="btn btn-default btn-block" href="/bulletin/">Back</a>

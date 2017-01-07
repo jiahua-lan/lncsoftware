@@ -43,8 +43,8 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Maven: jstl:jstl:1.2" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.7.0" level="project" />
-    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.7.0" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.7.0" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.7.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: javax.servlet.jsp:jsp-api:2.2" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: javax.servlet:javax.servlet-api:3.1.0" level="project" />
     <orderEntry type="library" name="Maven: org.pegdown:pegdown:1.6.0" level="project" />
@@ -120,5 +120,8 @@
     <orderEntry type="library" scope="TEST" name="Maven: commons-collections:commons-collections:3.2.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: com.alibaba:fastjson:1.2.7" level="project" />
     <orderEntry type="library" name="Maven: javax.servlet:servlet-api:2.5" level="project" />
+    <orderEntry type="library" name="bootstrap" level="application" />
+    <orderEntry type="library" name="holder" level="application" />
+    <orderEntry type="library" name="unslider" level="application" />
   </component>
 </module>

@@ -6,17 +6,16 @@ import cn.lncsa.services.BulletinServices;
 import cn.lncsa.services.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by cattenlinger on 2017/1/1.
@@ -46,21 +45,32 @@ public class BulletinController {
         return "bulletins";
     }
 
+    @RequestMapping(value = "/{type}", method = RequestMethod.GET)
+    public String listByType(@PathVariable("type") String type,@RequestParam(value = "page",defaultValue = "0") int page ,Model model){
+        model.addAttribute("currentType",type);
+        model.addAttribute("bulletins",bulletinServices.get(type, new PageRequest(page,10, Sort.Direction.DESC, "createDate")));
+        model.addAttribute("tags",bulletinServices.getAllTags());
+        return "bulletins";
+    }
+
     @RequestMapping(value = "/write",method = RequestMethod.GET)
     public String write(){
         return "writeBulletin";
     }
 
     @RequestMapping(value = "/write", method = RequestMethod.POST)
-    public String write(@ModelAttribute @Valid Bulletin bulletin, BindingResult result, Model model, HttpSession session){
+    public String write(@ModelAttribute Bulletin bulletin,@RequestParam("periodOfValidity") String periodOfValidity, Model model, HttpSession session){
         Integer userid = (Integer) session.getAttribute("session_userid");
         if(userid == null) return "redirect:/user/login";
 
-        if(result.hasErrors()) return "dialogs/bulletinSaveFailed";
+        //System.out.printf(bulletin.getPeriodOfValidity().toString());
+//        if(result.hasErrors()){
+//            return "dialogs/bulletinSaveFailed";
+//        }
 
         User user = userServices.get(userid);
         bulletin.setAuthor(user);
-        bulletin.setDate(new Date());
+        bulletin.setCreateDate(new Date());
         bulletinServices.save(bulletin);
 
         model.addAttribute("bulletin",bulletin);

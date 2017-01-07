@@ -1,5 +1,6 @@
 package cn.lncsa.data.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -13,6 +14,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "article_head")
+@JsonIgnoreProperties({"author"})
 public class Article implements IBaseModel<Integer> {
 
     public static String STATUS_DRAFT = "draft";

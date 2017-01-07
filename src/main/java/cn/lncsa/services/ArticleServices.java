@@ -9,8 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.*;
 import java.util.Date;
 import java.util.List;
 
@@ -45,12 +48,12 @@ public class ArticleServices{
 
     
     public void saveHead(Article article) {
-
+        articleDAO.save(article);
     }
 
     
     public void saveBody(ArticleBody articleBody) {
-
+        articleBodyDAO.save(articleBody);
     }
 
     
@@ -68,27 +71,24 @@ public class ArticleServices{
         return articleDAO.findAll(status,pageable);
     }
 
-    
     public List<Article> getLatest(Integer count) {
-        return articleDAO.findRecent(Article.STATUS_PUBLISHED, new PageRequest(0,count)).getContent();
+        return articleDAO.findAll((root, query, cb) -> {
+            return cb.equal(root.<String>get("status"),Article.STATUS_PUBLISHED);
+        }, new PageRequest(0,count, Sort.Direction.DESC,"status")).getContent();
     }
 
-    
-    public Page<Article> getByTag(Topic topic, Pageable pageable, String... status) {
-        return null;
+    public Page<Article> getByTopic(Topic topic, Pageable pageable, String... status) {
+        return articleDAO.findByTopic(topic,status,pageable);
     }
 
-    
     public Page<Article> getByUserId(Integer userId, Pageable pageable, String... status) {
         return null;
     }
 
-    
     public Page<Article> findBetweenDate(Date startDate, Date endDate, Pageable pageable, String... status) {
         return null;
     }
 
-    
     public Page<Article> findBetweenModifiedDate(Date startDate, Date endDate, Pageable pageable, String... status) {
         return null;
     }

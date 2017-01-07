@@ -11,4 +11,5 @@ import org.springframework.data.jpa.repository.Query;
  */
 public interface ITopicDAO extends IBaseDAO<Topic> {
 
+    Topic findByTitle(String title);
 }

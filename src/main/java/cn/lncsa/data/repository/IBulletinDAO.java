@@ -17,7 +17,7 @@ public interface IBulletinDAO extends IBaseDAO<Bulletin> {
      * @param type type name
      * @return a list of bulletin match the type
      */
-    @Query("select b from Bulletin b where b.type = ?1 order by b.date")
+    @Query("select b from Bulletin b where b.type = ?1 order by b.createDate")
     Page<Bulletin> getByType(String type, Pageable pageable);
 
     @Query("select distinct b.type from Bulletin b")

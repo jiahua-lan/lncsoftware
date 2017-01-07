@@ -1,3 +1,4 @@
+<#setting datetime_format="yyyy-MM-dd HH:mm">
 <#macro body title>
 <html>
 <head>
@@ -5,9 +6,12 @@
     <!-- 新 Bootstrap 核心 CSS 文件 -->
     <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.2/animate.min.css">
-    <style>body {
-        margin-top: 30px;
-    }</style>
+    <script src="/js/tools.js"></script>
+    <style>
+        body {
+            margin-top: 30px;
+        }
+    </style>
 </head>
 <body>
     <#nested>
@@ -15,7 +19,7 @@
 <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<script src="https://cdn.rawgit.com/imsky/holder/master/holder.js"></script>
+<script src="/js/holder.min.js"></script>
 </body>
 </html>
 </#macro>
@@ -31,7 +35,7 @@
         </ul>
         <#if (Session.session_userid??) >
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="/user/${Session.session_userid}">Welcome, ${Session.session_username?html}. </a></li>
+                <li><a href="/user/${Session.session_userid}">Welcome, ${Session.session_username?html} </a></li>
                 <li><a href="/user/logout">Logout</a></li>
             </ul>
         <#else>
@@ -44,40 +48,78 @@
 </nav>
 </#macro>
 
-<#macro defaultPager total current shownPages path>
+<#macro defaultPager total current length path>
 <div class="container-fluid">
     <nav style="text-align: center">
         <ul class="pagination">
+                <#-- Left side -->
             <#if current == 0>
                 <li class="disabled"><a href="#">&laquo;</a></li>
+                <li class="disabled"><a href="#">&lsaquo;</a></li>
             <#else>
-                <li><a href="${path + (current - 1)}">&laquo;</a></li>
+                <li><a href="${path + 0}">&laquo;</a></li>
+                <li><a href="${path + (current - 1)}">&lsaquo;</a></li>
             </#if>
-            <#if (total <= shownPages)>
-                <#list 0..total-1 as i>
-                    <li <#if i == current>class="active" </#if>><a href=${path + i}>${i+1}</a></li>
-                </#list>
-            <#elseif (total > shownPages)>
-                <#if (current <= (shownPages/2))>
-                    <#list 0..(shownPages-1) as i>
-                        <li <#if i == current>class="active" </#if>><a href=${path + i}>${i+1}</a></li>
-                    </#list>
-                <#elseif (current >= (shownPages/2) && current <= (total-shownPages/2)) >
-                    <#list current-(shownPages/2-1)..current+(shownPages/2) as i>
-                        <li <#if i == current>class="active" </#if>><a href=${path + i}>${i+1}</a></li>
-                    </#list>
-                <#elseif (current + (shownPages/2) >= total - 1)>
-                    <#list (total-shownPages)..(total-1) as i>
-                        <li <#if i == current>class="active" </#if>><a href=${path + i}>${i+1}</a></li>
-                    </#list>
+
+            <#-- Middle page list -->
+            <#if (total <= length)>
+                <@listPagerMiddle
+                    start=0
+                    end=(total - 1)
+                    current=current path=path/>
+
+            <#elseif (total > length)>
+                <#if (current <= (length / 2)?floor)>
+                    <@listPagerMiddle
+                        start=0
+                        end=(length - 1)
+                        current=current path=path/>
+
+                <#elseif ((current > (length / 2)?floor) && (current < (total - length / 2)?floor)) >
+                    <@listPagerMiddle
+                        start=current + 1 - (length / 2)?ceiling
+                        end=current + (length / 2)?floor
+                        current=current path=path/>
+
+                <#elseif (current + (length / 2)?floor >= total - 1)>
+                    <@listPagerMiddle
+                        start=(total-length)
+                        end=(total - 1)
+                        current=current path=path/>
                 </#if>
             </#if>
-            <#if current == total-1>
+
+                <#-- Right side -->
+            <#if current == (total - 1)>
+                <li class="disabled"><a href="#">&rsaquo;</a></li>
                 <li class="disabled"><a href="#">&raquo;</a></li>
             <#else >
-                <li><a href="${path + (current + 1)}">&raquo;</a></li>
+                <li><a href="${path + (current + 1)}">&rsaquo;</a></li>
+                <li><a href="${path + (total - 1)}">&raquo;</a></li>
             </#if>
         </ul>
     </nav>
+</div>
+</#macro>
+
+<#macro listPagerMiddle start end current path>
+    <#list start..end as i>
+    <li ${(i == current)?string('class="active"','')}><a href=${path + i}>${i + 1}</a></li>
+    </#list>
+</#macro>
+
+<#macro dialog mainTitle subtitle>
+<div class="container">
+    <div class="page-header">
+        <h1 align="center">${mainTitle}</h1>
+        <#if subtitle??>
+            <p align="center">${subtitle}</p>
+        </#if>
+    </div>
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <#nested >
+        </div>
+    </div>
 </div>
 </#macro>

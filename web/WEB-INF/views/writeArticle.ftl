@@ -13,6 +13,18 @@
                 <label for="af_subtitle">Sub-title</label>
                 <input class="form-control" id="af_subtitle" type="text" name="subtitle">
             </div>
+            <#if (topic_list?? && topic_list?size > 0)>
+                <div class="form-group">
+                    <div><label>Topics </label></div>
+                    <div class="btn-group" data-toggle="buttons">
+                        <#list topic_list as topic >
+                            <label class="btn btn-default">
+                                <input type="checkbox" name="topic_list" value="${topic.id}"> ${topic.title?cap_first}
+                            </label>
+                        </#list>
+                    </div>
+                </div>
+            </#if>
             <div class="form-group">
                 <label for="af_body">Contents</label>
                 <textarea id="af_body" name="article_body" class="form-control"></textarea>

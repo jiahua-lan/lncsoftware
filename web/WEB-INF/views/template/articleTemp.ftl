@@ -21,10 +21,10 @@
             <img src="${item.imageLink}" width="64pt" height="64pt">
         </div>
         </#if>
-        <div class="media-right">
+        <div class="media-body">
             <p>${item.content?html}</p>
         </div>
-        <div align="right"><small>posted at ${item.date}, tagged as</small> <span class="label label-info">${item.type}</span></div>
+        <div align="right"><small>posted at ${item.createDate}, tagged as</small> <span class="label label-info">${item.type}</span></div>
     </div>
 </a>
 </#macro>
@@ -68,5 +68,27 @@
     <#else>
         <a class="list-group-item disabled" href="#">No Content here...</a>
     </#if>
+</div>
+</#macro>
+
+<#macro bulletinBoardBody bulletin title>
+<div class="panel-body tab-content">
+    <span style="font-size: 20pt;">${title}</span>
+    <#if (bulletin.link?? && bulletin.link != "")>
+        <a class="btn btn-success pull-right" href="${bulletin.link!""}">Detail &gt;&gt;</a>
+    </#if>
+    <hr>
+    <div class="media">
+        <#if bulletin.imageLink?? && bulletin.imageLink != "">
+            <div class="media-left">
+                <img src="${bulletin.imageLink}" onload="DrawImage(this,64,64)" >
+            </div>
+        </#if>
+        <div class="media-right">
+            <p>${bulletin.content}</p>
+        </div>
+        <p align="right">
+            at ${bulletin.createDate} tagged as <span class="label label-info">${bulletin.type}</span></p>
+    </div>
 </div>
 </#macro>
