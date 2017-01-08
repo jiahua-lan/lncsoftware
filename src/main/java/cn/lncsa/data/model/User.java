@@ -3,10 +3,8 @@ package cn.lncsa.data.model;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.util.Date;
 import java.util.Set;
@@ -14,7 +12,6 @@ import java.util.Set;
 /**
  * Created by catten on 16/1/15.
  */
-@Component
 @Entity
 @Table(name = "users")
 public class User implements IBaseModel<Integer> {

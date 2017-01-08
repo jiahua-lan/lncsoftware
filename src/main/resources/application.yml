@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: Lnc Software BBS
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+    database: mysql
+  freemarker:
+    content-type: text/html
+    cache: true
+    charset: UTF-8
+    expose-request-attributes: true
+    expose-session-attributes: true
+    expose-spring-macro-helpers: true
+  http:
+    encoding:
+      charset: UTF-8
+      force: true
+server:
+  port: 9090

@@ -7,54 +7,76 @@
     <groupId>cn.lncsa</groupId>
     <artifactId>lncsoftware</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.4.3.RELEASE</version>
+        <relativePath/>
+    </parent>
 
     <properties>
-        <hibernate.version>5.1.0.Final</hibernate.version>
-        <spring.version>4.2.5.RELEASE</spring.version>
-        <jackson.version>2.7.0</jackson.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
     </properties>
 
     <dependencies>
-
-
-        <!-- JSTL -->
         <dependency>
-            <groupId>jstl</groupId>
-            <artifactId>jstl</artifactId>
-            <version>1.2</version>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>20.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-freemarker</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>ch.qos.logback</groupId>
+                    <artifactId>logback-classic</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>jul-to-slf4j</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
-        <!-- Jackson -->
-        <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
         <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>${jackson.version}</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jetty</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-annotations</artifactId>
-            <version>${jackson.version}</version>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>1.0.15</version>
         </dependency>
-
-        <!-- https://mvnrepository.com/artifact/javax.servlet.jsp/jsp-api -->
         <dependency>
-            <groupId>javax.servlet.jsp</groupId>
-            <artifactId>jsp-api</artifactId>
-            <version>2.2</version>
-            <scope>provided</scope>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.35</version>
         </dependency>
 
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>3.1.0</version>
-            <scope>provided</scope>
-        </dependency>
 
-        <!-- Markdown render -->
         <!--https://github.com/sirthias/pegdown/-->
         <dependency>
             <groupId>org.pegdown</groupId>
@@ -62,203 +84,27 @@
             <version>1.6.0</version>
         </dependency>
 
-
-        <!-- Hibernate -->
-        <!--
-        有坑注意
-        要把Spring的hibernate4相关参数改成Hibernate5的
-        http://stackoverflow.com/questions/32898333/hibernate-spring-exception-when-trying-to-create-a-transaction
-        -->
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <version>${hibernate.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
-            <version>${hibernate.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-validator</artifactId>
-            <version>${hibernate.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-ehcache</artifactId>
-            <version>${hibernate.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.javassist</groupId>
-            <artifactId>javassist</artifactId>
-            <version>3.20.0-GA</version>
-        </dependency>
-
-        <!-- Spring -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-core</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-orm</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-
-        <!-- SpringMVC -->
-        <!-- https://mvnrepository.com/artifact/org.springframework/spring-webmvc -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-webmvc</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.freemarker</groupId>
-            <artifactId>freemarker</artifactId>
-            <version>2.3.23</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context-support</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-
-
-        <!-- Database Connection Pool -->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid</artifactId>
-            <version>1.0.15</version>
-        </dependency>
-
-        <!-- Spring Data-->
-        <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-jpa</artifactId>
-            <version>1.9.4.RELEASE</version>
-        </dependency>
-
-        <!-- Logging Face -->
-
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-            <version>1.7.10</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>jcl-over-slf4j</artifactId>
-            <version>1.7.10</version>
-        </dependency>
-        <!-- Java Database Driver -->
-        <!-- http://mvnrepository.com/artifact/mysql/mysql-connector-java -->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.35</version>
-        </dependency>
-
-        <!-- Test Support -->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.10</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-            <version>4.2.5.RELEASE</version>
-            <scope>test</scope>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <version>1.4.190</version>
-            <scope>test</scope>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/com.github.springtestdbunit/spring-test-dbunit -->
-        <dependency>
-            <groupId>com.github.springtestdbunit</groupId>
-            <artifactId>spring-test-dbunit</artifactId>
-            <version>1.2.1</version>
-            <scope>test</scope>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/org.dbunit/dbunit -->
-        <dependency>
-            <groupId>org.dbunit</groupId>
-            <artifactId>dbunit</artifactId>
-            <version>2.5.0</version>
-            <scope>test</scope>
-        </dependency>
-
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>1.2.7</version>
+            <version>1.2.15</version>
             <scope>test</scope>
         </dependency>
 
-        <!-- Servlet API-->
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>2.5</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
         </dependency>
-
     </dependencies>
 
     <build>
-        <!-- Compile plugin -->
         <plugins>
-            <!-- Web project plugin -->
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>2.6</version>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <failOnMissingWebXml>true</failOnMissingWebXml>
-                    <filteringDeploymentDescriptors>true</filteringDeploymentDescriptors>
-                    <warSourceDirectory>web</warSourceDirectory>
-                    <webResources>
-                        <resource>
-                            <directory>web</directory>
-                            <filtering>true</filtering>
-                        </resource>
-                    </webResources>
-                </configuration>
-            </plugin>
-
-            <!-- Jetty container plugin-->
-            <plugin>
-                <groupId>org.eclipse.jetty</groupId>
-                <artifactId>jetty-maven-plugin</artifactId>
-                <version>9.2.10.v20150310</version>
-                <configuration>
-                    <scanIntervalSeconds>5</scanIntervalSeconds>
-                    <webAppSourceDirectory>web</webAppSourceDirectory>
-                    <webApp>
-                        <compactPath>/</compactPath>
-                    </webApp>
-                    <stopKey/>
-                    <stopPort/>
+                    <fork>true</fork>
                 </configuration>
             </plugin>
         </plugins>
