@@ -3,6 +3,7 @@ package cn.lncsa.services;
 import cn.lncsa.data.model.Article;
 import cn.lncsa.data.model.ArticleBody;
 import cn.lncsa.data.model.Topic;
+import cn.lncsa.data.model.User;
 import cn.lncsa.data.repository.IArticleBodyDAO;
 import cn.lncsa.data.repository.IArticleDAO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,8 +88,12 @@ public class ArticleServices{
 //        }, pageable);
     }
 
-    public Page<Article> getByUserId(Integer userId, Pageable pageable, String... status) {
+    public Page<Article> getByUser(User user, Pageable pageable, String... status) {
         return null;
+    }
+
+    public Page<Article> getByUser(User user, Pageable pageable){
+        return articleDAO.findAll((root, query, cb) -> cb.equal(root.get("author"),user), pageable);
     }
 
     public Page<Article> findBetweenDate(Date startDate, Date endDate, Pageable pageable, String... status) {

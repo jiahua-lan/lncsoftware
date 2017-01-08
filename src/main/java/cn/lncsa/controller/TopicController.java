@@ -4,6 +4,7 @@ import cn.lncsa.data.model.Topic;
 import cn.lncsa.data.model.User;
 import cn.lncsa.services.TopicServices;
 import cn.lncsa.services.UserServices;
+import cn.lncsa.view.SessionUserBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,12 +42,13 @@ public class TopicController {
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public String create(@ModelAttribute Topic topic, Model model, HttpSession session){
-        Integer userid = (Integer) session.getAttribute("session_userid");
-        if(userid == null) return "redirect:/user/login";
+        SessionUserBean sessionUserBean = (SessionUserBean) session.getAttribute("session_user");
+        if(sessionUserBean == null) return "redirect:/user/login";
+
         if(topicServices.hasTopic(topic.getTitle())) return "dialogs/topicCreateFailed";
 
         topic.setCreateDate(new Date());
-        topic.setCreator(userServices.get(userid));
+        topic.setCreator(userServices.get(sessionUserBean.getUserId()));
         topic.setWeight(1000);
 
         topicServices.save(topic);

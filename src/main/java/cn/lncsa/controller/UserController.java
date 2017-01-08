@@ -1,14 +1,17 @@
 package cn.lncsa.controller;
 
 import cn.lncsa.data.model.User;
+import cn.lncsa.data.model.UserProfile;
+import cn.lncsa.services.ArticleServices;
 import cn.lncsa.services.UserServices;
+import cn.lncsa.view.SessionUserBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -21,10 +24,16 @@ import javax.validation.Valid;
 public class UserController {
 
     private UserServices userServices;
+    private ArticleServices articleServices;
 
     @Autowired
     private void setUserServices(UserServices userServices) {
         this.userServices = userServices;
+    }
+
+    @Autowired
+    private void setArticleServices(ArticleServices articleServices) {
+        this.articleServices = articleServices;
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
@@ -58,14 +67,86 @@ public class UserController {
 
         model.addAttribute("login_username", user.getName());
 
-        session.setAttribute("session_userid", user.getId());
-        session.setAttribute("session_username",user.getName());
+        session.setAttribute("session_user",new SessionUserBean(user));
+
         return "dialogs/loginSuccess";
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public String logout(HttpSession session) {
-        session.removeAttribute("session_userid");
+        session.removeAttribute("session_user");
         return "dialogs/logoutSuccess";
+    }
+
+    @RequestMapping("/self")
+    public String userCenter(Model model,HttpSession session){
+        SessionUserBean sessionUserBean = (SessionUserBean) session.getAttribute("session_user");
+        if(sessionUserBean == null) return "redirect:/user/login";
+
+        User user = userServices.get(sessionUserBean.getUserId());
+        model.addAttribute("user_model",user);
+        model.addAttribute("user_info",userServices.getProfile(user,true));
+        model.addAttribute("user_latest_articles",articleServices.getByUser(user,new PageRequest(0,5, Sort.Direction.DESC, "createDate")).getContent());
+        return "userCenter";
+    }
+
+    @RequestMapping(value = "/profile",method = RequestMethod.GET)
+    public String userProfile(@RequestParam(value = "action", defaultValue = "show") String action, HttpSession session){
+        switch (action){
+            case "create": {
+                SessionUserBean sessionUserBean = (SessionUserBean) session.getAttribute("session_user");
+                if(sessionUserBean == null) return "redirect:/user/login";
+
+                User user = userServices.get(sessionUserBean.getUserId());
+                if(user.getProfile() != null) return "dialogs/createUserProfileFailed";
+
+                userServices.saveProfile(sessionUserBean.getUserId(),new UserProfile());
+
+                return "dialogs/createUserProfileSuccess";
+            }
+
+            case "show":
+            default:
+                return "redirect:/user/self/profile";
+        }
+    }
+
+    @RequestMapping(value = "/self/profile",method = RequestMethod.GET)
+    public String selfProfile(Model model, HttpSession session){
+        SessionUserBean sessionUserBean = (SessionUserBean) session.getAttribute("session_user");
+        if(sessionUserBean == null) return "redirect:/user/login";
+
+        User user = userServices.get(sessionUserBean.getUserId());
+        model.addAttribute("user_model",user);
+        model.addAttribute("user_info",user.getProfile());
+        return "userSelfProfile";
+    }
+
+    @RequestMapping(value = "/self/profile", method = RequestMethod.POST)
+    public String updateProfile(@ModelAttribute UserProfile userProfile, Model model, HttpSession session){
+        SessionUserBean sessionUserBean = (SessionUserBean) session.getAttribute("session_user");
+        if(sessionUserBean == null) return "redirect:/user/login";
+
+        User user = userServices.get(sessionUserBean.getUserId());
+        UserProfile originProfile = user.getProfile();
+        originProfile.setNickname(userProfile.getNickname());
+        originProfile.setGender(userProfile.getGender());
+        originProfile.setHeadPic(userProfile.getHeadPic());
+
+        userServices.saveProfile(originProfile);
+        session.setAttribute("session_user",new SessionUserBean(user));
+
+        return "dialogs/updateProfileSuccess";
+    }
+
+    @RequestMapping(value = "/self/profile/secret",method = RequestMethod.POST)
+    public String secretProfile(@RequestParam(value = "secret",defaultValue = "false") Boolean secret, HttpSession session){
+        SessionUserBean sessionUserBean = (SessionUserBean) session.getAttribute("session_user");
+        if(sessionUserBean == null) return "redirect:/user/login";
+
+        UserProfile userProfile = userServices.getProfile(sessionUserBean.getUserId(),true);
+        userProfile.setSecret(secret);
+        userServices.saveProfile(userProfile);
+        return "dialogs/updateProfileSuccess";
     }
 }

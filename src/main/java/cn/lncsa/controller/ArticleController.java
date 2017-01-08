@@ -6,6 +6,7 @@ import cn.lncsa.data.model.Topic;
 import cn.lncsa.services.ArticleServices;
 import cn.lncsa.services.TopicServices;
 import cn.lncsa.services.UserServices;
+import cn.lncsa.view.SessionUserBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -81,10 +82,10 @@ public class ArticleController {
 
     @RequestMapping(value = "/write",method = RequestMethod.POST)
     public String write(@ModelAttribute Article article, @RequestParam("topic_list") List<Integer> topicIds, @RequestParam("article_body") String body, Model model, HttpSession session){
-        Integer userid = (Integer) session.getAttribute("session_userid");
-        if(userid == null) return "redirect:/user/login";
+        SessionUserBean sessionUserBean = (SessionUserBean) session.getAttribute("session_user");
+        if(sessionUserBean == null) return "redirect:/user/login";
 
-        article.setAuthor(userServices.get(userid));
+        article.setAuthor(userServices.get(sessionUserBean.getUserId()));
 
         articleServices.save(article,new ArticleBody(body));
 

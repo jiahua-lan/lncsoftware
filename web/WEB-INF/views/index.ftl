@@ -15,7 +15,7 @@
             <div class="col-md-8">
                 <div class="panel panel-success">
                     <div class="panel-body clearfix">
-                        <span style="font-size: 17pt;">Recent Article</span>
+                        <span class="lnc_title_panel">Recent Article</span>
                         <a class="btn btn-success btn-sm pull-right" href="/article/">More &gt;&gt;</a>
                     </div>
                     <@articleTemp.mediaGroupListItem itemset=articles type="article"/>

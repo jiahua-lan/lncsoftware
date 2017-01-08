@@ -35,7 +35,6 @@ public class UserProfile implements IBaseModel<Integer> {
         this.id = id;
     }
 
-    @NotEmpty(message = "validate_user_profile_secret_empty")
     public Boolean getSecret() {
         return secret;
     }

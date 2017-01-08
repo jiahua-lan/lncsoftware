@@ -2,10 +2,13 @@
 <div class="row carousel slide" id="carousel_banner" style="height: 240px">
     <div class="col-md-4">
         <div class="panel panel-success">
+            <div class="panel-heading">
+                Recent Bulletins
+            </div>
             <div class="list-group" id="index_bulletin_list">
                 <#list bulletinSet as b>
                     <a class="list-group-item" data-target="#carousel_banner" data-slide-to="${b_index}" href="#index_bulletin_item_${b.id}">
-                        <label class="label label-info">${b.type}</label>
+                        <label class="label label-info pull-right">${b.type}</label>
                         <#if (b.content?length > 25)>${b.content?substring(0,25)?html}...
                         <#else >${b.content?html}
                         </#if>

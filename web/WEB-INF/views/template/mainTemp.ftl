@@ -6,10 +6,15 @@
     <!-- 新 Bootstrap 核心 CSS 文件 -->
     <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.2/animate.min.css">
+    <link href="/css/bootstrap-toggle.min.css" rel="stylesheet">
     <script src="/js/tools.js"></script>
     <style>
         body {
             margin-top: 30px;
+        }
+
+        .lnc_title_panel{
+            font-size: 17pt;
         }
     </style>
 </head>
@@ -19,6 +24,7 @@
 <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="/js/bootstrap-toggle.min.js"></script>
 <script src="/js/holder.min.js"></script>
 </body>
 </html>
@@ -33,9 +39,14 @@
             <li <#if activeOrder==2>class="active"</#if>><a href="/bulletin/">Bulletins</a></li>
             <li <#if activeOrder==3>class="active"</#if>><a href="/about">About Us</a></li>
         </ul>
-        <#if (Session.session_userid??) >
+        <#if (Session.session_user??) >
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="/user/${Session.session_userid}">Welcome, ${Session.session_username?html} </a></li>
+                <li <#if activeOrder==4>class="active"</#if>><a href="/user/self">Welcome,
+                    <#if Session.session_user.nickname?? && Session.session_user.nickname != "">
+                        ${Session.session_user.nickname}
+                    <#else >
+                        ${Session.session_user.username}
+                    </#if></a></li>
                 <li><a href="/user/logout">Logout</a></li>
             </ul>
         <#else>

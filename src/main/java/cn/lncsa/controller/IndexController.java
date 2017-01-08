@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * Created by catten on 16/7/1.
  */
 @Controller
+@RequestMapping("")
 public class IndexController {
 
     private BulletinServices bulletinServices;
@@ -33,9 +34,9 @@ public class IndexController {
         this.topicServices = topicServices;
     }
 
-    @RequestMapping("/")
+    @RequestMapping(path = {"/",""})
     public String index(Model model) {
-        model.addAttribute("bulletins",bulletinServices.getAvailableItems(5));
+        model.addAttribute("bulletins",bulletinServices.getAvailableItems(4));
         model.addAttribute("articles",articleServices.getLatest(5));
         model.addAttribute("topics",topicServices.mostWeightTopics(10));
         return "index";

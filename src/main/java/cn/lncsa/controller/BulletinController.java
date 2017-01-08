@@ -4,6 +4,7 @@ import cn.lncsa.data.model.Bulletin;
 import cn.lncsa.data.model.User;
 import cn.lncsa.services.BulletinServices;
 import cn.lncsa.services.UserServices;
+import cn.lncsa.view.SessionUserBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -60,15 +61,10 @@ public class BulletinController {
 
     @RequestMapping(value = "/write", method = RequestMethod.POST)
     public String write(@ModelAttribute Bulletin bulletin,@RequestParam("periodOfValidity") String periodOfValidity, Model model, HttpSession session){
-        Integer userid = (Integer) session.getAttribute("session_userid");
-        if(userid == null) return "redirect:/user/login";
+        SessionUserBean sessionUserBean = (SessionUserBean) session.getAttribute("session_user");
+        if(sessionUserBean == null) return "redirect:/user/login";
 
-        //System.out.printf(bulletin.getPeriodOfValidity().toString());
-//        if(result.hasErrors()){
-//            return "dialogs/bulletinSaveFailed";
-//        }
-
-        User user = userServices.get(userid);
+        User user = userServices.get(sessionUserBean.getUserId());
         bulletin.setAuthor(user);
         bulletin.setCreateDate(new Date());
         bulletinServices.save(bulletin);

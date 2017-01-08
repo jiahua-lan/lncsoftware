@@ -14,7 +14,6 @@ import java.util.Set;
 /**
  * Created by catten on 16/1/15.
  */
-@Component
 @Entity
 @Table(name = "users")
 public class User implements IBaseModel<Integer> {
