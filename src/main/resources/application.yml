@@ -5,7 +5,6 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: create-drop
-    database: mysql
   freemarker:
     content-type: text/html
     cache: true
